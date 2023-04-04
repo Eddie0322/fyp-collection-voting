@@ -1,0 +1,225 @@
+.App {
+  text-align: center;
+  position:absolute;
+  background-color: black;
+  color: #a3a3a3;
+  margin: 0;
+  padding: 0;
+}
+
+.Scene {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+.three {
+  z-index: 0;
+}
+
+.controls {
+  position: absolute;
+  z-index: 1;
+  background: rgba(44, 43, 43, 0.2);
+  padding: 16px;
+  color: #fff;
+  width: 200px;
+  border-radius: 16px;
+  padding-top: 50;
+  margin-top: 100;
+}
+
+.controls > button {
+  padding: 10px;
+  background: #222;
+  color: #ccc;
+  border: none;
+  margin: 2px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+
+.controls > button:hover {
+  background-color: #111;
+  color: #fff;
+}
+
+.controls > button.active {
+  font-weight: bold;
+  background-color: #333;
+  color: #ff0;
+}
+
+.selected-point {
+  font-size: 0.85em;
+  margin-top: 16px;
+}
+
+.hover-tag {
+  text-align: center;
+  position: absolute;
+  top: 16px;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  width: 300px;
+  z-index: 2;
+  color: #fff;
+}
+
+img {
+  border-radius: 2px;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.modalBackground{
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modalContent{
+  position: relative;
+  width: 70%;
+  height: 75%;
+  color:rgba(255, 255, 255, 0.9);
+  background-color: rgba(13, 13, 13, 0.5);
+  padding: 20px;
+  border-radius: 5px;
+
+}
+
+.HeaderRow{
+  position: absolute;
+  top: 16px;
+  right: 16px;
+}
+
+.content-left{
+  position:absolute;
+  bottom: 48px;
+  top:48px;
+  left: 48px;
+  float:left;
+  width:40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.content-right{
+  margin-top: 32px;
+  width: 50%;
+  float:right;
+}
+
+.portal-header{
+  color:white;
+  font-size: 28px;
+  font-family: Georgia,'Times New Roman', Times, serif;
+  font-weight: 100;
+  line-height: 1.5;
+}
+
+.portal-date{
+  color:#d3d3d3;
+  font-size: 18px;
+  /* font-family: Arial, Helvetica, sans-serif; */
+  font-family: Georgia,'Times New Roman', Times, serif;
+  font-weight: 100; 
+  letter-spacing: 1px;
+  margin-top: 32px;
+}
+
+.vote-result{
+  color:#d3d3d3;
+  font-size: 14px;
+  /* font-family: Arial, Helvetica, sans-serif; */
+  font-family: Georgia,'Times New Roman', Times, serif;
+  font-weight: 100; 
+  letter-spacing: 1px;
+  margin-top: 32px;
+}
+
+.vote-result em{
+  color:#fdff9c;
+  font-size: 16px;
+}
+
+.portal-content-box{
+  float:right;
+  margin-right: 24px;
+  width: 250px;
+}
+
+.portal-content{
+  color:#d3d3d3;
+  font-size: 14px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 100; 
+  letter-spacing: 1px;
+  font-style: normal;
+  
+}
+
+.portal-content-title{
+  width: 450px;
+  color:#a3a3a3;
+  font-size: 14px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 100; 
+  letter-spacing: 1px;
+  font-style: normal;
+}
+
+.portal-content-vote{
+  width: 450px;
+  color:#fdff9c;
+  font-size: 14px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 100; 
+  letter-spacing: 1px;
+  font-style: italic;
+  margin-top: 24px;
+}
+
+.button-row{
+  position: absolute;
+  margin-top: 32px;
+}
+
+.select-emotions{
+  color:rgba(44, 44, 44, 0.9);
+  margin-top: 32px;
+}
+
+hr {
+  width: 95%;
+  margin-top: 0px;
+  margin-bottom: 48px;
+  margin-left: 0px;
+  border-top: 1px;
+  opacity: 0.5;
+}
+
+#preloader{
+  background: #000 url(assets/preloader.gif) no-repeat center center;
+  background-size: 30%;
+  height: 100vh;
+  width: 100%;
+  position:fixed;
+  z-index: 100;
+}
+
+.stackedBar{
+  height: 54px;
+}
+

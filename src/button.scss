@@ -1,0 +1,240 @@
+
+$theme: rgb(0, 60, 26);
+$theme2:rgb(0, 62, 116);
+
+button {
+	margin: 0px;
+	padding: 0px;
+	border: none;
+	outline: none;
+	color: inherit;
+	// background-color: inherit;
+	// width: 144px;
+	// height: 38px;
+	cursor: pointer;
+	position: relative;
+	border-radius: 30px;
+
+}
+
+.btn {
+	width: 144px;
+	height: 38px;
+	border: 0px solid $theme;
+	animation: 0.5s collision ease-in;
+	overflow: hidden;
+	font-size: 12px;
+	transition: 0.3s 0.1s;
+	z-index: 0;
+
+	&:active {
+		transform: translateX(100px);
+		background: rgba(255, 255, 255, 0.5);
+	}
+
+	p {
+		position: relative;
+		color: $theme;
+		font-weight: 700;
+		font-size: 0.8rem;
+		z-index: 1;
+		transition: 1s ease-in-out;
+	}
+
+	&:hover {
+		p {
+			color: #fff;
+		}
+	}
+
+	&:before,
+	&:after {
+		content: "";
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		height: 20px;
+		width: 20px;
+		border-radius: 50%;
+		background-color: $theme;
+	}
+
+	&:hover {
+		&:before {
+			animation: collisionLeft 1s both;
+			animation-direction: alternate;
+		}
+		&:after {
+			animation: collisionRight 1s both;
+			animation-direction: alternate;
+		}
+	}
+
+	&:before {
+		left: -30%;
+	}
+	&:after {
+		left: 125%;
+	}
+
+	@keyframes collisionLeft {
+		0% {
+			left: -30%;
+			width: 20px;
+			height: 20px;
+		}
+		50% {
+			left: 50%;
+			width: 40px;
+			height: 40px;
+		}
+		100% {
+			left: 50%;
+			width: 300px;
+			height: 300px;
+		}
+	}
+
+	@keyframes collisionRight {
+		0% {
+			left: 125%;
+			width: 20px;
+			height: 20px;
+		}
+		50% {
+			left: 50%;
+			width: 40px;
+			height: 40px;
+		}
+		100% {
+			left: 50%;
+			width: 300px;
+			height: 300px;
+		}
+	}
+}
+
+.btn2 {
+	width: 144px;
+	height: 38px;
+	border: 0px solid $theme2;
+	animation: 0.5s collision ease-in;
+	overflow: hidden;
+	font-size: 12px;
+	transition: 0.3s 0.1s;
+	z-index: 0;
+
+	&:active {
+		transform: translateX(100px);
+		background: rgba(255, 255, 255, 0.5);
+	}
+
+	p {
+		position: relative;
+		color: $theme2;
+		font-weight: 700;
+		font-size: 0.8rem;
+		z-index: 1;
+		transition: 1s ease-in-out;
+	}
+
+	&:hover {
+		p {
+			color: #fff;
+		}
+	}
+
+	&:before,
+	&:after {
+		content: "";
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		height: 20px;
+		width: 20px;
+		border-radius: 50%;
+		background-color: $theme2;
+	}
+
+	&:hover {
+		&:before {
+			animation: collisionLeft 1s both;
+			animation-direction: alternate;
+		}
+		&:after {
+			animation: collisionRight 1s both;
+			animation-direction: alternate;
+		}
+	}
+
+	&:before {
+		left: -30%;
+	}
+	&:after {
+		left: 125%;
+	}
+
+	@keyframes collisionLeft {
+		0% {
+			left: -30%;
+			width: 20px;
+			height: 20px;
+		}
+		50% {
+			left: 50%;
+			width: 40px;
+			height: 40px;
+		}
+		100% {
+			left: 50%;
+			width: 300px;
+			height: 300px;
+		}
+	}
+
+	@keyframes collisionRight {
+		0% {
+			left: 125%;
+			width: 20px;
+			height: 20px;
+		}
+		50% {
+			left: 50%;
+			width: 40px;
+			height: 40px;
+		}
+		100% {
+			left: 50%;
+			width: 300px;
+			height: 300px;
+		}
+	}
+}
+
+.btn3 {
+	width: 144px;
+	height: 38px;
+	border: 0px solid $theme2;
+	animation: 0.5s collision ease-in;
+	overflow: hidden;
+	font-size: 12px;
+	transition: 0.3s 0.1s;
+	z-index: 0;
+
+	&:active {
+		transform: translateX(100px);
+		background: rgba(255, 255, 255, 0.5);
+	}
+
+	p {
+		position: relative;
+		color: $theme2;
+		font-weight: 700;
+		font-size: 0.8rem;
+		z-index: 1;
+		transition: 1s ease-in-out;
+	}
+
+}
