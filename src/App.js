@@ -38,6 +38,8 @@ function App() {
   const { user, logOut } = UserAuth()
   const [openLoginModal, setOpenLoginModal] = React.useState(false)
 
+  console.log("test git merge")
+
   //const stackedBarLabel = React.useRef()
 
   //console.log("Modal open?  ", openModal);
