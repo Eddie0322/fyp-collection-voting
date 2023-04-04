@@ -1,87 +1,14 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-// import { useAuthState } from 'react-firebase-hooks/auth';
-// import { auth } from './FirebaseConfig';
-// import { isSignInWithEmailLink, sendSignInLinkToEmail, signInWithEmailLink } from 'firebase/auth';
-// import { useMutation } from "@apollo/client";
-// import { MUTATION_USERS } from './Queries';
 import { GoogleButton } from 'react-google-button'
 import { UserAuth } from './AuthContext';
+import crossSVG from "./assets/cross.svg";
+import { motion, AnimatePresence } from "framer-motion"
 
 const LoginModal = ({openLoginModal, closeLoginModal}) => {
 
-    // const [user] = useAuthState(auth);
-    // const [email, setEmail] = React.useState('');
-    // const [loginLoading, setLoginLoading] = React.useState(false)
-    // const [loginError, setLoginError] = React.useState('')
-    // const [infoMsg, setInfoMsg] = React.useState('');
-    // const [initialLoading, setInitialLoading] = React.useState(false)
-    // const [initialError, setInitialError] = React.useState('')
-
     const containerRef = React.useRef();
     const { user } = UserAuth();
-
-    // React.useEffect(() => {
-    //     if(user){
-    //         //user has signed in
-    //         return(
-    //             <div>You have signed in</div>
-    //         )
-    //     }
-    //     else{
-    //         if(isSignInWithEmailLink(auth, window.location.href)){
-    //             //if user clicks the email link on a different device, we will ask for email confirmation
-    //             let email = localStorage.getItem('email');
-    //             if(!email){
-    //                 email = window.prompt('please provide your email');
-    //             }
-    //             //complete the loggin process
-    //             setInitialLoading(true);
-    //             signInWithEmailLink(auth, localStorage.getItem('email'), window.location.href)
-    //             .then((result) => {
-    //                 console.log(result)
-    //                 localStorage.removeItem('email');
-    //                 setInitialLoading(false);
-    //                 setInitialError('')
-    //                 if(result._tokenResponse.isNewUser === true){
-    //                     insert_user_poll({
-    //                         variables: {
-    //                           id: result.user.uid, 
-    //                           email: result.user.email, 
-    //                           created_at: result.metadata.creationTime
-    //                         },
-    //                       });
-    //                       console.log({ data, loading, error });
-    //                 }
-    //             }).catch((err) => {
-    //                 setInitialLoading(false);
-    //                 setInitialError(err.message)
-    //             })
-    //         }else{
-    //             console.log('enter email and sign in')
-    //         }
-    //     }
-
-    // },[])
-
-    // const handleLogin = (e) => {
-    //     e.preventDefault();
-    //     setLoginLoading(true)
-    //     sendSignInLinkToEmail(auth, email, {
-    //         //the url we will redirect back to after clicking on the link inside email
-    //         url: 'http://localhost:3000/',
-    //         handleCodeInApp: true,
-    //     }).then(() => {
-    //         localStorage.setItem('email', email);
-    //         setLoginLoading(false);
-    //         setLoginError('');
-    //         setInfoMsg('We have sent you an email with link to sign in');
-    //     }).catch(err => {
-    //         setLoginLoading(false);
-    //         setLoginError(err.message);
-    //     })
-
-    // }
 
     const { googleSignIn } = UserAuth();
     const handleGoogleSignIn = async() => {
@@ -92,73 +19,118 @@ const LoginModal = ({openLoginModal, closeLoginModal}) => {
         }
     }
     
-    if(!openLoginModal) return null
+    // if(!openLoginModal) return null
 
         return (
             ReactDom.createPortal(
-            <>
-            <div className='modalBackground' onClick={closeLoginModal} ref={containerRef}>
-                <div className='modalContent' onClick={e => { e.stopPropagation(); }}>
+            <AnimatePresence mode='wait'>
 
-                    <div>Login</div>
+            {openLoginModal && (
+
+            <>
+            <motion.div 
+                    initial={{
+                        opacity: 0
+                    }}
+                    animate={{
+                        opacity: 1,
+                        transition: {
+                            duration: 0.2
+                        }
+                    }}
+                    exit={{
+                        opacity: 0
+                    }}               
+                    className='modalBackground' 
+                    onClick={closeLoginModal} 
+                    ref={containerRef}
+                >
+                        
+                <div 
+                    className='loginModalContent' 
+                    onClick={e => { e.stopPropagation(); }}
+                >
+
+                    <motion.div 
+                        initial={{
+                            scale: 0
+                        }}
+                        animate={{
+                            scale: 1,
+                            transition: {
+                                delay: 0.2,
+                                duration: 0.2
+                            }
+                        }}         
+                        className='HeaderRow'
+                    >
+                    <img style={{ width: "24px", cursor: "pointer" }} src={crossSVG} alt="" onClick={closeLoginModal}></img> 
+                    </motion.div>
+
+                    <motion.div
+                        initial={{
+                            opacity: 0,
+                            y: 50
+                        }}
+                        animate={{
+                            opacity: 1,
+                            y: 0,
+                            transition: {
+                                delay: 0.2,
+                                duration: 0.4
+                            }
+                        }}                 
+                    >
+                        <div className='loginTitle'>Welcome to Art Emotions ~</div>
+                        <div className='loginSubTitle'>Vote for your emotions on ARTIC collections with your Google account</div>
+                    </motion.div>
+                   
                     <br></br>
                         {user?(
-                            <span>You have logged in!</span>        
+                            <motion.div
+                            initial={{
+                                opacity: 0,
+                            }}
+                            animate={{
+                                opacity: 1,
+                                transition: {
+                                    delay: 1,
+                                    duration: 1
+                                }
+                            }}  >
+                                <>
+                                <br></br>
+                                <div className='loginTitle' style={{ fontSize: "16px", color: "rgba(255, 229, 180)" }}>👋 You have logged in!</div> 
+                                </>
+                            </motion.div>
+                            
                         ):(
-                            <GoogleButton onClick={handleGoogleSignIn}/>
+                            <motion.div
+                            initial={{
+                                opacity: 0,
+                            }}
+                            animate={{
+                                opacity: 1,
+                                transition: {
+                                    delay: 0.6,
+                                    duration: 0.4
+                                }
+                            }}  >
+                                <GoogleButton 
+                                    type="light"
+                                    onClick={handleGoogleSignIn}
+                                    className='googleButton'/>
+                            </motion.div>
                         )}
                         
                     <br></br>
-{/*  
-                    {initialLoading?(
-                        <div>Loading...</div>
-                    ):(
-                        <>
-                            {initialError!=='' ? (
-                                <div>{initialError}</div>
-                            ):(
-                                <>
-                                    {user?(
-                                        <div>Please wait...</div>
-                                    ):(
-                                        <form onSubmit={handleLogin}>
-                                            <label>Email</label>
-                                            <input 
-                                                type={'email'} 
-                                                required placeholder='Enter email'
-                                                value={email||''} onChange={(e) => setEmail(e.target.value)}
-                                            ></input>
-                                        
-                                            <button type='submit'>
-                                                {loginLoading?(
-                                                    <span>Logging you in</span>
-                                                ):(
-                                                    <span>Login</span>
-                                                )}
-                                            </button>
-                    
-                                           
-                                            {loginError!=='' && (
-                                                <div>{loginError}</div>
-                                            )}
-                        
-                                        
-                                            {infoMsg!=='' && (
-                                                <div>{infoMsg}</div>
-                                            )}
-                                        </form>)
-                                    }
-                                </>
-                            )}
-                        </>
-                    )}
-
-*/}
 
                 </div>
-            </div>
+                
+            </motion.div >
             </>
-        ,
+            )}
+        </AnimatePresence>,
         document.getElementById('loginPortal')))
     }
 

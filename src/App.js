@@ -38,8 +38,6 @@ function App() {
   const { user, logOut } = UserAuth()
   const [openLoginModal, setOpenLoginModal] = React.useState(false)
 
-  console.log("test git merge")
-
   //const stackedBarLabel = React.useRef()
 
   //console.log("Modal open?  ", openModal);
@@ -277,12 +275,15 @@ function App() {
                      
                             {user?(
                               <>
-                              <div>{user.email}</div>
-                              <div>{user.displayName}</div>
-                              <button onClick={handleSignOut}>LOGOUT</button>
+                              <hr></hr>
+                              <div style={{fontSize: "14px", color: "rgba(255, 229, 180)", fontFamily: "Arial, Helvetica, sans-serif"}}>{user.displayName}</div>
+                              <br></br>
+                              <div style={{fontSize: "14px", color: "rgba(255, 229, 180)", fontFamily: "Arial, Helvetica, sans-serif"}}>{user.email}</div>
+                              <br></br>
+                              <button onClick={handleSignOut} className="btn"><p>LOGOUT</p></button>
                               </>
                             ):(
-                              <button onClick={() => setOpenLoginModal(true)}>Login</button>
+                              <button onClick={() => setOpenLoginModal(true)} className="btn"><p>LOGIN</p></button>
                               
                             )}
                           
