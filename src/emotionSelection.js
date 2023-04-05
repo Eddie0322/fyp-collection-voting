@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MultiSelect } from "react-multi-select-component";
-import { MUTATION_VOTES } from "./Queries";
+import { INSERT_VOTES, MUTATION_VOTES } from "./Queries";
 import { useMutation } from "@apollo/client";
 import { UserAuth } from './AuthContext';
 import './App.css';
@@ -20,14 +20,29 @@ const options = [
   { label: "Dread", value: "dread", disabled: false, id: 12  },
 ];
 
-const EmotionSelection = ({id, setOpenModal}) => {
+
+const EmotionSelection = ({id, setOpenModal, setOpenLoginModal}) => {
   const [selected, setSelected] = useState([]);
-  const [insert_vote_poll, { data, loading, error }] = useMutation(MUTATION_VOTES);
-  const { user } = UserAuth()
+  const [insert_vote_poll, { data, loading, error }] = useMutation(INSERT_VOTES);
+  const [mutate_user_vote, { data: vote_affected_rows, loading: vote_loading, error: vote_error }] = useMutation(MUTATION_VOTES);
+  const { user, userVotes, user_votes_data } = UserAuth()
+  const [ voteSelection, setVoteSelection ] = useState([])
   
   //console.log({ data, loading, error })
   //console.log(selected);
   //console.log(options);
+  //console.log(voteSelection)
+
+  useEffect(() => {
+      if(user && userVotes.includes(id)){
+        var result = user_votes_data.user[0].votes.filter(obj => {
+          return obj.collection_poll_id === id
+        })     
+        setVoteSelection([result[0].first_option_id, result[0].second_option_id, result[0].third_option_id])
+      }else{
+        setVoteSelection([])
+      }
+  },[user, userVotes])
 
 
   if (selected.length >= 3){
@@ -64,7 +79,7 @@ const EmotionSelection = ({id, setOpenModal}) => {
   }
 
   function buttonDisabled(){
-    if (selected.length !== 3 || data){
+    if (selected.length !== 3 || data || vote_affected_rows){
       return(
         [true, "btn3"]
       )
@@ -105,6 +120,26 @@ const EmotionSelection = ({id, setOpenModal}) => {
         }
   }
 
+  const modifyVotes = () => {
+    if(user && (userVotes.includes(id))) {
+      mutate_user_vote({
+          variables: {
+            collection_poll_id: selected[0].collectionId, 
+            created_by_user_id: user.uid, 
+            first_option_id: selected[0].id, 
+            second_option_id: selected[1].id,
+            third_option_id: selected[2].id
+          },
+        });
+
+        setTimeout(() => {
+          setOpenModal(false)
+        }, 1500)
+
+    } else {
+        console.log("Please Log In!")
+    }
+}
 
   return (
     <div>
@@ -122,18 +157,62 @@ const EmotionSelection = ({id, setOpenModal}) => {
                 className="select-emotions"
             />
 
-            <p className='vote-result'>Strongest Emotion: <em>{showSelected()[0]}</em></p>
-            <p className='vote-result'>2nd Strongest Emotion: <em>{showSelected()[1]}</em></p>
-            <p className='vote-result'>3rd Strongest Emotion: <em>{showSelected()[2]}</em></p>
+            {user && (userVotes.includes(id)) && (voteSelection.length !== 0)? (
+              <>
+              {(selected.length !== 0) ? (
+                <>
+                  <p className='vote-result'>Strongest Emotion: <em>{showSelected()[0]}</em></p>
+                  <p className='vote-result'>2nd Strongest Emotion: <em>{showSelected()[1]}</em></p>
+                  <p className='vote-result'>3rd Strongest Emotion: <em>{showSelected()[2]}</em></p>
+                </>
+              ):(
+                <>
+                  <p className='vote-result'>Previous Strongest Emotion Vote: <em>{options[voteSelection[0]-1].label}</em></p>
+                  <p className='vote-result'>Previous 2nd Strongest Emotion Vote: <em>{options[voteSelection[1]-1].label}</em></p>
+                  <p className='vote-result'>Previous 3rd Strongest Emotion Vote: <em>{options[voteSelection[2]-1].label}</em></p>
+                </>
+              )}
+              </>
+            ):(
+              <>
+                <p className='vote-result'>Strongest Emotion: <em>{showSelected()[0]}</em></p>
+                <p className='vote-result'>2nd Strongest Emotion: <em>{showSelected()[1]}</em></p>
+                <p className='vote-result'>3rd Strongest Emotion: <em>{showSelected()[2]}</em></p>
+              </>
+            )}
 
             <div className='button-row'>
-               <button 
-                  className={buttonDisabled()[1]} 
+
+              {user?(
+                <>
+                {userVotes.includes(id) ? (
+                    <button 
+                      className={buttonDisabled()[1]} 
+                      style={{marginLeft: "160px"}} 
+                      disabled={buttonDisabled()[0]}
+                      onClick= {() => modifyVotes()}>
+                      <p>Edit</p>
+                    </button>
+                ):(
+                    <button 
+                      className={buttonDisabled()[1]} 
+                      style={{marginLeft: "160px"}} 
+                      disabled={buttonDisabled()[0]}
+                      onClick= {() => insertVotes()}>
+                      <p>{submitButtonText()}</p>
+                    </button>
+                )} 
+                </>  
+              ):(
+                <button 
+                  className={ "btn2"} 
                   style={{marginLeft: "160px"}} 
-                  disabled={buttonDisabled()[0]}
-                  onClick= {() => insertVotes()}>
-                  <p>{submitButtonText()}</p>
+                  onClick={() => setOpenLoginModal(true)}
+                  >
+                  <p>Login and Vote</p>
                 </button>
+              )}
+
             </div>
 
 

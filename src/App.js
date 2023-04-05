@@ -35,7 +35,7 @@ function App() {
   const [stackedBarValue, setStackedBarValue] = React.useState()
   const [stackedBarColors, setStackedBarColors] = React.useState()
 
-  const { user, logOut } = UserAuth()
+  const { user, logOut, database_loading } = UserAuth()
   const [openLoginModal, setOpenLoginModal] = React.useState(false)
 
   //const stackedBarLabel = React.useRef()
@@ -280,11 +280,23 @@ function App() {
                               <br></br>
                               <div style={{fontSize: "14px", color: "rgba(255, 229, 180)", fontFamily: "Arial, Helvetica, sans-serif"}}>{user.email}</div>
                               <br></br>
-                              <button onClick={handleSignOut} className="btn"><p>LOGOUT</p></button>
+                                <>
+                                {database_loading?(
+                                    <></>
+                                ):(
+                                    <button onClick={handleSignOut} className="btn"><p>LOGOUT</p></button>
+                                )}
+                                   
+                                </>
                               </>
                             ):(
-                              <button onClick={() => setOpenLoginModal(true)} className="btn"><p>LOGIN</p></button>
-                              
+                              <>
+                              {database_loading?(
+                                 <div style={{fontSize: "14px", color: "rgba(255, 229, 180)", fontFamily: "Arial, Helvetica, sans-serif"}}>Loading...</div>
+                              ):(
+                                 <button onClick={() => setOpenLoginModal(true)} className="btn"><p>LOGIN</p></button>
+                              )}
+                             </>
                             )}
                           
                   </div>
@@ -356,6 +368,7 @@ function App() {
                 stackedBarLabel = {stackedBarLabel[selectedPoint.id]}
                 stackedBarValue = {stackedBarValue[selectedPoint.id]}
                 stackedBarColors = {stackedBarColors[selectedPoint.id]}
+                setOpenLoginModal = {setOpenLoginModal}
 
           >
             

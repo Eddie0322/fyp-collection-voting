@@ -8,7 +8,7 @@ import { motion, AnimatePresence } from "framer-motion"
 const LoginModal = ({openLoginModal, closeLoginModal}) => {
 
     const containerRef = React.useRef();
-    const { user } = UserAuth();
+    const { user, database_loading } = UserAuth();
 
     const { googleSignIn } = UserAuth();
     const handleGoogleSignIn = async() => {
@@ -98,10 +98,19 @@ const LoginModal = ({openLoginModal, closeLoginModal}) => {
                                     duration: 1
                                 }
                             }}  >
-                                <>
-                                <br></br>
-                                <div className='loginTitle' style={{ fontSize: "16px", color: "rgba(255, 229, 180)" }}>👋 You have logged in!</div> 
-                                </>
+                                
+                                {database_loading?(
+                                     <>
+                                    <br></br>
+                                    <div className='loginTitle' style={{ fontSize: "16px", color: "rgba(255, 229, 180)" }}>Loading...</div>
+                                    </> 
+                                ):(
+                                   <>
+                                     <br></br>
+                                     <div className='loginTitle' style={{ fontSize: "16px", color: "rgba(255, 229, 180)" }}>👋 You have logged in!</div>
+                                  </> 
+                                )}
+                               
                             </motion.div>
                             
                         ):(

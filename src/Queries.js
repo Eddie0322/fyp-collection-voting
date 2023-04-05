@@ -22,7 +22,7 @@ export const SUBSCRIPTION_COLLECTION_VALUE = gql`
     }
 `
 
-export const MUTATION_VOTES = gql`
+export const INSERT_VOTES = gql`
 
         mutation insert_vote_poll(
             $collection_poll_id: Int!
@@ -97,6 +97,54 @@ export const MUTATION_USERS = gql`
             }
 
     }
+`
+
+export const SUBSCRIPTION_USER_VOTE = gql`
+    subscription get_user_vote ($id: String!) {
+        user(where: {id: { _eq: $id } }) {
+            votes {
+              collection_poll_id
+              first_option_id
+              second_option_id
+              third_option_id
+            }
+          }
+    }
+`
+
+export const MUTATION_VOTES = gql`
+
+    mutation mutate_user_vote(
+
+            $created_by_user_id: String!, 
+            $first_option_id: Int!, 
+            $second_option_id: Int!, 
+            $third_option_id: Int!, 
+            $collection_poll_id: Int!
+        
+        ) {
+
+        update_vote(
+
+            _set: {
+                first_option_id: $first_option_id,
+                second_option_id: $second_option_id,
+                third_option_id: $third_option_id
+            }
+            ,
+
+            where: {
+                created_by_user_id: {_eq: $created_by_user_id}, 
+                collection_poll_id: {_eq: $collection_poll_id}
+            }
+            
+        )
+
+            {
+                affected_rows
+            }
+
+        }
 `
 
 

@@ -6,6 +6,7 @@ import './App.css';
 import './button.scss'
 import { motion, AnimatePresence } from "framer-motion"
 import StackedBar from './Chart';
+import { UserAuth } from './AuthContext';
 
 const Modal = ({ 
                 id, 
@@ -22,10 +23,12 @@ const Modal = ({
                 setOpenModal, 
                 stackedBarLabel,
                 stackedBarValue,
-                stackedBarColors }) => {
+                stackedBarColors,
+                setOpenLoginModal }) => {
 
 
     const contentRef = React.useRef();
+    const { userVotes } = UserAuth();
 
     // if (!openModal) return null;
     if (!checkVoteOpen){
@@ -131,8 +134,12 @@ const Modal = ({
                                     }}                    
                                 className='button-row'
                                 >
+                                    {userVotes.includes(id)?(
+                                        <button onClick={openVote} className="btn"><p>Edit Your Vote</p></button>
+                                    ):(
+                                        <button onClick={openVote} className="btn"><p>Vote</p></button>
+                                    )}   
                                     
-                                    <button onClick={openVote} className="btn"><p>Vote</p></button>
 
                                 </motion.div>
 
@@ -221,6 +228,7 @@ const Modal = ({
                             <EmotionSelection
                                 id = {id}
                                 setOpenModal = {setOpenModal}
+                                setOpenLoginModal = {setOpenLoginModal}
                             />
                        
 
