@@ -263,3 +263,38 @@ hr {
 
 }
 
+.threeBtnGroup{
+  position: absolute;
+  z-index: 1;
+  background: rgba(44, 43, 43, 0.2);
+  padding: 16px;
+  color: #fff;
+  width: 100px;
+  border-radius: 16px;
+  left: 50%;
+  bottom: 20px;
+  transform: translate(-50%, -50%);
+}
+
+
+.threeBtnGroup > button {
+  padding: 10px;
+  background: #222;
+  color: #ccc;
+  border: none;
+  margin: 2px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+
+.threeBtnGroup > button:hover {
+  background-color: #111;
+  color: #fff;
+}
+
+.threeBtnGroup > button.active {
+  font-weight: bold;
+  background-color: #333;
+  color: #ff0;
+}

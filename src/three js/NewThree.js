@@ -267,10 +267,12 @@ const Scene = ({ data,
                  loading, 
                  collection_value_loading, 
                  storeSelected,
+                 zoom,
+                 setZoom
                  }) => {
     
     //console.log(data[0]);
-    const [zoom, setZoom] = useState(false)
+    // const [zoom, setZoom] = useState(false)
     const [focus, setFocus] = useState({})
 
 

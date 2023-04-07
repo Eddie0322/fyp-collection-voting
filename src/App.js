@@ -37,6 +37,7 @@ function App() {
 
   const { user, logOut, database_loading } = UserAuth()
   const [openLoginModal, setOpenLoginModal] = React.useState(false)
+  const [ zoom, setZoom ] = React.useState(false)
 
   //const stackedBarLabel = React.useRef()
 
@@ -309,6 +310,10 @@ function App() {
                     closeLoginModal={() => setOpenLoginModal(false)}
                     >
                 </LoginModal>
+
+              <div className='threeBtnGroup'>
+                <button onClick={() => setZoom(false)}>Zoom Out</button>
+              </div>
              
 
 
@@ -334,6 +339,8 @@ function App() {
                   loading={loading}
                   collection_value_loading={collection_value_loading}
                   storeSelected = {storeSelectedPoint.current}
+                  zoom = {zoom}
+                  setZoom = {setZoom}
                   />
 
           </div> 
