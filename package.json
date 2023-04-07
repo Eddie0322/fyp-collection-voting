@@ -12,6 +12,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "apexcharts": "^3.37.2",
+    "camera-controls": "^2.3.4",
     "firebase": "^9.18.0",
     "framer-motion": "^10.8.5",
     "graphql": "^16.6.0",
