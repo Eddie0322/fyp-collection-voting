@@ -18,18 +18,32 @@ function Controls({ zoom, focus, pos = new THREE.Vector3(), look = new THREE.Vec
   const camera = useThree((state) => state.camera)
   const gl = useThree((state) => state.gl)
   const controls = useMemo(() => new CameraControls(camera, gl.domElement), [])
+
+  useEffect(() => {
+    if(!zoom){
+      controls.setPosition(13, 13, 13, true)
+    }else{
+      controls.setPosition(focus.x + 1.5, focus.y + 1.5, focus.z + 2, true)
+    }
+  }, [zoom, focus])
+
+  controls.mouseButtons.right = CameraControls.ACTION.NONE
+  controls.maxDistance = 15
+  controls.minDistance = 2.5
+  
   
   return useFrame((state, delta) => {
-    // zoom ? pos.set(focus.x + 1.5, focus.y + 1.5, focus.z + 3.5) : pos.set(15, 15, 15)
-    // zoom ? look.set(focus.x, focus.y, focus.z - 0.2) : look.set(0, 0, 4)
+    //zoom ? pos.set(focus.x + 1.5, focus.y + 1.5, focus.z + 3.5) : pos.set(15, 15, 15)
+    zoom ? look.set(focus.x, focus.y, focus.z - 0.2) : look.set( 5, 5, 5)
 
-    zoom ? pos.set(focus.x + 1.5, focus.y + 1.5, focus.z + 3.5) : pos.set(15, 15, 15)
-    zoom ? look.set(focus.x, focus.y, focus.z - 0.2) : look.set(0, 0, 4)
 
+    // state.camera.position.set(pos)
     state.camera.position.lerp(pos, 0.5)
     state.camera.updateProjectionMatrix()
 
-    controls.setLookAt(state.camera.position.x, state.camera.position.y, state.camera.position.z, look.x, look.y, look.z, true)
+    //controls.setPosition(state.camera.position.x, state.camera.position.y, state.camera.position.z, true)
+    controls.setTarget(look.x, look.y, look.z, true)
+    //
     return controls.update(delta)
   })
 }
@@ -56,6 +70,7 @@ function UpdateInstancedMeshMatrices({ mesh, data, selectedPoint, hoverPoint }) 
       mesh.setMatrixAt(i, tempObject.matrix);
     }
   
+    //mesh.rotation.y = Math.PI / 2
     mesh.instanceMatrix.needsUpdate = true;
   
 }
@@ -140,7 +155,7 @@ const useMousePointInteraction = ({ data, selectedPoint, onSelectPoint, hoverPoi
                 setTimeout(() => {
                   setOpenModal(true);
                   setOpenVote(false);
-                }, 1000)
+                }, 500)
           }
     };
 
@@ -268,7 +283,7 @@ const Scene = ({ data,
                  collection_value_loading, 
                  storeSelected,
                  zoom,
-                 setZoom
+                 setZoom,
                  }) => {
     
     //console.log(data[0]);
@@ -285,7 +300,7 @@ const Scene = ({ data,
       //console.log(data);
 
     return(
-        <Canvas style={{ background: "black" }} camera={{ position: [50, 50, 50] }}>
+        <Canvas style={{ background: "black" }} camera={{ position: [25, 25, 25] }}>
 
             {/* <primitive object={new THREE.AxesHelper(10)} /> */}
 
@@ -295,14 +310,14 @@ const Scene = ({ data,
                   // maxAzimuthAngle={Math.PI / 2}
                   // minPolarAngle={Math.PI / 6}
                   // maxPolarAngle={Math.PI - Math.PI / 6}
-            />
-            <PerspectiveCamera makeDefault fov={75} position={[5, 5, 20]}/> */}
+            /> */}
+            {/* <PerspectiveCamera makeDefault fov={75} position={[5, 5, 20]}/> */}
 
             <Controls zoom={zoom} focus={focus} />
             <ambientLight />
             <Float       
                 speed={0.5}
-                rotationIntensity={0.6}
+                rotationIntensity={0.4}
                 floatIntensity={0.6}>
             <InstancedPoints 
                 data = {data} 
@@ -314,8 +329,8 @@ const Scene = ({ data,
                 setOpenModal = {setOpenModal}
                 setOpenVote = {setOpenVote}
                 storeSelected = {storeSelected}
-                zoomToView={(focusRef) => (setFocus(focusRef))}
-                setZoom={setZoom}
+                zoomToView = {(focusRef) => (setFocus(focusRef))}
+                setZoom = {setZoom}
                 // zoomToView={(focusRef) => (setZoom(!zoom), setFocus(focusRef))}
                 />
             </Float>

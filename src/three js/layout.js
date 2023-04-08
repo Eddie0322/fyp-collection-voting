@@ -42,8 +42,8 @@ function spiralLayout(data){
   for (let i = 0; i < data.length; ++i) {
       const datum = data[i];
 
-      datum.y = data[i].PCAy*0.45;
       datum.x = data[i].PCAx*0.45;
+      datum.y = data[i].PCAy*0.45;
       datum.z = data[i].PCAz*0.45;
       
     }

@@ -329,15 +329,15 @@ function App() {
               <Scene 
                   //data = {data.current} 
                   data = {data} 
-                  layout={layout} 
-                  selectedPoint={selectedPoint} 
-                  onSelectPoint={setSelectedPoint}
+                  layout = {layout} 
+                  selectedPoint = {selectedPoint} 
+                  onSelectPoint = {setSelectedPoint}
                   setOpenModal = {setOpenModal}
                   setOpenVote = {setOpenVote}
-                  hoverPoint={hoverPoint}
-                  onHoverPoint={setHoverPoint}
-                  loading={loading}
-                  collection_value_loading={collection_value_loading}
+                  hoverPoint = {hoverPoint}
+                  onHoverPoint = {setHoverPoint}
+                  loading = {loading}
+                  collection_value_loading = {collection_value_loading}
                   storeSelected = {storeSelectedPoint.current}
                   zoom = {zoom}
                   setZoom = {setZoom}
