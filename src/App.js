@@ -12,7 +12,7 @@ import { SUBSCRIPTION_COLLECTION_VALUE, SUBSCRIPTION_TOTAL_COUNT } from './Queri
 import LoginModal from './loginModal';
 import { UserAuth } from './AuthContext';
 
-let initialData = new Array(1000).fill(0).map((d, id) => ({ id, PCAx: 0, PCAy: 0, PCAz: 0, Label: 0 }));
+let initialData = new Array(1000).fill(0).map((d, id) => ({ id, PCAx: 0, PCAy: 0, PCAz: 0, Label: -1, totalVote: 0 }));
 let listObjects;
 let objectsImageUrl = [];
 
@@ -122,7 +122,7 @@ function App() {
     let collectionValueArray = [];
     
     React.useEffect(() => {
-      if(collection_value_data){
+      if(collection_value_data && total_count_data){
 
             if(selectedPoint){
               storeSelectedPoint.current = selectedPoint;
@@ -177,14 +177,15 @@ function App() {
                 PCAx: testArray.projection[index][0] + 5,
                 PCAy: testArray.projection[index][1] + 5,
                 PCAz: testArray.projection[index][2] + 5,
-                Label: testArray.labelArray[index]
+                Label: testArray.labelArray[index],
+                totalVote: total_count_data.total_count[index].count
               }
             )))
 
         },1000)
 
       }
-    },[collection_value_data])
+    },[collection_value_data, total_count_data])
   
 
     //Get the largest three emotion value for displaying 

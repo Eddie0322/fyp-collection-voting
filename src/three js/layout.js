@@ -21,7 +21,6 @@ function gridLayout(data){
     }
 }
 
-
 // function spiralLayout(data){
 //     let theta = 0;
 //     for (let i = 0; i < data.length; ++i) {
@@ -34,19 +33,31 @@ function gridLayout(data){
 //         datum.y = y;
 //         datum.x = radius * Math.cos(theta);
 //         datum.z = radius * Math.sin(theta);
-        
+
 //       }
 // }
 
 function spiralLayout(data){
+
+  let theta = 0;
   for (let i = 0; i < data.length; ++i) {
       const datum = data[i];
 
-      datum.x = data[i].PCAx*0.45;
-      datum.y = data[i].PCAy*0.45;
-      datum.z = data[i].PCAz*0.45;
-      
+    if( datum.totalVote !== 0 ){
+      datum.x = data[i].PCAx * 0.35;
+      datum.y = data[i].PCAy * 0.35;
+      datum.z = data[i].PCAz * 0.35;
+
+    } else {
+        const phi = Math.PI * (Math.sqrt(5) - 1)
+        const y = 1 - (i / (data.length - 1) * 2)
+        const radius = Math.sqrt(1 - y * y) * 1;
+        theta = phi * i;
+        datum.y = y * 2;
+        datum.x = radius * Math.cos(theta) * 2;
+        datum.z = radius * Math.sin(theta) * 2;
     }
+  }
 }
 
 export const useLayout = ({ data, layout = 'grid'}) => {

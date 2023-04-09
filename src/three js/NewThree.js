@@ -1,13 +1,16 @@
 import { OrbitControls, PerspectiveCamera, Float } from "@react-three/drei";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { Canvas, useFrame, useThree, extend } from "@react-three/fiber";
 //import { hover } from "@testing-library/user-event/dist/hover";
 import { useRef, useEffect, useMemo, useState } from "react";
 import * as THREE from "three";
 import { Object3D } from "three";
 import {  useAnimatedLayout } from "./layout";
 import CameraControls from 'camera-controls'
+import { raycast, MeshLineGeometry, MeshLineMaterial } from 'meshline'
 
+extend({ MeshLineGeometry, MeshLineMaterial })
 CameraControls.install({ THREE })
+
 
 const tempObject = new Object3D();
 const loadingElement = <div id="preloader"></div>;
@@ -58,14 +61,32 @@ function UpdateInstancedMeshMatrices({ mesh, data, selectedPoint, hoverPoint }) 
       const { x, y, z } = data[i]; 
   
       tempObject.position.set(x, y, z);
-      if(data[i] === selectedPoint){
-        tempObject.scale.set(3.5, 3.5, 3.5);
-      }else if(data[i] === hoverPoint){
-        tempObject.scale.set(2, 2, 2);
-      }else{
-        tempObject.scale.set(1, 1, 1);
+
+
+      if(data[i].totalVote !== 0){
+
+          if (data[i] === selectedPoint) {
+            tempObject.scale.set(3.5, 3.5, 3.5);
+          } else if(data[i] === hoverPoint) {
+            tempObject.scale.set(2, 2, 2);
+          } else {
+            tempObject.scale.set(1, 1, 1);
+          }
+
+      } else {
+
+          if (data[i] === selectedPoint) {
+            tempObject.scale.set(1, 1, 1);
+          } else if(data[i] === hoverPoint) {
+            tempObject.scale.set(0.6, 0.6, 0.6);
+          } else {
+            tempObject.scale.set(0.3, 0.3, 0.3);
+          }
+
       }
-      //tempObject.scale.set(1, 1, 1);
+
+
+
       tempObject.updateMatrix(); 
       mesh.setMatrixAt(i, tempObject.matrix);
     }
@@ -96,7 +117,14 @@ const usePointColors = ({ data, selectedPoint, layout, hoverPoint }) => {
   
       if (layoutSelected.current === "spiral"){
       for (let i = 0; i < data.length; ++i) {
-          scratchColor.set(data[i] === (selectedPoint) ? SELECTED_COLOR : DEFAULT_COLOR[data[i].Label]);
+        if(data[i] === (selectedPoint)){
+          scratchColor.set(SELECTED_COLOR)
+        }else if(data[i].totalVote === 0){
+          scratchColor.set(DEFAULT_COLOR_ORIGIN)
+        }else{
+          scratchColor.set(DEFAULT_COLOR[data[i].Label])
+        }
+          //scratchColor.set(data[i] === (selectedPoint) ? SELECTED_COLOR : DEFAULT_COLOR[data[i].Label]);
           //scratchColor.set(data[i] === hoverPoint ? SELECTED_COLOR : DEFAULT_COLOR[data[i].Label]);
           scratchColor.toArray(colorArray, i*3);
         }
@@ -271,6 +299,63 @@ const InstancedPoints = ({
 };
 
 
+
+
+const points = [];
+points.push(new THREE.Vector3(0, 0, 0));
+points.push(new THREE.Vector3(10, 10, 10));
+let lines
+
+const Lines = ({data, layout}) => {
+
+  const [linePoints, seLinePoints] = useState([]);
+
+  useEffect(() => {
+    let arr = [];
+    let result = [];
+    for (let i = 0; i < data.length; ++i) {
+      if(data[i].totalVote !== 0 && data[i].Label === 0){
+        arr.push(new THREE.Vector3(data[i].PCAx * 0.35, data[i].PCAy * 0.35, data[i].PCAz * 0.35))  
+      }
+    }
+    for (let i = 0; i < arr.length - 1; i++) {
+      // This is where you'll capture that last value
+      for (let j = i + 1; j < arr.length; j++) {
+        result.push([arr[i], arr[j]]);
+      }
+    }
+
+    //console.log(result)
+    lines = result.map((object, index) => {
+      return(
+
+          <mesh raycast={raycast} onPointerOver={console.log} key={index}>
+            <meshLineGeometry points={object} />
+            <meshLineMaterial lineWidth={0.008} color="#ff3" />
+          </mesh>  
+
+      )
+    })
+
+    seLinePoints(lines)
+
+  },[data])
+
+  
+
+  if(layout === "grid") return null
+
+  return(
+    <>
+      {linePoints} 
+    </>
+  )
+    
+};
+
+
+
+
 const Scene = ({ data, 
                  layout, 
                  selectedPoint, 
@@ -314,26 +399,39 @@ const Scene = ({ data,
             {/* <PerspectiveCamera makeDefault fov={75} position={[5, 5, 20]}/> */}
 
             <Controls zoom={zoom} focus={focus} />
+
             <ambientLight />
+
             <Float       
                 speed={0.5}
                 rotationIntensity={0.4}
                 floatIntensity={0.6}>
-            <InstancedPoints 
-                data = {data} 
-                layout = {layout}
-                selectedPoint = {selectedPoint}
-                onSelectPoint = {onSelectPoint} 
-                hoverPoint = {hoverPoint}
-                onHoverPoint = {onHoverPoint}
-                setOpenModal = {setOpenModal}
-                setOpenVote = {setOpenVote}
-                storeSelected = {storeSelected}
-                zoomToView = {(focusRef) => (setFocus(focusRef))}
-                setZoom = {setZoom}
-                // zoomToView={(focusRef) => (setZoom(!zoom), setFocus(focusRef))}
+
+                <InstancedPoints 
+                    data = {data} 
+                    layout = {layout}
+                    selectedPoint = {selectedPoint}
+                    onSelectPoint = {onSelectPoint} 
+                    hoverPoint = {hoverPoint}
+                    onHoverPoint = {onHoverPoint}
+                    setOpenModal = {setOpenModal}
+                    setOpenVote = {setOpenVote}
+                    storeSelected = {storeSelected}
+                    zoomToView = {(focusRef) => (setFocus(focusRef))}
+                    setZoom = {setZoom}
+                    // zoomToView={(focusRef) => (setZoom(!zoom), setFocus(focusRef))}
                 />
+
+                <Lines 
+                    data = {data}
+                    layout= {layout}
+                />
+
             </Float>
+
+
+
+
         </Canvas> 
     );
     
