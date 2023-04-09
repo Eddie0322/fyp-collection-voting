@@ -299,45 +299,78 @@ const InstancedPoints = ({
 };
 
 
+//Components of emotions lines 
+let linesAmusement
+let linesCalmness
 
-
-const points = [];
-points.push(new THREE.Vector3(0, 0, 0));
-points.push(new THREE.Vector3(10, 10, 10));
-let lines
 
 const Lines = ({data, layout}) => {
 
-  const [linePoints, seLinePoints] = useState([]);
+  //state of emotions line points
+  const [amusementLinePoints, setAmusementLinePoints] = useState([]);
+  const [calmnessLinePoints, setCalmnessLinePoints] = useState([]);
 
   useEffect(() => {
-    let arr = [];
-    let result = [];
+    
+    //PCA arrays of emotions
+    let arrAmusement = [];
+    let arrCalmness = []
+
+    //Pairs of start points and end points of lines 
+    let resultAmusement = [];
+    let resultCalmness = [];
+
+
     for (let i = 0; i < data.length; ++i) {
-      if(data[i].totalVote !== 0 && data[i].Label === 0){
-        arr.push(new THREE.Vector3(data[i].PCAx * 0.35, data[i].PCAy * 0.35, data[i].PCAz * 0.35))  
+      if ( data[i].totalVote !== 0 && data[i].Label === 0 ) {
+        arrAmusement.push(new THREE.Vector3(data[i].PCAx * 0.35, data[i].PCAy * 0.35, data[i].PCAz * 0.35))  
+      } 
+      else if ( data[i].totalVote !== 0 && data[i].Label === 5 ) {
+        arrCalmness.push(new THREE.Vector3(data[i].PCAx * 0.35, data[i].PCAy * 0.35, data[i].PCAz * 0.35))  
       }
     }
-    for (let i = 0; i < arr.length - 1; i++) {
+
+    //
+    //Store Results
+    for (let i = 0; i < arrAmusement.length - 1; i++) {
       // This is where you'll capture that last value
-      for (let j = i + 1; j < arr.length; j++) {
-        result.push([arr[i], arr[j]]);
+      for (let j = i + 1; j < arrAmusement.length; j++) {
+        resultAmusement.push([arrAmusement[i], arrAmusement[j]]);
       }
     }
 
-    //console.log(result)
-    lines = result.map((object, index) => {
-      return(
+    for (let i = 0; i < arrCalmness.length - 1; i++) {
+      // This is where you'll capture that last value
+      for (let j = i + 1; j < arrCalmness.length; j++) {
+        resultCalmness.push([arrCalmness[i], arrCalmness[j]]);
+      }
+    }
 
+    //
+    //map to lines components
+    linesAmusement = resultAmusement.map((object, index) => {
+      return(
           <mesh raycast={raycast} onPointerOver={console.log} key={index}>
             <meshLineGeometry points={object} />
             <meshLineMaterial lineWidth={0.008} color="#ff3" />
           </mesh>  
-
       )
     })
 
-    seLinePoints(lines)
+    linesCalmness = resultCalmness.map((object, index) => {
+      return(
+          <mesh raycast={raycast} onPointerOver={console.log} key={index}>
+            <meshLineGeometry points={object} />
+            <meshLineMaterial lineWidth={0.008} color="#c0f" />
+          </mesh>  
+      )
+    })
+
+
+    //
+    //Set state values
+    setAmusementLinePoints(linesAmusement)
+    setCalmnessLinePoints(linesCalmness)
 
   },[data])
 
@@ -347,7 +380,8 @@ const Lines = ({data, layout}) => {
 
   return(
     <>
-      {linePoints} 
+      {amusementLinePoints} 
+      {calmnessLinePoints}
     </>
   )
     
