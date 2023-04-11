@@ -1,16 +1,15 @@
 import { OrbitControls, PerspectiveCamera, Float } from "@react-three/drei";
-import { Canvas, useFrame, useThree, extend } from "@react-three/fiber";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 //import { hover } from "@testing-library/user-event/dist/hover";
 import { useRef, useEffect, useMemo, useState } from "react";
 import * as THREE from "three";
 import { Object3D } from "three";
 import {  useAnimatedLayout } from "./layout";
 import CameraControls from 'camera-controls'
-import { raycast, MeshLineGeometry, MeshLineMaterial } from 'meshline'
+import Lines from "./Lines";
 
-extend({ MeshLineGeometry, MeshLineMaterial })
+
 CameraControls.install({ THREE })
-
 
 const tempObject = new Object3D();
 const loadingElement = <div id="preloader"></div>;
@@ -297,97 +296,6 @@ const InstancedPoints = ({
         </instancedMesh>
       );
 };
-
-
-//Components of emotions lines 
-let linesAmusement
-let linesCalmness
-
-
-const Lines = ({data, layout}) => {
-
-  //state of emotions line points
-  const [amusementLinePoints, setAmusementLinePoints] = useState([]);
-  const [calmnessLinePoints, setCalmnessLinePoints] = useState([]);
-
-  useEffect(() => {
-    
-    //PCA arrays of emotions
-    let arrAmusement = [];
-    let arrCalmness = []
-
-    //Pairs of start points and end points of lines 
-    let resultAmusement = [];
-    let resultCalmness = [];
-
-
-    for (let i = 0; i < data.length; ++i) {
-      if ( data[i].totalVote !== 0 && data[i].Label === 0 ) {
-        arrAmusement.push(new THREE.Vector3(data[i].PCAx * 0.35, data[i].PCAy * 0.35, data[i].PCAz * 0.35))  
-      } 
-      else if ( data[i].totalVote !== 0 && data[i].Label === 5 ) {
-        arrCalmness.push(new THREE.Vector3(data[i].PCAx * 0.35, data[i].PCAy * 0.35, data[i].PCAz * 0.35))  
-      }
-    }
-
-    //
-    //Store Results
-    for (let i = 0; i < arrAmusement.length - 1; i++) {
-      // This is where you'll capture that last value
-      for (let j = i + 1; j < arrAmusement.length; j++) {
-        resultAmusement.push([arrAmusement[i], arrAmusement[j]]);
-      }
-    }
-
-    for (let i = 0; i < arrCalmness.length - 1; i++) {
-      // This is where you'll capture that last value
-      for (let j = i + 1; j < arrCalmness.length; j++) {
-        resultCalmness.push([arrCalmness[i], arrCalmness[j]]);
-      }
-    }
-
-    //
-    //map to lines components
-    linesAmusement = resultAmusement.map((object, index) => {
-      return(
-          <mesh raycast={raycast} onPointerOver={console.log} key={index}>
-            <meshLineGeometry points={object} />
-            <meshLineMaterial lineWidth={0.008} color="#ff3" />
-          </mesh>  
-      )
-    })
-
-    linesCalmness = resultCalmness.map((object, index) => {
-      return(
-          <mesh raycast={raycast} onPointerOver={console.log} key={index}>
-            <meshLineGeometry points={object} />
-            <meshLineMaterial lineWidth={0.008} color="#c0f" />
-          </mesh>  
-      )
-    })
-
-
-    //
-    //Set state values
-    setAmusementLinePoints(linesAmusement)
-    setCalmnessLinePoints(linesCalmness)
-
-  },[data])
-
-  
-
-  if(layout === "grid") return null
-
-  return(
-    <>
-      {amusementLinePoints} 
-      {calmnessLinePoints}
-    </>
-  )
-    
-};
-
-
 
 
 const Scene = ({ data, 

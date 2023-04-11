@@ -44,18 +44,18 @@ function spiralLayout(data){
       const datum = data[i];
 
     if( datum.totalVote !== 0 ){
-      datum.x = data[i].PCAx * 0.35;
-      datum.y = data[i].PCAy * 0.35;
-      datum.z = data[i].PCAz * 0.35;
+      datum.x = data[i].PCAx * 0.35 + 10;
+      datum.y = data[i].PCAy * 0.35 + 5;
+      datum.z = data[i].PCAz * 0.35 + 5;
 
     } else {
         const phi = Math.PI * (Math.sqrt(5) - 1)
         const y = 1 - (i / (data.length - 1) * 2)
         const radius = Math.sqrt(1 - y * y) * 1;
         theta = phi * i;
-        datum.y = y * 2;
-        datum.x = radius * Math.cos(theta) * 2;
-        datum.z = radius * Math.sin(theta) * 2;
+        datum.y = y * 2 + 5;
+        datum.x = radius * Math.cos(theta) * 2 + 5;
+        datum.z = radius * Math.sin(theta) * 2 + 5;
     }
   }
 }

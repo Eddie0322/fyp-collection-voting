@@ -99,7 +99,7 @@ export const calculatePCA = (valueData, initialValueData) => {
           covar[i][j] = covar[i][j] / 1000   //Here can be -0
           }
       }
-      //console.table(covar)
+      console.table(covar)
 
       const { u, q } = SVD(covar, 'f')
       //console.table(u)
@@ -118,7 +118,6 @@ export const calculatePCA = (valueData, initialValueData) => {
         return outp;
     }
       storeQarr = findIndicesOfMax(q,3)
-      //console.log(storeQarr)
 
       var projection = []
       var pc1 = 0, pc2 = 0, pc3 = 0
