@@ -38,15 +38,14 @@ function gridLayout(data){
 // }
 
 function spiralLayout(data){
-
+  let PCApos = [];
+  let PCAposDup = [];
   let theta = 0;
   for (let i = 0; i < data.length; ++i) {
       const datum = data[i];
 
     if( datum.totalVote !== 0 ){
-      datum.x = data[i].PCAx * 0.35 + 10;
-      datum.y = data[i].PCAy * 0.35 + 5;
-      datum.z = data[i].PCAz * 0.35 + 5;
+      PCApos.push(datum)
 
     } else {
         const phi = Math.PI * (Math.sqrt(5) - 1)
@@ -58,6 +57,30 @@ function spiralLayout(data){
         datum.z = radius * Math.sin(theta) * 2 + 5;
     }
   }
+  
+  for (let j = 0; j < PCApos.length; j++){
+    for (let k = 0; k < PCApos.length ; k++){
+      if(
+        PCApos[j].PCAx === PCApos[k].PCAx &&
+        PCApos[j].PCAy === PCApos[k].PCAy &&
+        PCApos[j].PCAz === PCApos[k].PCAz &&
+        j !== k
+      ){
+        PCAposDup.push(PCApos[j].id)
+        PCApos[j].PCAx = PCApos[j].PCAx + 1
+        PCApos[j].PCAy = PCApos[j].PCAy + 0.5
+        PCApos[j].PCAz = PCApos[j].PCAz + 0.5
+      }
+    }
+    
+    data[PCApos[j].id].x = PCApos[j].PCAx * 0.35 + 10
+    data[PCApos[j].id].y = PCApos[j].PCAy * 0.35 + 5
+    data[PCApos[j].id].z = PCApos[j].PCAz * 0.35 + 5
+
+  }
+
+  console.log(PCAposDup)
+
 }
 
 export const useLayout = ({ data, layout = 'grid'}) => {
