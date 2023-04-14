@@ -78,45 +78,49 @@ const Lines = ({data, layout}) => {
     let resultDread = [];
 
 
-    for (let i = 0; i < data.length; ++i) {
-      if ( data[i].totalVote !== 0 && data[i].Label === 0 ) {
-        arrAmusement.push(new THREE.Vector3(data[i].PCAx * 0.35 + 10, data[i].PCAy * 0.35 + 5, data[i].PCAz * 0.35 + 5))  
-      } 
-      else if ( data[i].totalVote !== 0 && data[i].Label === 1 ) {
-        arrIntimate.push(new THREE.Vector3(data[i].PCAx * 0.35 + 10, data[i].PCAy * 0.35 + 5, data[i].PCAz * 0.35 + 5))  
+    if(layout === "spiral"){
+      for (let i = 0; i < data.length; ++i) {
+        if ( data[i].totalVote !== 0 && data[i].Label === 0 ) {
+          arrAmusement.push(new THREE.Vector3(data[i].x, data[i].y, data[i].z))  
+        } 
+        else if ( data[i].totalVote !== 0 && data[i].Label === 1 ) {
+          arrIntimate.push(new THREE.Vector3(data[i].x, data[i].y, data[i].z))  
+        }
+        else if ( data[i].totalVote !== 0 && data[i].Label === 2 ) {
+          arrElegant.push(new THREE.Vector3(data[i].x, data[i].y, data[i].z))  
+        }
+        else if ( data[i].totalVote !== 0 && data[i].Label === 3 ) {
+          arrLively.push(new THREE.Vector3(data[i].x, data[i].y, data[i].z))  
+        }
+        else if ( data[i].totalVote !== 0 && data[i].Label === 4 ) {
+          arrSpiritual.push(new THREE.Vector3(data[i].x, data[i].y, data[i].z))  
+        }
+        else if ( data[i].totalVote !== 0 && data[i].Label === 5 ) {
+          arrCalmness.push(new THREE.Vector3(data[i].x, data[i].y, data[i].z))  
+        }
+        else if ( data[i].totalVote !== 0 && data[i].Label === 6 ) {
+          arrBoredom.push(new THREE.Vector3(data[i].x, data[i].y, data[i].z))  
+        }
+        else if ( data[i].totalVote !== 0 && data[i].Label === 7 ) {
+          arrStrange.push(new THREE.Vector3(data[i].x, data[i].y, data[i].z))  
+        }
+        else if ( data[i].totalVote !== 0 && data[i].Label === 8 ) {
+          arrMysterious.push(new THREE.Vector3(data[i].x, data[i].y, data[i].z))    
+        }
+        else if ( data[i].totalVote !== 0 && data[i].Label === 9 ) {
+          arrAnxiety.push(new THREE.Vector3(data[i].x, data[i].y, data[i].z))  
+        }
+        else if ( data[i].totalVote !== 0 && data[i].Label === 10 ) {
+          arrSadness.push(new THREE.Vector3(data[i].x, data[i].y, data[i].z))  
+        }
+        else if ( data[i].totalVote !== 0 && data[i].Label === 11 ) {
+          arrDread.push(new THREE.Vector3(data[i].x, data[i].y, data[i].z))  
+        }
       }
-      else if ( data[i].totalVote !== 0 && data[i].Label === 2 ) {
-        arrElegant.push(new THREE.Vector3(data[i].PCAx * 0.35 + 10, data[i].PCAy * 0.35 + 5, data[i].PCAz * 0.35 + 5))  
-      }
-      else if ( data[i].totalVote !== 0 && data[i].Label === 3 ) {
-        arrLively.push(new THREE.Vector3(data[i].PCAx * 0.35 + 10, data[i].PCAy * 0.35 + 5, data[i].PCAz * 0.35 + 5))  
-      }
-      else if ( data[i].totalVote !== 0 && data[i].Label === 4 ) {
-        arrSpiritual.push(new THREE.Vector3(data[i].PCAx * 0.35 + 10, data[i].PCAy * 0.35 + 5, data[i].PCAz * 0.35 + 5))  
-      }
-      else if ( data[i].totalVote !== 0 && data[i].Label === 5 ) {
-        arrCalmness.push(new THREE.Vector3(data[i].PCAx * 0.35 + 10, data[i].PCAy * 0.35 + 5, data[i].PCAz * 0.35 + 5))  
-      }
-      else if ( data[i].totalVote !== 0 && data[i].Label === 6 ) {
-        arrBoredom.push(new THREE.Vector3(data[i].PCAx * 0.35 + 10, data[i].PCAy * 0.35 + 5, data[i].PCAz * 0.35 + 5))  
-      }
-      else if ( data[i].totalVote !== 0 && data[i].Label === 7 ) {
-        arrStrange.push(new THREE.Vector3(data[i].PCAx * 0.35 + 10, data[i].PCAy * 0.35 + 5, data[i].PCAz * 0.35 + 5))  
-      }
-      else if ( data[i].totalVote !== 0 && data[i].Label === 8 ) {
-        arrMysterious.push(new THREE.Vector3(data[i].PCAx * 0.35 + 10, data[i].PCAy * 0.35 + 5, data[i].PCAz * 0.35 + 5))  
-      }
-      else if ( data[i].totalVote !== 0 && data[i].Label === 9 ) {
-        arrAnxiety.push(new THREE.Vector3(data[i].PCAx * 0.35 + 10, data[i].PCAy * 0.35 + 5, data[i].PCAz * 0.35 + 5))  
-      }
-      else if ( data[i].totalVote !== 0 && data[i].Label === 10 ) {
-        arrSadness.push(new THREE.Vector3(data[i].PCAx * 0.35 + 10, data[i].PCAy * 0.35 + 5, data[i].PCAz * 0.35 + 5))  
-      }
-      else if ( data[i].totalVote !== 0 && data[i].Label === 11 ) {
-        arrDread.push(new THREE.Vector3(data[i].PCAx * 0.35 + 10, data[i].PCAy * 0.35 + 5, data[i].PCAz * 0.35 + 5))  
-      }
-    }
+    
+    
 
+  
     //
     //Store Results
     storeResult(arrAmusement, resultAmusement)
@@ -243,25 +247,26 @@ const Lines = ({data, layout}) => {
         )
       })
 
+          //
+          //Set state values
+          setAmusementLinePoints(linesAmusement)
+          setIntimateLinePoints(linesIntimate)
+          setElegantLinePoints(linesElegant)
+          setLivelyLinePoints(linesLively)
+          setSpiritualLinePoints(linesSpiritual)
+          setCalmnessLinePoints(linesCalmness)
+          setBoredomLinePoints(linesBoredom)
+          setStrangeLinePoints(linesStrange)
+          setMysteriousLinePoints(linesMysterious)
+          setAnxietyLinePoints(linesAnxiety)
+          setSadnessLinePoints(linesSadness)
+          setDreadLinePoints(linesDread)
+    }
+    
 
-    //
-    //Set state values
-    setAmusementLinePoints(linesAmusement)
-    setIntimateLinePoints(linesIntimate)
-    setElegantLinePoints(linesElegant)
-    setLivelyLinePoints(linesLively)
-    setSpiritualLinePoints(linesSpiritual)
-    setCalmnessLinePoints(linesCalmness)
-    setBoredomLinePoints(linesBoredom)
-    setStrangeLinePoints(linesStrange)
-    setMysteriousLinePoints(linesMysterious)
-    setAnxietyLinePoints(linesAnxiety)
-    setSadnessLinePoints(linesSadness)
-    setDreadLinePoints(linesDread)
+  },[data, layout])
 
-  },[data])
 
-  
 
   if(layout === "grid") return null
 

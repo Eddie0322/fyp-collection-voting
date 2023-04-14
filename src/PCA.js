@@ -27,16 +27,12 @@ import { SVD } from 'svd-js'
       return a.length ? [a.splice(0, n)].concat(partition(a, n)) : [];
     }  
 
-    //Create a matrix of a 12 x 1000 matrix
-    //let labelArray = []
-    function array(n) { return Array(n).fill(0); }
-    let PCAdata = array(12000)
-    let finalPCAdata = partition(PCAdata,1000)
+
 
     
-export const calculatePCA = (valueData, initialValueData) => {
+export const calculatePCA = (valueData, initialValueData, votedCollections) => {
 
-      finalPCAdata = partition(valueData, 1000);
+      let finalPCAdata = partition(valueData, 1000);
       //console.log(finalPCAdata);
       //console.log("Data for calculating label: ", initialValueData[0]);
       let labelArray = []
@@ -69,10 +65,10 @@ export const calculatePCA = (valueData, initialValueData) => {
         for (let j = 0; j < 1000; j++) {
           tmp2 = tmp2 + finalPCAdata[i][j]
         }
-        averages.push(tmp2/1000)
+        averages.push(tmp2/votedCollections.length)
       }
       
-      //console.log(averages)
+      console.log(averages)
       
       for (let i = 0; i < 12; i++) {
         for (let j = 0; j < 1000; j++) {
@@ -96,19 +92,19 @@ export const calculatePCA = (valueData, initialValueData) => {
                 for (let k = 0; k < 1000; k++) {
                       covar[i][j] = covar[i][j] + finalPCAdata[i][k]*finalPCAdata[j][k]
                 }
-          covar[i][j] = covar[i][j] / 1000   //Here can be -0
+          covar[i][j] = covar[i][j] / 999   //Here can be -0
           }
       }
-      console.table(covar)
+      //console.table(covar)
 
-      const { u, q } = SVD(covar, 'f')
+      const { u, q } = SVD(covar, "f")
       //console.table(u)
       //console.log(q)
       
       var storeQarr = []
       function findIndicesOfMax(inp, count) {
         var outp = [];
-        for (var i = 0; i < inp.length; i++) {
+        for (var i = 1; i < inp.length; i++) {
             outp.push(i); // add index to output array
             if (outp.length > count) {
                 outp.sort(function(a, b) { return inp[b] - inp[a]; }); // descending sort the output array
@@ -118,6 +114,8 @@ export const calculatePCA = (valueData, initialValueData) => {
         return outp;
     }
       storeQarr = findIndicesOfMax(q,3)
+
+      console.log(storeQarr)
 
       var projection = []
       var pc1 = 0, pc2 = 0, pc3 = 0
@@ -137,7 +135,7 @@ export const calculatePCA = (valueData, initialValueData) => {
           tmp4.push(pc3)
           projection.push(tmp4)
     }
-    //console.table(projection)
+
 
     return {
       projection: projection,

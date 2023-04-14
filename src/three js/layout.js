@@ -37,9 +37,34 @@ function gridLayout(data){
 //       }
 // }
 
+function getRandomPointArray(n, minDistance) {
+  const arr = [];
+  while (arr.length < n) {
+    const x = (Math.random() * 1.5) + 0;
+    const y = (Math.random() * 1.5) + 0;
+    const z = (Math.random() * 1.5) + 0;
+    const point = {x, y, z};
+    let isDuplicate = false;
+    for (const p of arr) {
+      const dist = Math.sqrt((p.x - point.x) ** 2 + (p.y - point.y) ** 2 + (p.z - point.z) ** 2);
+      if (dist < minDistance) {
+        isDuplicate = true;
+        break;
+      }
+    }
+    if (!isDuplicate) {
+      arr.push(point);
+    }
+  }
+  return arr;
+}
+
+
 function spiralLayout(data){
   let PCApos = [];
   let PCAposDup = [];
+  let PCAMod = [];
+  let minDistance = 0.7
   let theta = 0;
   for (let i = 0; i < data.length; ++i) {
       const datum = data[i];
@@ -66,19 +91,29 @@ function spiralLayout(data){
         PCApos[j].PCAz === PCApos[k].PCAz &&
         j !== k
       ){
-        PCAposDup.push(PCApos[j].id)
-        PCApos[j].PCAx = PCApos[j].PCAx + 1
-        PCApos[j].PCAy = PCApos[j].PCAy + 0.5
-        PCApos[j].PCAz = PCApos[j].PCAz + 0.5
+        if(!PCAposDup.includes(PCApos[j].id)){
+          PCAposDup.push(PCApos[j].id)
+        }
       }
     }
-    
-    data[PCApos[j].id].x = PCApos[j].PCAx * 0.35 + 10
-    data[PCApos[j].id].y = PCApos[j].PCAy * 0.35 + 5
-    data[PCApos[j].id].z = PCApos[j].PCAz * 0.35 + 5
 
   }
 
+  PCAMod = getRandomPointArray(PCAposDup.length, minDistance)
+  let indicator = 0;
+  for (let j = 0; j < PCApos.length; j++){
+    if(PCAposDup.includes(PCApos[j].id)){
+      data[PCApos[j].id].x = (PCApos[j].PCAx + PCAMod[indicator].x) * 0.3 + 4
+      data[PCApos[j].id].y = (PCApos[j].PCAy + PCAMod[indicator].y) * 0.3 + 4
+      data[PCApos[j].id].z = (PCApos[j].PCAz + PCAMod[indicator].z) * 0.3 + 4
+      indicator = indicator + 1
+    }else{
+      data[PCApos[j].id].x = PCApos[j].PCAx * 0.3 + 4
+      data[PCApos[j].id].y = PCApos[j].PCAy * 0.3 + 4
+      data[PCApos[j].id].z = PCApos[j].PCAz * 0.3 + 4
+    }
+     
+  }
   console.log(PCAposDup)
 
 }

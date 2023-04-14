@@ -329,7 +329,7 @@ const Scene = ({ data,
     return(
         <Canvas style={{ background: "black" }} camera={{ position: [25, 25, 25] }}>
 
-            {/* <primitive object={new THREE.AxesHelper(10)} /> */}
+            <primitive object={new THREE.AxesHelper(10)} />
 
             {/* <OrbitControls
                   target={[5 ,5 ,5 ]}

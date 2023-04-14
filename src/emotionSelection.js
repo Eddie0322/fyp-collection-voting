@@ -21,7 +21,7 @@ const options = [
 ];
 
 
-const EmotionSelection = ({id, setOpenModal, setOpenLoginModal}) => {
+const EmotionSelection = ({id, setOpenModal, setOpenLoginModal, setZoom}) => {
   const [selected, setSelected] = useState([]);
   const [insert_vote_poll, { data, loading, error }] = useMutation(INSERT_VOTES);
   const [mutate_user_vote, { data: vote_affected_rows, loading: vote_loading, error: vote_error }] = useMutation(MUTATION_VOTES);
@@ -113,6 +113,7 @@ const EmotionSelection = ({id, setOpenModal, setOpenLoginModal}) => {
 
             setTimeout(() => {
               setOpenModal(false)
+              setZoom(false)
             }, 1500)
 
         } else {
@@ -134,6 +135,7 @@ const EmotionSelection = ({id, setOpenModal, setOpenLoginModal}) => {
 
         setTimeout(() => {
           setOpenModal(false)
+          setZoom(false)
         }, 1500)
 
     } else {

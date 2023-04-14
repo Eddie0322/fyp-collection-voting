@@ -24,7 +24,8 @@ const Modal = ({
                 stackedBarLabel,
                 stackedBarValue,
                 stackedBarColors,
-                setOpenLoginModal }) => {
+                setOpenLoginModal,
+                setZoom }) => {
 
 
     const contentRef = React.useRef();
@@ -229,6 +230,7 @@ const Modal = ({
                                 id = {id}
                                 setOpenModal = {setOpenModal}
                                 setOpenLoginModal = {setOpenLoginModal}
+                                setZoom = {setZoom}
                             />
                        
 

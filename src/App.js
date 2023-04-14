@@ -120,6 +120,7 @@ function App() {
     //Get Collection Value from API
     const { error, loading: collection_value_loading, data:collection_value_data } = useSubscription(SUBSCRIPTION_COLLECTION_VALUE);
     let collectionValueArray = [];
+    let votedCollections = [];
     
     React.useEffect(() => {
       if(collection_value_data && total_count_data){
@@ -165,9 +166,17 @@ function App() {
               collectionValueArray.push(collection_value_data.collection_value_accumulated_results[i].dread)
             }           
 
+            for(let i = 0; i < 1000; i++){
+              if(total_count_data.total_count[i].count > 0){
+                votedCollections.push(total_count_data.total_count[i])
+              }
+            }
+
+            console.log(votedCollections)
+
         // setCollectionValue(collection_value_data.collection_value_accumulated_results);
         collectionValue.current = collectionValueArray;
-        var testArray = calculatePCA(collectionValue.current, collection_value_data.collection_value_accumulated_results);
+        var testArray = calculatePCA(collectionValue.current, collection_value_data.collection_value_accumulated_results, votedCollections);
         //console.log(testArray)
           
         setTimeout(() => {
@@ -377,6 +386,7 @@ function App() {
                 stackedBarValue = {stackedBarValue[selectedPoint.id]}
                 stackedBarColors = {stackedBarColors[selectedPoint.id]}
                 setOpenLoginModal = {setOpenLoginModal}
+                setZoom = {setZoom}
 
           >
             
