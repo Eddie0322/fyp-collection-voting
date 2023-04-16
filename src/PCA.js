@@ -68,7 +68,7 @@ export const calculatePCA = (valueData, initialValueData, votedCollections) => {
         averages.push(tmp2/votedCollections.length)
       }
       
-      console.log(averages)
+      //console.log(averages)
       
       for (let i = 0; i < 12; i++) {
         for (let j = 0; j < 1000; j++) {

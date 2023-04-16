@@ -141,7 +141,8 @@ const Lines = ({data, layout}) => {
     //map to lines components
     linesAmusement = resultAmusement.map((object, index) => {
       return(
-          <mesh raycast={raycast} onPointerOver={console.log} key={index}>
+         // <mesh raycast={raycast} onPointerOver={console.log} key={index}>
+          <mesh raycast={raycast} key={index}>
             <meshLineGeometry points={object} />
             <meshLineMaterial lineWidth={0.008} color="#ff3" />
           </mesh>  
@@ -150,7 +151,7 @@ const Lines = ({data, layout}) => {
 
     linesIntimate = resultIntimate.map((object, index) => {
         return(
-            <mesh raycast={raycast} onPointerOver={console.log} key={index}>
+            <mesh raycast={raycast} key={index}>
               <meshLineGeometry points={object} />
               <meshLineMaterial lineWidth={0.008} color="#05d" />
             </mesh>  
@@ -159,7 +160,7 @@ const Lines = ({data, layout}) => {
 
     linesElegant = resultElegant.map((object, index) => {
         return(
-            <mesh raycast={raycast} onPointerOver={console.log} key={index}>
+            <mesh raycast={raycast} key={index}>
               <meshLineGeometry points={object} />
               <meshLineMaterial lineWidth={0.008} color="#88f" />
             </mesh>  
@@ -168,7 +169,7 @@ const Lines = ({data, layout}) => {
 
     linesLively = resultLively.map((object, index) => {
         return(
-            <mesh raycast={raycast} onPointerOver={console.log} key={index}>
+            <mesh raycast={raycast} key={index}>
               <meshLineGeometry points={object} />
               <meshLineMaterial lineWidth={0.008} color="#e72" />
             </mesh>  
@@ -177,7 +178,7 @@ const Lines = ({data, layout}) => {
 
     linesSpiritual = resultSpiritual.map((object, index) => {
         return(
-            <mesh raycast={raycast} onPointerOver={console.log} key={index}>
+            <mesh raycast={raycast} key={index}>
               <meshLineGeometry points={object} />
               <meshLineMaterial lineWidth={0.008} color="#e33" />
             </mesh>  
@@ -186,7 +187,7 @@ const Lines = ({data, layout}) => {
 
     linesCalmness = resultCalmness.map((object, index) => {
       return(
-          <mesh raycast={raycast} onPointerOver={console.log} key={index}>
+          <mesh raycast={raycast} key={index}>
             <meshLineGeometry points={object} />
             <meshLineMaterial lineWidth={0.008} color="#c0f" />
           </mesh>  
@@ -195,7 +196,7 @@ const Lines = ({data, layout}) => {
 
     linesBoredom = resultBoredom.map((object, index) => {
         return(
-            <mesh raycast={raycast} onPointerOver={console.log} key={index}>
+            <mesh raycast={raycast} key={index}>
               <meshLineGeometry points={object} />
               <meshLineMaterial lineWidth={0.008} color="#3ff" />
             </mesh>  
@@ -204,7 +205,7 @@ const Lines = ({data, layout}) => {
 
       linesStrange = resultStrange.map((object, index) => {
         return(
-            <mesh raycast={raycast} onPointerOver={console.log} key={index}>
+            <mesh raycast={raycast} key={index}>
               <meshLineGeometry points={object} />
               <meshLineMaterial lineWidth={0.008} color="#0c0" />
             </mesh>  
@@ -213,7 +214,7 @@ const Lines = ({data, layout}) => {
 
       linesMysterious = resultMysterious.map((object, index) => {
         return(
-            <mesh raycast={raycast} onPointerOver={console.log} key={index}>
+            <mesh raycast={raycast} key={index}>
               <meshLineGeometry points={object} />
               <meshLineMaterial lineWidth={0.008} color="#663" />
             </mesh>  
@@ -222,7 +223,7 @@ const Lines = ({data, layout}) => {
 
       linesAnxiety = resultAnxiety.map((object, index) => {
         return(
-            <mesh raycast={raycast} onPointerOver={console.log} key={index}>
+            <mesh raycast={raycast} key={index}>
               <meshLineGeometry points={object} />
               <meshLineMaterial lineWidth={0.008} color="#777" />
             </mesh>  
@@ -231,7 +232,7 @@ const Lines = ({data, layout}) => {
 
       linesSadness = resultSadness.map((object, index) => {
         return(
-            <mesh raycast={raycast} onPointerOver={console.log} key={index}>
+            <mesh raycast={raycast} key={index}>
               <meshLineGeometry points={object} />
               <meshLineMaterial lineWidth={0.008} color="#933" />
             </mesh>  
@@ -240,7 +241,7 @@ const Lines = ({data, layout}) => {
 
       linesDread = resultDread.map((object, index) => {
         return(
-            <mesh raycast={raycast} onPointerOver={console.log} key={index}>
+            <mesh raycast={raycast} key={index}>
               <meshLineGeometry points={object} />
               <meshLineMaterial lineWidth={0.008} color="#ccc" />
             </mesh>  

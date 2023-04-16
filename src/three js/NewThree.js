@@ -62,25 +62,28 @@ function UpdateInstancedMeshMatrices({ mesh, data, selectedPoint, hoverPoint }) 
       tempObject.position.set(x, y, z);
 
 
-      if(data[i].totalVote !== 0){
+      if(data[i].totalVote !== 0) {
 
-          if (data[i] === selectedPoint) {
-            tempObject.scale.set(3.5, 3.5, 3.5);
-          } else if(data[i] === hoverPoint) {
-            tempObject.scale.set(2, 2, 2);
-          } else {
-            tempObject.scale.set(1, 1, 1);
-          }
+                  if (data[i] === selectedPoint) {
+                    tempObject.scale.set(3.5, 3.5, 3.5);
+                    //console.log(data[i])
+                  } else if(data[i] === hoverPoint) {
+                    tempObject.scale.set(2, 2, 2);
+                  } else {
+                    tempObject.scale.set(1, 1, 1);
+                  }
 
-      } else {
+            }
 
-          if (data[i] === selectedPoint) {
-            tempObject.scale.set(1, 1, 1);
-          } else if(data[i] === hoverPoint) {
-            tempObject.scale.set(0.6, 0.6, 0.6);
-          } else {
-            tempObject.scale.set(0.3, 0.3, 0.3);
-          }
+       else {
+
+                  if (data[i] === selectedPoint) {
+                    tempObject.scale.set(2.5, 2.5, 2.5);
+                  } else if(data[i] === hoverPoint) {
+                    tempObject.scale.set(0.6, 0.6, 0.6);
+                  } else {
+                    tempObject.scale.set(0.3, 0.3, 0.3);
+                  }
 
       }
 
@@ -92,6 +95,7 @@ function UpdateInstancedMeshMatrices({ mesh, data, selectedPoint, hoverPoint }) 
   
     //mesh.rotation.y = Math.PI / 2
     mesh.instanceMatrix.needsUpdate = true;
+
   
 }
 
@@ -115,24 +119,37 @@ const usePointColors = ({ data, selectedPoint, layout, hoverPoint }) => {
     useEffect(() => {
   
       if (layoutSelected.current === "spiral"){
-      for (let i = 0; i < data.length; ++i) {
-        if(data[i] === (selectedPoint)){
-          scratchColor.set(SELECTED_COLOR)
-        }else if(data[i].totalVote === 0){
-          scratchColor.set(DEFAULT_COLOR_ORIGIN)
-        }else{
-          scratchColor.set(DEFAULT_COLOR[data[i].Label])
-        }
-          //scratchColor.set(data[i] === (selectedPoint) ? SELECTED_COLOR : DEFAULT_COLOR[data[i].Label]);
-          //scratchColor.set(data[i] === hoverPoint ? SELECTED_COLOR : DEFAULT_COLOR[data[i].Label]);
-          scratchColor.toArray(colorArray, i*3);
-        }
-      }else{
-        for (let i = 0; i < data.length; ++i) {
-          scratchColor.set(data[i] === (selectedPoint) ? SELECTED_COLOR : DEFAULT_COLOR_ORIGIN);
-          //scratchColor.set(data[i] === hoverPoint ? SELECTED_COLOR : DEFAULT_COLOR_ORIGIN);
-          scratchColor.toArray(colorArray, i*3);
-        }    
+
+          for (let i = 0; i < data.length; ++i) {
+
+                    if (data[i] === (selectedPoint)) {
+
+                      scratchColor.set(SELECTED_COLOR)
+
+                    } else if (data[i].totalVote === 0) {
+
+                      scratchColor.set(DEFAULT_COLOR_ORIGIN)
+
+                    } else  {
+
+                      scratchColor.set(DEFAULT_COLOR[data[i].Label])
+
+                    }
+
+                  scratchColor.toArray(colorArray, i*3);
+              }
+                    
+            }
+
+       else {
+
+          for (let i = 0; i < data.length; ++i) {
+
+                    scratchColor.set(data[i] === (selectedPoint) ? SELECTED_COLOR : DEFAULT_COLOR_ORIGIN);
+                    scratchColor.toArray(colorArray, i*3);
+
+          }    
+
       }
       colorAttrib.current.needsUpdate = true;
     }, [data, selectedPoint, colorArray, layout, hoverPoint]);
@@ -143,7 +160,17 @@ const usePointColors = ({ data, selectedPoint, layout, hoverPoint }) => {
 
 
 //Mouse interaction
-const useMousePointInteraction = ({ data, selectedPoint, onSelectPoint, hoverPoint, onHoverPoint, setOpenModal, setOpenVote, zoomToView, setZoom }) => {
+const useMousePointInteraction = ({ 
+                          data, 
+                          selectedPoint, 
+                          onSelectPoint, 
+                          storeSelectedPoint,
+                          hoverPoint, 
+                          onHoverPoint, 
+                          setOpenModal, 
+                          setOpenVote, 
+                          zoomToView, 
+                          setZoom }) => {
      
       //Track mouse down position to skip click handlers on drags
       const mouseDownRef = useRef([0,0]);
@@ -156,6 +183,7 @@ const useMousePointInteraction = ({ data, selectedPoint, onSelectPoint, hoverPoi
       const handleClick = event => {
         //index is instanceId if we never change sort order
         const { instanceId, clientX, clientY } = event;  
+
         const downDistance = Math.sqrt(
           Math.pow(mouseDownRef.current[0] - clientX, 2) +
           Math.pow(mouseDownRef.current[1] - clientY, 2)
@@ -169,16 +197,18 @@ const useMousePointInteraction = ({ data, selectedPoint, onSelectPoint, hoverPoi
       
       const index = instanceId;
       const point = data[index];
-      console.log(point)
+      //console.log(point)
         
           // toggle the point
           if (point === selectedPoint){
-                onSelectPoint(null);
+                storeSelectedPoint.current = null;
+                onSelectPoint(null)
                 setOpenModal(false);
           } else {
+                storeSelectedPoint.current = index
+                onSelectPoint(point)
                 setZoom(true)
                 zoomToView(point)
-                onSelectPoint(point);
                 setTimeout(() => {
                   setOpenModal(true);
                   setOpenVote(false);
@@ -221,20 +251,21 @@ const useMousePointInteraction = ({ data, selectedPoint, onSelectPoint, hoverPoi
 const InstancedPoints = ({
         data, 
         layout, 
+        setLayout,
         selectedPoint, 
         onSelectPoint, 
         hoverPoint, 
         onHoverPoint, 
         setOpenModal, 
         setOpenVote, 
-        storeSelected,
         zoomToView,
-        setZoom
+        setZoom,
+        storeSelectedPoint,
+        updatePosLoading
       }) => {
 
     const numPoints = data.length;
     const meshRef = useRef();
-    //const storeSelected = useRef();
     
     // run the layout, animating on change   
     useAnimatedLayout({
@@ -244,16 +275,30 @@ const InstancedPoints = ({
         UpdateInstancedMeshMatrices({ mesh: meshRef.current, data, selectedPoint, hoverPoint });
       },
     });
-
-    // Select point after voting
-    useEffect(() => {
-      onSelectPoint(data[storeSelected.id])
-    }, [storeSelected]) 
   
     // update instance matrices only when needed
     useEffect(() => {
-      UpdateInstancedMeshMatrices({ mesh: meshRef.current, data, selectedPoint, hoverPoint });
-    }, [data, layout, selectedPoint, hoverPoint]);
+      
+        if(!updatePosLoading){
+
+                if(storeSelectedPoint.current !== null){
+                  const point = data[storeSelectedPoint.current];
+                  if(point !== selectedPoint){
+                          onSelectPoint(point);
+                          setZoom(true)
+                          zoomToView(point)
+                          setTimeout(() => {
+                              setOpenModal(true);
+                              setOpenVote(false);
+                        }, 1000)
+                  }
+                }
+                 
+                  UpdateInstancedMeshMatrices({ mesh: meshRef.current, data, selectedPoint, hoverPoint });
+
+        } 
+
+    }, [data, layout, selectedPoint, hoverPoint, updatePosLoading]);
 
     // Color settings
     const { colorAttrib, colorArray } = usePointColors({ data, selectedPoint, layout, hoverPoint });
@@ -263,6 +308,7 @@ const InstancedPoints = ({
       data,
       selectedPoint,
       onSelectPoint,
+      storeSelectedPoint,
       hoverPoint,
       onHoverPoint,
       setOpenModal,
@@ -300,6 +346,7 @@ const InstancedPoints = ({
 
 const Scene = ({ data, 
                  layout, 
+                 setLayout,
                  selectedPoint, 
                  onSelectPoint, 
                  hoverPoint, 
@@ -308,14 +355,17 @@ const Scene = ({ data,
                  setOpenVote, 
                  loading, 
                  collection_value_loading, 
-                 storeSelected,
                  zoom,
                  setZoom,
+                 focus,
+                 zoomToView,
+                 storeSelectedPoint,
+                 updatePosLoading
                  }) => {
     
     //console.log(data[0]);
     // const [zoom, setZoom] = useState(false)
-    const [focus, setFocus] = useState({})
+    // const [focus, setFocus] = useState({})
 
 
     if(loading || collection_value_loading){
@@ -358,9 +408,11 @@ const Scene = ({ data,
                     onHoverPoint = {onHoverPoint}
                     setOpenModal = {setOpenModal}
                     setOpenVote = {setOpenVote}
-                    storeSelected = {storeSelected}
-                    zoomToView = {(focusRef) => (setFocus(focusRef))}
+                    zoomToView = {zoomToView}
                     setZoom = {setZoom}
+                    storeSelectedPoint = {storeSelectedPoint}
+                    setLayout = {setLayout}
+                    updatePosLoading = {updatePosLoading}
                     // zoomToView={(focusRef) => (setZoom(!zoom), setFocus(focusRef))}
                 />
 

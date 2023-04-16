@@ -21,9 +21,9 @@ const options = [
 ];
 
 
-const EmotionSelection = ({id, setOpenModal, setOpenLoginModal, setZoom}) => {
+const EmotionSelection = ({id, setOpenModal, setOpenLoginModal, setZoom, storeSelectedPoint, setUpdatePosLoading}) => {
   const [selected, setSelected] = useState([]);
-  const [insert_vote_poll, { data, loading, error }] = useMutation(INSERT_VOTES);
+  const [insert_vote_poll, { data: insert_vote_data, loading, error }] = useMutation(INSERT_VOTES);
   const [mutate_user_vote, { data: vote_affected_rows, loading: vote_loading, error: vote_error }] = useMutation(MUTATION_VOTES);
   const { user, userVotes, user_votes_data } = UserAuth()
   const [ voteSelection, setVoteSelection ] = useState([])
@@ -79,7 +79,7 @@ const EmotionSelection = ({id, setOpenModal, setOpenLoginModal, setZoom}) => {
   }
 
   function buttonDisabled(){
-    if (selected.length !== 3 || data || vote_affected_rows){
+    if (selected.length !== 3 || insert_vote_data || vote_affected_rows){
       return(
         [true, "btn3"]
       )
@@ -91,7 +91,7 @@ const EmotionSelection = ({id, setOpenModal, setOpenLoginModal, setZoom}) => {
   }
 
   function submitButtonText(){
-    if (data){
+    if (insert_vote_data){
       return "Voted"
     }else{
       return "Submit"
@@ -111,9 +111,12 @@ const EmotionSelection = ({id, setOpenModal, setOpenLoginModal, setZoom}) => {
               },
             });
 
+            storeSelectedPoint.current = selected[0].collectionId
+
             setTimeout(() => {
               setOpenModal(false)
               setZoom(false)
+              setUpdatePosLoading(true)
             }, 1500)
 
         } else {
@@ -133,9 +136,12 @@ const EmotionSelection = ({id, setOpenModal, setOpenLoginModal, setZoom}) => {
           },
         });
 
+        storeSelectedPoint.current = selected[0].collectionId
+
         setTimeout(() => {
           setOpenModal(false)
           setZoom(false)
+          setUpdatePosLoading(true)
         }, 1500)
 
     } else {

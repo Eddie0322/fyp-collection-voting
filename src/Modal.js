@@ -25,7 +25,9 @@ const Modal = ({
                 stackedBarValue,
                 stackedBarColors,
                 setOpenLoginModal,
-                setZoom }) => {
+                setZoom,
+                storeSelectedPoint,
+                setUpdatePosLoading }) => {
 
 
     const contentRef = React.useRef();
@@ -231,6 +233,8 @@ const Modal = ({
                                 setOpenModal = {setOpenModal}
                                 setOpenLoginModal = {setOpenLoginModal}
                                 setZoom = {setZoom}
+                                storeSelectedPoint = {storeSelectedPoint}
+                                setUpdatePosLoading = {setUpdatePosLoading}
                             />
                        
 

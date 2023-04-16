@@ -30,24 +30,28 @@ function App() {
   const [loading, setLoading] = React.useState(true);
   //const [collectionValue, setCollectionValue] = React.useState([])
   const collectionValue = React.useRef();
-  const storeSelectedPoint = React.useRef(data[0])
   const [stackedBarLabel, setStackedBarLabel] = React.useState()
   const [stackedBarValue, setStackedBarValue] = React.useState()
   const [stackedBarColors, setStackedBarColors] = React.useState()
 
   const { user, logOut, database_loading } = UserAuth()
   const [openLoginModal, setOpenLoginModal] = React.useState(false)
-  const [ zoom, setZoom ] = React.useState(false)
+  const [zoom, setZoom] = React.useState(false)
+  const [focus, setFocus] = React.useState({})
+
+  const storeSelectedPoint = React.useRef(null)
+  const [updatePosLoading, setUpdatePosLoading] = React.useState(false)
 
   //const stackedBarLabel = React.useRef()
 
   //console.log("Modal open?  ", openModal);
-  // console.log(storeSelectedPoint.current);
-  // console.log(selectedPoint)
+  //console.log(selectedPoint)
   //console.log("Loading? ", loading);
   //console.log("AppJS Data: ", data)
   //console.log(collections);
   //console.log(loginUser)
+  //console.log(updatePosLoading)
+  console.log(storeSelectedPoint.current)
 
 
     React.useEffect(() => {
@@ -125,9 +129,15 @@ function App() {
     React.useEffect(() => {
       if(collection_value_data && total_count_data){
 
-            if(selectedPoint){
-              storeSelectedPoint.current = selectedPoint;
-            }
+            // if(selectedPoint){
+            //     setSelectedPoint(selectedPoint)
+            //     setZoom(true); 
+            //     setFocus(selectedPoint);
+            //     setTimeout(() => {
+            //     setOpenModal(true);
+            //     setOpenVote(false);
+            //     }, 2000)
+            // }
 
             for(let i=0; i<1000; i++){
               collectionValueArray.push(collection_value_data.collection_value_accumulated_results[i].amusement)
@@ -172,7 +182,7 @@ function App() {
               }
             }
 
-            console.log(votedCollections)
+            //console.log(votedCollections)
 
         // setCollectionValue(collection_value_data.collection_value_accumulated_results);
         collectionValue.current = collectionValueArray;
@@ -190,7 +200,7 @@ function App() {
                 totalVote: total_count_data.total_count[index].count
               }
             )))
-
+            setUpdatePosLoading(false)
         },1000)
 
       }
@@ -340,6 +350,7 @@ function App() {
                   //data = {data.current} 
                   data = {data} 
                   layout = {layout} 
+                  setLayout = {setLayout}
                   selectedPoint = {selectedPoint} 
                   onSelectPoint = {setSelectedPoint}
                   setOpenModal = {setOpenModal}
@@ -348,9 +359,14 @@ function App() {
                   onHoverPoint = {setHoverPoint}
                   loading = {loading}
                   collection_value_loading = {collection_value_loading}
-                  storeSelected = {storeSelectedPoint.current}
                   zoom = {zoom}
                   setZoom = {setZoom}
+                  focus = {focus}
+                  setFocus = {setFocus}
+                  zoomToView = {(focusRef) => (setFocus(focusRef))}
+                  storeSelectedPoint = {storeSelectedPoint}
+                  updatePosLoading = {updatePosLoading}
+
                   />
 
           </div> 
@@ -387,7 +403,8 @@ function App() {
                 stackedBarColors = {stackedBarColors[selectedPoint.id]}
                 setOpenLoginModal = {setOpenLoginModal}
                 setZoom = {setZoom}
-
+                storeSelectedPoint = {storeSelectedPoint}
+                setUpdatePosLoading = {setUpdatePosLoading}
           >
             
           </Modal>
