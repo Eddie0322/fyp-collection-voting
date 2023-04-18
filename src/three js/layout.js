@@ -77,9 +77,9 @@ function spiralLayout(data){
         const y = 1 - (i / (data.length - 1) * 2)
         const radius = Math.sqrt(1 - y * y) * 1;
         theta = phi * i;
-        datum.y = y * 2 + 5;
-        datum.x = radius * Math.cos(theta) * 2 + 5;
-        datum.z = radius * Math.sin(theta) * 2 + 5;
+        datum.y = y * 1.5 ;
+        datum.x = radius * Math.cos(theta) * 1.5 ;
+        datum.z = radius * Math.sin(theta) * 1.5 ;
     }
   }
   

@@ -41,6 +41,7 @@ function App() {
 
   const storeSelectedPoint = React.useRef(null)
   const [updatePosLoading, setUpdatePosLoading] = React.useState(false)
+  const [isVoteByUser, setIsVoteByUser] = React.useState(false)
 
   //const stackedBarLabel = React.useRef()
 
@@ -366,6 +367,8 @@ function App() {
                   zoomToView = {(focusRef) => (setFocus(focusRef))}
                   storeSelectedPoint = {storeSelectedPoint}
                   updatePosLoading = {updatePosLoading}
+                  setIsVoteByUser = {setIsVoteByUser}
+                  isVoteByUser = {isVoteByUser}
 
                   />
 
@@ -405,6 +408,7 @@ function App() {
                 setZoom = {setZoom}
                 storeSelectedPoint = {storeSelectedPoint}
                 setUpdatePosLoading = {setUpdatePosLoading}
+                setIsVoteByUser = {setIsVoteByUser}
           >
             
           </Modal>

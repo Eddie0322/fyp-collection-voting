@@ -27,7 +27,8 @@ const Modal = ({
                 setOpenLoginModal,
                 setZoom,
                 storeSelectedPoint,
-                setUpdatePosLoading }) => {
+                setUpdatePosLoading,
+                setIsVoteByUser }) => {
 
 
     const contentRef = React.useRef();
@@ -235,6 +236,7 @@ const Modal = ({
                                 setZoom = {setZoom}
                                 storeSelectedPoint = {storeSelectedPoint}
                                 setUpdatePosLoading = {setUpdatePosLoading}
+                                setIsVoteByUser = {setIsVoteByUser}
                             />
                        
 

@@ -259,9 +259,12 @@ const InstancedPoints = ({
         setOpenModal, 
         setOpenVote, 
         zoomToView,
+        zoom,
         setZoom,
         storeSelectedPoint,
-        updatePosLoading
+        updatePosLoading,
+        setIsVoteByUser,
+        isVoteByUser
       }) => {
 
     const numPoints = data.length;
@@ -281,7 +284,8 @@ const InstancedPoints = ({
       
         if(!updatePosLoading){
 
-                if(storeSelectedPoint.current !== null){
+                if(storeSelectedPoint.current !== null && isVoteByUser){
+
                   const point = data[storeSelectedPoint.current];
                   if(point !== selectedPoint){
                           onSelectPoint(point);
@@ -291,12 +295,29 @@ const InstancedPoints = ({
                               setOpenModal(true);
                               setOpenVote(false);
                         }, 1000)
+                          setIsVoteByUser(false);
                   }
+
+                } else if (storeSelectedPoint.current !== null && !isVoteByUser && !zoom){
+
+                        const point = data[storeSelectedPoint.current];
+                        if(point !== selectedPoint){
+                                onSelectPoint(point);
+                        }
+
+                } else if (storeSelectedPoint.current !== null && !isVoteByUser && zoom){
+
+                        const point = data[storeSelectedPoint.current];
+                        if(point !== selectedPoint){
+                                onSelectPoint(point);
+                                setZoom(true)
+                                zoomToView(point)
+                        }
                 }
                  
                   UpdateInstancedMeshMatrices({ mesh: meshRef.current, data, selectedPoint, hoverPoint });
 
-        } 
+      }
 
     }, [data, layout, selectedPoint, hoverPoint, updatePosLoading]);
 
@@ -360,7 +381,9 @@ const Scene = ({ data,
                  focus,
                  zoomToView,
                  storeSelectedPoint,
-                 updatePosLoading
+                 updatePosLoading,
+                 setIsVoteByUser,
+                 isVoteByUser
                  }) => {
     
     //console.log(data[0]);
@@ -410,9 +433,12 @@ const Scene = ({ data,
                     setOpenVote = {setOpenVote}
                     zoomToView = {zoomToView}
                     setZoom = {setZoom}
+                    zoom = {zoom}
                     storeSelectedPoint = {storeSelectedPoint}
                     setLayout = {setLayout}
                     updatePosLoading = {updatePosLoading}
+                    setIsVoteByUser = {setIsVoteByUser}
+                    isVoteByUser = {isVoteByUser} 
                     // zoomToView={(focusRef) => (setZoom(!zoom), setFocus(focusRef))}
                 />
 
