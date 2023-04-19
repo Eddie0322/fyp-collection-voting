@@ -2,7 +2,7 @@ import { raycast, MeshLineGeometry, MeshLineMaterial } from 'meshline'
 import { extend } from "@react-three/fiber";
 import * as THREE from "three";
 import { useEffect, useState } from "react";
-
+import { motion } from "framer-motion-3d"
 
 
 extend({ MeshLineGeometry, MeshLineMaterial })
@@ -31,6 +31,19 @@ function storeResult(arr, result){
 }
 
 
+let lineWidth = 0.004
+
+const variants = {
+  hidden: { opacity: 0 },
+  visible: { 
+    opacity: 0.5, 
+    transition: {
+        delay: 0.5,
+        duration: 1
+} },
+}
+
+
 const Lines = ({data, layout}) => {
 
   //state of emotions line points
@@ -46,6 +59,7 @@ const Lines = ({data, layout}) => {
   const [anxietyLinePoints, setAnxietyLinePoints] = useState([]);
   const [sadnessLinePoints, setSadnessLinePoints] = useState([]);
   const [dreadLinePoints, setDreadLinePoints] = useState([]);
+
 
   useEffect(() => {
     
@@ -78,7 +92,6 @@ const Lines = ({data, layout}) => {
     let resultDread = [];
 
 
-    if(layout === "spiral"){
       for (let i = 0; i < data.length; ++i) {
         if ( data[i].totalVote !== 0 && data[i].Label === 0 ) {
           arrAmusement.push(new THREE.Vector3(data[i].x, data[i].y, data[i].z))  
@@ -144,7 +157,7 @@ const Lines = ({data, layout}) => {
          // <mesh raycast={raycast} onPointerOver={console.log} key={index}>
           <mesh raycast={raycast} key={index}>
             <meshLineGeometry points={object} />
-            <meshLineMaterial lineWidth={0.008} color="#ff3" />
+            <motion.meshLineMaterial initial="hidden" animate="visible" variants={variants} lineWidth={lineWidth} color="#ff3" />
           </mesh>  
       )
     })
@@ -153,7 +166,7 @@ const Lines = ({data, layout}) => {
         return(
             <mesh raycast={raycast} key={index}>
               <meshLineGeometry points={object} />
-              <meshLineMaterial lineWidth={0.008} color="#05d" />
+              <motion.meshLineMaterial initial="hidden" animate="visible" variants={variants} lineWidth={lineWidth} color="#f88" />
             </mesh>  
         )
       })
@@ -162,7 +175,7 @@ const Lines = ({data, layout}) => {
         return(
             <mesh raycast={raycast} key={index}>
               <meshLineGeometry points={object} />
-              <meshLineMaterial lineWidth={0.008} color="#88f" />
+              <motion.meshLineMaterial initial="hidden" animate="visible" variants={variants} lineWidth={lineWidth} color="#88f" />
             </mesh>  
         )
     })     
@@ -171,7 +184,7 @@ const Lines = ({data, layout}) => {
         return(
             <mesh raycast={raycast} key={index}>
               <meshLineGeometry points={object} />
-              <meshLineMaterial lineWidth={0.008} color="#e72" />
+              <motion.meshLineMaterial initial="hidden" animate="visible" variants={variants} lineWidth={lineWidth} color="#e72" />
             </mesh>  
         )
     })   
@@ -180,7 +193,7 @@ const Lines = ({data, layout}) => {
         return(
             <mesh raycast={raycast} key={index}>
               <meshLineGeometry points={object} />
-              <meshLineMaterial lineWidth={0.008} color="#e33" />
+              <motion.meshLineMaterial initial="hidden" animate="visible" variants={variants} lineWidth={lineWidth} color="#4d2" />
             </mesh>  
         )
     })   
@@ -189,7 +202,7 @@ const Lines = ({data, layout}) => {
       return(
           <mesh raycast={raycast} key={index}>
             <meshLineGeometry points={object} />
-            <meshLineMaterial lineWidth={0.008} color="#c0f" />
+            <motion.meshLineMaterial initial="hidden" animate="visible" variants={variants} lineWidth={lineWidth} color="#3ff" />
           </mesh>  
       )
     })
@@ -198,7 +211,7 @@ const Lines = ({data, layout}) => {
         return(
             <mesh raycast={raycast} key={index}>
               <meshLineGeometry points={object} />
-              <meshLineMaterial lineWidth={0.008} color="#3ff" />
+              <motion.meshLineMaterial initial="hidden" animate="visible" variants={variants} lineWidth={lineWidth} color="#663" />
             </mesh>  
         )
       })
@@ -207,7 +220,7 @@ const Lines = ({data, layout}) => {
         return(
             <mesh raycast={raycast} key={index}>
               <meshLineGeometry points={object} />
-              <meshLineMaterial lineWidth={0.008} color="#0c0" />
+              <motion.meshLineMaterial initial="hidden" animate="visible" variants={variants} lineWidth={lineWidth} color="#999" />
             </mesh>  
         )
       })
@@ -216,7 +229,7 @@ const Lines = ({data, layout}) => {
         return(
             <mesh raycast={raycast} key={index}>
               <meshLineGeometry points={object} />
-              <meshLineMaterial lineWidth={0.008} color="#663" />
+              <motion.meshLineMaterial initial="hidden" animate="visible" variants={variants} lineWidth={lineWidth} color="#c0f" />
             </mesh>  
         )
       })
@@ -225,7 +238,7 @@ const Lines = ({data, layout}) => {
         return(
             <mesh raycast={raycast} key={index}>
               <meshLineGeometry points={object} />
-              <meshLineMaterial lineWidth={0.008} color="#777" />
+              <motion.meshLineMaterial initial="hidden" animate="visible" variants={variants} lineWidth={lineWidth} color="#40d" />
             </mesh>  
         )
       })
@@ -234,7 +247,7 @@ const Lines = ({data, layout}) => {
         return(
             <mesh raycast={raycast} key={index}>
               <meshLineGeometry points={object} />
-              <meshLineMaterial lineWidth={0.008} color="#933" />
+              <motion.meshLineMaterial initial="hidden" animate="visible" variants={variants} lineWidth={lineWidth} color="#060" />
             </mesh>  
         )
       })
@@ -243,7 +256,7 @@ const Lines = ({data, layout}) => {
         return(
             <mesh raycast={raycast} key={index}>
               <meshLineGeometry points={object} />
-              <meshLineMaterial lineWidth={0.008} color="#ccc" />
+              <motion.meshLineMaterial initial="hidden" animate="visible" variants={variants} lineWidth={lineWidth} color="#c24" />
             </mesh>  
         )
       })
@@ -262,7 +275,9 @@ const Lines = ({data, layout}) => {
           setAnxietyLinePoints(linesAnxiety)
           setSadnessLinePoints(linesSadness)
           setDreadLinePoints(linesDread)
-    }
+
+
+    
     
 
   },[data, layout])

@@ -7,6 +7,7 @@ import { Object3D } from "three";
 import {  useAnimatedLayout } from "./layout";
 import CameraControls from 'camera-controls'
 import Lines from "./Lines";
+import ConvexHull from "./ConvexHull";
 
 
 CameraControls.install({ THREE })
@@ -49,7 +50,6 @@ function Controls({ zoom, focus, pos = new THREE.Vector3(), look = new THREE.Vec
     return controls.update(delta)
   })
 }
-
 
 
 //update
@@ -103,7 +103,7 @@ function UpdateInstancedMeshMatrices({ mesh, data, selectedPoint, hoverPoint }) 
 //Color settings
 const SELECTED_COLOR = '#6c6';
 const DEFAULT_COLOR_ORIGIN = '#fff'
-const DEFAULT_COLOR = ["#ff3", "#05d", "#88f", "#e72", "#e33", "#c0f", "#3ff", "#0c0", "#663", "#777", "#933", "#ccc"]
+const DEFAULT_COLOR = ["#ff3", "#f88", "#88f", "#e72", "#4d2", "#3ff", "#663", "#999", "#c0f", "#40d", "#060", "#c24"]
 
 //re-use for instance computations
 const scratchColor = new THREE.Color();
@@ -153,8 +153,7 @@ const usePointColors = ({ data, selectedPoint, layout, hoverPoint }) => {
       }
       colorAttrib.current.needsUpdate = true;
     }, [data, selectedPoint, colorArray, layout, hoverPoint]);
-
-    //console.log(colorArray)
+   
     return {colorAttrib, colorArray};
 };
 
@@ -251,7 +250,6 @@ const useMousePointInteraction = ({
 const InstancedPoints = ({
         data, 
         layout, 
-        setLayout,
         selectedPoint, 
         onSelectPoint, 
         hoverPoint, 
@@ -319,7 +317,7 @@ const InstancedPoints = ({
 
       }
 
-    }, [data, layout, selectedPoint, hoverPoint, updatePosLoading]);
+    }, [data, selectedPoint, hoverPoint, updatePosLoading]);
 
     // Color settings
     const { colorAttrib, colorArray } = usePointColors({ data, selectedPoint, layout, hoverPoint });
@@ -443,6 +441,11 @@ const Scene = ({ data,
                 />
 
                 <Lines 
+                    data = {data}
+                    layout= {layout}
+                />
+                
+                <ConvexHull
                     data = {data}
                     layout= {layout}
                 />

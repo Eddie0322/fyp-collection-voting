@@ -215,7 +215,7 @@ function App() {
       let percentageColorsArray = [];
       //let finalLabelArray = [];
       let emoLabel = ["amusement", "intimate", "elegant", "lively", "spiritual", "calmness", "boredom", "strange", "mysterious", "anxiety", "sadness", "dread"]
-      let colorsArray = ["#ff3", "#05d", "#88f", "#e72", "#e33", "#c0f", "#3ff", "#0c0", "#663", "#777", "#933", "#ccc"]
+      let colorsArray = ["#ff3", "#f88", "#88f", "#e72", "#4d2", "#3ff", "#663", "#999", "#c0f", "#40d", "#060", "#c24"]
       React.useEffect(() => {
           if(collection_value_data){
             for(let i=0; i<1000; i++){
