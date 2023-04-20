@@ -65,7 +65,7 @@ function UpdateInstancedMeshMatrices({ mesh, data, selectedPoint, hoverPoint }) 
       if(data[i].totalVote !== 0) {
 
                   if (data[i] === selectedPoint) {
-                    tempObject.scale.set(3.5, 3.5, 3.5);
+                    tempObject.scale.set(2.5, 2.5, 2.5);
                     //console.log(data[i])
                   } else if(data[i] === hoverPoint) {
                     tempObject.scale.set(2, 2, 2);
@@ -109,6 +109,7 @@ const DEFAULT_COLOR = ["#ff3", "#f88", "#88f", "#e72", "#4d2", "#3ff", "#663", "
 const scratchColor = new THREE.Color();
 
 const usePointColors = ({ data, selectedPoint, layout, hoverPoint }) => {
+
     const numPoints = data.length;
     const layoutSelected = useRef();
     const colorAttrib = useRef();
@@ -347,7 +348,7 @@ const InstancedPoints = ({
           onPointerOver={handlePointerOver}
           onPointerOut={handlePointerOut}
           >
-          <sphereGeometry args={[0.1, 32, 32]}>
+          <sphereGeometry args={[0.12, 32, 32]}>
             <instancedBufferAttribute
               ref={colorAttrib}
               attach="attributes-color"
@@ -400,7 +401,7 @@ const Scene = ({ data,
     return(
         <Canvas style={{ background: "black" }} camera={{ position: [25, 25, 25] }}>
 
-            <primitive object={new THREE.AxesHelper(10)} />
+            {/* <primitive object={new THREE.AxesHelper(10)} /> */}
 
             {/* <OrbitControls
                   target={[5 ,5 ,5 ]}

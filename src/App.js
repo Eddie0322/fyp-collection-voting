@@ -52,7 +52,7 @@ function App() {
   //console.log(collections);
   //console.log(loginUser)
   //console.log(updatePosLoading)
-  console.log(storeSelectedPoint.current)
+  //console.log(storeSelectedPoint.current)
 
 
     React.useEffect(() => {

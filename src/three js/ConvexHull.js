@@ -25,7 +25,7 @@ const ConvexHull = ({data, layout}) => {
       visible: { 
         opacity: 0.2, 
         transition: {
-            delay: 0.5,
+            delay: 0.8,
             duration: 1.5
       } },
     }

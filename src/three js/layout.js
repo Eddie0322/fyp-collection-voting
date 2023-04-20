@@ -1,5 +1,5 @@
 import { useRef, useEffect } from "react";
-import { useSpring } from 'react-spring';
+import { useSpring, config } from 'react-spring';
 
 
 function gridLayout(data){
@@ -61,11 +61,13 @@ function getRandomPointArray(n, minDistance) {
 
 
 function spiralLayout(data){
+  let unvotedData = []
   let PCApos = [];
   let PCAposDup = [];
   let PCAMod = [];
   let minDistance = 0.7
   let theta = 0;
+
   for (let i = 0; i < data.length; ++i) {
       const datum = data[i];
 
@@ -73,14 +75,18 @@ function spiralLayout(data){
       PCApos.push(datum)
 
     } else {
-        const phi = Math.PI * (Math.sqrt(5) - 1)
-        const y = 1 - (i / (data.length - 1) * 2)
-        const radius = Math.sqrt(1 - y * y) * 1;
-        theta = phi * i;
-        datum.y = y * 1.5 ;
-        datum.x = radius * Math.cos(theta) * 1.5 ;
-        datum.z = radius * Math.sin(theta) * 1.5 ;
+       unvotedData.push(datum)
     }
+  }
+
+  for(let i = 0; i < unvotedData.length; i++ ){
+    const phi = Math.PI * (Math.sqrt(5) - 1)
+    const y = 1 - (i / (unvotedData.length - 1) * 2)
+    const radius = Math.sqrt(1 - y * y) * 1;
+    theta = phi * i;
+    data[unvotedData[i].id].y = y * 1.5 ;
+    data[unvotedData[i].id].x = radius * Math.cos(theta) * 1.5 ;
+    data[unvotedData[i].id].z = radius * Math.sin(theta) * 1.5 ;
   }
   
   for (let j = 0; j < PCApos.length; j++){
@@ -174,6 +180,7 @@ export function useAnimatedLayout({ data, layout, onFrame }) {
   // do the actual animation when layout changes
   const prevLayout = useRef(layout);
   useSpring({
+    config: { tension: 80, friction: 16 },
     animationProgress: 1,
     from: { animationProgress: 0 },
     reset: layout !== prevLayout.current,
