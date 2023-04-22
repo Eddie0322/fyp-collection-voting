@@ -3,14 +3,12 @@ import './App.css';
 import Scene from './three js/NewThree';
 import Modal from './Modal';
 import { calculatePCA } from './PCA';
-
 import { useSubscription } from '@apollo/client';
 import { SUBSCRIPTION_COLLECTION_VALUE, SUBSCRIPTION_TOTAL_COUNT } from './Queries';
-
-
-//Handle user loggin
 import LoginModal from './loginModal';
 import { UserAuth } from './AuthContext';
+import ImagePreview from './ImagePreview';
+import SideBar from './SideBar';
 
 let initialData = new Array(1000).fill(0).map((d, id) => ({ id, PCAx: 0, PCAy: 0, PCAz: 0, Label: -1, totalVote: 0 }));
 let listObjects;
@@ -42,6 +40,9 @@ function App() {
   const storeSelectedPoint = React.useRef(null)
   const [updatePosLoading, setUpdatePosLoading] = React.useState(false)
   const [isVoteByUser, setIsVoteByUser] = React.useState(false)
+
+  const [optionToShow, setOptionToShow] = React.useState(undefined)
+  const [showAllMesh, setShowAllMesh] = React.useState(true)
 
   //const stackedBarLabel = React.useRef()
 
@@ -275,29 +276,22 @@ function App() {
         <div className="App"> 
           <div className='Scene'>
 
+
               <div className='controls'>
                   <br></br>
-                  <button onClick={() => setLayout('grid')}>Cube</button>
-                  <button onClick={() => setLayout('spiral')}>PCA</button>
-                  <br></br>
-                  {selectedPoint && 
-                  (
-                  <div className="selected-point">
-                        <div>You selected cube <strong>{selectedPoint.id}</strong></div>
-                        <br></br>
-                        {/* <div>{listObjects[selectedPoint.id]}</div> 
-                        <div><h3 style={{color:'#4adede'}}><strong>Emotion Label {selectedPoint.Label}</strong></h3></div>  */}
+                  <button onClick={() => {setLayout('grid'); setShowAllMesh(true)}}>Cube</button>
+                  <button onClick={() => {setLayout('spiral')}}>PCA</button>
+              </div>
 
-                        <br></br>
-                  </div>    
-                  )}
+
+              <div className='controlsUser'>
 
                   {/*Display the login info here first */}
                   <div>
                      
                             {user?(
                               <>
-                              <hr></hr>
+                              <br></br>
                               <div style={{fontSize: "14px", color: "rgba(255, 229, 180)", fontFamily: "Arial, Helvetica, sans-serif"}}>{user.displayName}</div>
                               <br></br>
                               <div style={{fontSize: "14px", color: "rgba(255, 229, 180)", fontFamily: "Arial, Helvetica, sans-serif"}}>{user.email}</div>
@@ -306,7 +300,10 @@ function App() {
                                 {database_loading?(
                                     <></>
                                 ):(
+                                  <>
+                                    <br></br>
                                     <button onClick={handleSignOut} className="btn"><p>LOGOUT</p></button>
+                                    </>
                                 )}
                                    
                                 </>
@@ -314,37 +311,45 @@ function App() {
                             ):(
                               <>
                               {database_loading?(
+                                <>
+                                 <br></br>
                                  <div style={{fontSize: "14px", color: "rgba(255, 229, 180)", fontFamily: "Arial, Helvetica, sans-serif"}}>Loading...</div>
+                                </>
                               ):(
+                                <>
+                                <br></br>
                                  <button onClick={() => setOpenLoginModal(true)} className="btn"><p>LOGIN</p></button>
+                                 </>
                               )}
                              </>
                             )}
                           
                   </div>
-
               </div>
 
+              <SideBar
+                    optionToShow = {optionToShow}
+                    setOptionToShow = {setOptionToShow}
+                    showAllMesh = {showAllMesh}
+                    setShowAllMesh = {setShowAllMesh}
+              />
               
-                <LoginModal
+              <LoginModal
                     openLoginModal={openLoginModal}
                     closeLoginModal={() => setOpenLoginModal(false)}
-                    >
-                </LoginModal>
+              />
+             
 
               <div className='threeBtnGroup'>
                 <button onClick={() => setZoom(false)}>Zoom Out</button>
               </div>
              
-
-
-              <div className="hover-tag">
-                    {hoverPoint && (
-                      <div>
-                        <strong>{collections[hoverPoint.id].title}</strong>
-                      </div>
-                    )}
-                  </div>
+              
+              <ImagePreview 
+                  hoverPoint={hoverPoint}
+                  collections={collections}
+                  objectsImageUrl={objectsImageUrl}
+              />
 
 
               <Scene 
@@ -369,6 +374,9 @@ function App() {
                   updatePosLoading = {updatePosLoading}
                   setIsVoteByUser = {setIsVoteByUser}
                   isVoteByUser = {isVoteByUser}
+
+                  optionToShow = {optionToShow}
+                  showAllMesh = {showAllMesh}
 
                   />
 

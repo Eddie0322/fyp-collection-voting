@@ -33,18 +33,28 @@ function storeResult(arr, result){
 
 let lineWidth = 0.004
 
-const variants = {
+const varShow = {
   hidden: { opacity: 0 },
   visible: { 
     opacity: 0.5, 
     transition: {
         delay: 0.5,
         duration: 1
-} },
+  } },
+}
+
+const varHide = {
+  visible: { opacity: 0.5 },
+  hidden: { 
+    opacity: 0, 
+    transition: {
+        delay: 0.5,
+        duration: 1
+  } },
 }
 
 
-const Lines = ({data, layout}) => {
+const Lines = ({data, layout, optionToShow, showAllMesh}) => {
 
   //state of emotions line points
   const [amusementLinePoints, setAmusementLinePoints] = useState([]);
@@ -154,110 +164,409 @@ const Lines = ({data, layout}) => {
     //map to lines components
     linesAmusement = resultAmusement.map((object, index) => {
       return(
-         // <mesh raycast={raycast} onPointerOver={console.log} key={index}>
-          <mesh raycast={raycast} key={index}>
-            <meshLineGeometry points={object} />
-            <motion.meshLineMaterial initial="hidden" animate="visible" variants={variants} lineWidth={lineWidth} color="#ff3" />
-          </mesh>  
+        // <mesh raycast={raycast} onPointerOver={console.log} key={index}>
+        <>
+        {showAllMesh ? (
+            <>
+            <mesh raycast={raycast} key={index}>
+                          <meshLineGeometry points={object} />
+                          <motion.meshLineMaterial 
+                                initial={'hidden'} 
+                                animate={'visible'}
+                                variants={varShow}
+                                lineWidth={lineWidth} 
+                                color="#ff3" />
+              </mesh>  
+            </>
+        ):(
+            <>
+              <mesh raycast={raycast} key={index}>
+                          <meshLineGeometry points={object} />
+                          <motion.meshLineMaterial 
+                                initial={optionToShow === 1 ? 'hidden' : 'visible'} 
+                                animate={optionToShow === 1 ? 'visible' : 'hidden'}
+                                variants={optionToShow === 1 ? varShow : varHide}
+                                lineWidth={lineWidth} 
+                                color="#ff3" />
+              </mesh>  
+            </> 
+        )
+        }
+       </> 
       )
     })
 
     linesIntimate = resultIntimate.map((object, index) => {
         return(
-            <mesh raycast={raycast} key={index}>
-              <meshLineGeometry points={object} />
-              <motion.meshLineMaterial initial="hidden" animate="visible" variants={variants} lineWidth={lineWidth} color="#f88" />
-            </mesh>  
+            // <mesh raycast={raycast} onPointerOver={console.log} key={index}>
+              <>
+              {showAllMesh ? (
+                  <>
+                  <mesh raycast={raycast} key={index}>
+                                <meshLineGeometry points={object} />
+                                <motion.meshLineMaterial 
+                                      initial={'hidden'} 
+                                      animate={'visible'}
+                                      variants={varShow}
+                                      lineWidth={lineWidth} 
+                                      color="#f88" />
+                    </mesh>  
+                  </>
+              ):(
+                  <>
+                    <mesh raycast={raycast} key={index}>
+                                <meshLineGeometry points={object} />
+                                <motion.meshLineMaterial 
+                                      initial={optionToShow === 2 ? 'hidden' : 'visible'} 
+                                      animate={optionToShow === 2 ? 'visible' : 'hidden'}
+                                      variants={optionToShow === 2 ? varShow : varHide}
+                                      lineWidth={lineWidth} 
+                                      color="#f88" />
+                    </mesh>  
+                  </> 
+              )
+              }
+            </>  
         )
       })
 
     linesElegant = resultElegant.map((object, index) => {
         return(
-            <mesh raycast={raycast} key={index}>
-              <meshLineGeometry points={object} />
-              <motion.meshLineMaterial initial="hidden" animate="visible" variants={variants} lineWidth={lineWidth} color="#88f" />
-            </mesh>  
+            // <mesh raycast={raycast} onPointerOver={console.log} key={index}>
+            <>
+            {showAllMesh ? (
+                <>
+                <mesh raycast={raycast} key={index}>
+                              <meshLineGeometry points={object} />
+                              <motion.meshLineMaterial 
+                                    initial={'hidden'} 
+                                    animate={'visible'}
+                                    variants={varShow}
+                                    lineWidth={lineWidth} 
+                                    color="#88f" />
+                  </mesh>  
+                </>
+            ):(
+                <>
+                  <mesh raycast={raycast} key={index}>
+                              <meshLineGeometry points={object} />
+                              <motion.meshLineMaterial 
+                                    initial={optionToShow === 3 ? 'hidden' : 'visible'} 
+                                    animate={optionToShow === 3 ? 'visible' : 'hidden'}
+                                    variants={optionToShow === 3 ? varShow : varHide}
+                                    lineWidth={lineWidth} 
+                                    color="#88f" />
+                  </mesh>  
+                </> 
+            )
+            }
+          </>   
         )
     })     
 
     linesLively = resultLively.map((object, index) => {
         return(
-            <mesh raycast={raycast} key={index}>
-              <meshLineGeometry points={object} />
-              <motion.meshLineMaterial initial="hidden" animate="visible" variants={variants} lineWidth={lineWidth} color="#e72" />
-            </mesh>  
+            // <mesh raycast={raycast} onPointerOver={console.log} key={index}>
+            <>
+            {showAllMesh ? (
+                <>
+                <mesh raycast={raycast} key={index}>
+                              <meshLineGeometry points={object} />
+                              <motion.meshLineMaterial 
+                                    initial={'hidden'} 
+                                    animate={'visible'}
+                                    variants={varShow}
+                                    lineWidth={lineWidth} 
+                                    color="#e72" />
+                  </mesh>  
+                </>
+            ):(
+                <>
+                  <mesh raycast={raycast} key={index}>
+                              <meshLineGeometry points={object} />
+                              <motion.meshLineMaterial 
+                                    initial={optionToShow === 4 ? 'hidden' : 'visible'} 
+                                    animate={optionToShow === 4 ? 'visible' : 'hidden'}
+                                    variants={optionToShow === 4 ? varShow : varHide}
+                                    lineWidth={lineWidth} 
+                                    color="#e72" />
+                  </mesh>  
+                </> 
+            )
+            }
+          </>  
         )
     })   
 
     linesSpiritual = resultSpiritual.map((object, index) => {
         return(
-            <mesh raycast={raycast} key={index}>
-              <meshLineGeometry points={object} />
-              <motion.meshLineMaterial initial="hidden" animate="visible" variants={variants} lineWidth={lineWidth} color="#4d2" />
-            </mesh>  
+            // <mesh raycast={raycast} onPointerOver={console.log} key={index}>
+            <>
+            {showAllMesh ? (
+                <>
+                <mesh raycast={raycast} key={index}>
+                              <meshLineGeometry points={object} />
+                              <motion.meshLineMaterial 
+                                    initial={'hidden'} 
+                                    animate={'visible'}
+                                    variants={varShow}
+                                    lineWidth={lineWidth} 
+                                    color="#4d2" />
+                  </mesh>  
+                </>
+            ):(
+                <>
+                  <mesh raycast={raycast} key={index}>
+                              <meshLineGeometry points={object} />
+                              <motion.meshLineMaterial 
+                                    initial={optionToShow === 5 ? 'hidden' : 'visible'} 
+                                    animate={optionToShow === 5 ? 'visible' : 'hidden'}
+                                    variants={optionToShow === 5 ? varShow : varHide}
+                                    lineWidth={lineWidth} 
+                                    color="#4d2" />
+                  </mesh>  
+                </> 
+            )
+            }
+          </>  
         )
     })   
 
     linesCalmness = resultCalmness.map((object, index) => {
       return(
-          <mesh raycast={raycast} key={index}>
-            <meshLineGeometry points={object} />
-            <motion.meshLineMaterial initial="hidden" animate="visible" variants={variants} lineWidth={lineWidth} color="#3ff" />
-          </mesh>  
+          // <mesh raycast={raycast} onPointerOver={console.log} key={index}>
+          <>
+          {showAllMesh ? (
+              <>
+              <mesh raycast={raycast} key={index}>
+                            <meshLineGeometry points={object} />
+                            <motion.meshLineMaterial 
+                                  initial={'hidden'} 
+                                  animate={'visible'}
+                                  variants={varShow}
+                                  lineWidth={lineWidth} 
+                                  color="#3ff" />
+                </mesh>  
+              </>
+          ):(
+              <>
+                <mesh raycast={raycast} key={index}>
+                            <meshLineGeometry points={object} />
+                            <motion.meshLineMaterial 
+                                  initial={optionToShow === 6 ? 'hidden' : 'visible'} 
+                                  animate={optionToShow === 6 ? 'visible' : 'hidden'}
+                                  variants={optionToShow === 6 ? varShow : varHide}
+                                  lineWidth={lineWidth} 
+                                  color="#3ff" />
+                </mesh>  
+              </> 
+          )
+          }
+        </>  
       )
     })
 
     linesBoredom = resultBoredom.map((object, index) => {
         return(
-            <mesh raycast={raycast} key={index}>
-              <meshLineGeometry points={object} />
-              <motion.meshLineMaterial initial="hidden" animate="visible" variants={variants} lineWidth={lineWidth} color="#663" />
-            </mesh>  
+            // <mesh raycast={raycast} onPointerOver={console.log} key={index}>
+            <>
+            {showAllMesh ? (
+                <>
+                <mesh raycast={raycast} key={index}>
+                              <meshLineGeometry points={object} />
+                              <motion.meshLineMaterial 
+                                    initial={'hidden'} 
+                                    animate={'visible'}
+                                    variants={varShow}
+                                    lineWidth={lineWidth} 
+                                    color="#663" />
+                  </mesh>  
+                </>
+            ):(
+                <>
+                  <mesh raycast={raycast} key={index}>
+                              <meshLineGeometry points={object} />
+                              <motion.meshLineMaterial 
+                                    initial={optionToShow === 7 ? 'hidden' : 'visible'} 
+                                    animate={optionToShow === 7 ? 'visible' : 'hidden'}
+                                    variants={optionToShow === 7 ? varShow : varHide}
+                                    lineWidth={lineWidth} 
+                                    color="#663" />
+                  </mesh>  
+                </> 
+            )
+            }
+          </>  
         )
       })
 
       linesStrange = resultStrange.map((object, index) => {
         return(
-            <mesh raycast={raycast} key={index}>
-              <meshLineGeometry points={object} />
-              <motion.meshLineMaterial initial="hidden" animate="visible" variants={variants} lineWidth={lineWidth} color="#999" />
-            </mesh>  
+            // <mesh raycast={raycast} onPointerOver={console.log} key={index}>
+            <>
+            {showAllMesh ? (
+                <>
+                <mesh raycast={raycast} key={index}>
+                              <meshLineGeometry points={object} />
+                              <motion.meshLineMaterial 
+                                    initial={'hidden'} 
+                                    animate={'visible'}
+                                    variants={varShow}
+                                    lineWidth={lineWidth} 
+                                    color="#999" />
+                  </mesh>  
+                </>
+            ):(
+                <>
+                  <mesh raycast={raycast} key={index}>
+                              <meshLineGeometry points={object} />
+                              <motion.meshLineMaterial 
+                                    initial={optionToShow === 8 ? 'hidden' : 'visible'} 
+                                    animate={optionToShow === 8 ? 'visible' : 'hidden'}
+                                    variants={optionToShow === 8 ? varShow : varHide}
+                                    lineWidth={lineWidth} 
+                                    color="#999" />
+                  </mesh>  
+                </> 
+            )
+            }
+          </>  
         )
       })
 
       linesMysterious = resultMysterious.map((object, index) => {
         return(
-            <mesh raycast={raycast} key={index}>
-              <meshLineGeometry points={object} />
-              <motion.meshLineMaterial initial="hidden" animate="visible" variants={variants} lineWidth={lineWidth} color="#c0f" />
-            </mesh>  
+            // <mesh raycast={raycast} onPointerOver={console.log} key={index}>
+            <>
+            {showAllMesh ? (
+                <>
+                <mesh raycast={raycast} key={index}>
+                              <meshLineGeometry points={object} />
+                              <motion.meshLineMaterial 
+                                    initial={'hidden'} 
+                                    animate={'visible'}
+                                    variants={varShow}
+                                    lineWidth={lineWidth} 
+                                    color="#c0f" />
+                  </mesh>  
+                </>
+            ):(
+                <>
+                  <mesh raycast={raycast} key={index}>
+                              <meshLineGeometry points={object} />
+                              <motion.meshLineMaterial 
+                                    initial={optionToShow === 9 ? 'hidden' : 'visible'} 
+                                    animate={optionToShow === 9 ? 'visible' : 'hidden'}
+                                    variants={optionToShow === 9 ? varShow : varHide}
+                                    lineWidth={lineWidth} 
+                                    color="#c0f" />
+                  </mesh>  
+                </> 
+            )
+            }
+          </>  
         )
       })
 
       linesAnxiety = resultAnxiety.map((object, index) => {
         return(
-            <mesh raycast={raycast} key={index}>
-              <meshLineGeometry points={object} />
-              <motion.meshLineMaterial initial="hidden" animate="visible" variants={variants} lineWidth={lineWidth} color="#40d" />
-            </mesh>  
+            // <mesh raycast={raycast} onPointerOver={console.log} key={index}>
+            <>
+            {showAllMesh ? (
+                <>
+                <mesh raycast={raycast} key={index}>
+                              <meshLineGeometry points={object} />
+                              <motion.meshLineMaterial 
+                                    initial={'hidden'} 
+                                    animate={'visible'}
+                                    variants={varShow}
+                                    lineWidth={lineWidth} 
+                                    color="#40d" />
+                  </mesh>  
+                </>
+            ):(
+                <>
+                  <mesh raycast={raycast} key={index}>
+                              <meshLineGeometry points={object} />
+                              <motion.meshLineMaterial 
+                                    initial={optionToShow === 10 ? 'hidden' : 'visible'} 
+                                    animate={optionToShow === 10 ? 'visible' : 'hidden'}
+                                    variants={optionToShow === 10 ? varShow : varHide}
+                                    lineWidth={lineWidth} 
+                                    color="#40d" />
+                  </mesh>  
+                </> 
+            )
+            }
+          </>  
         )
       })
 
       linesSadness = resultSadness.map((object, index) => {
         return(
-            <mesh raycast={raycast} key={index}>
-              <meshLineGeometry points={object} />
-              <motion.meshLineMaterial initial="hidden" animate="visible" variants={variants} lineWidth={lineWidth} color="#060" />
-            </mesh>  
+            // <mesh raycast={raycast} onPointerOver={console.log} key={index}>
+            <>
+            {showAllMesh ? (
+                <>
+                <mesh raycast={raycast} key={index}>
+                              <meshLineGeometry points={object} />
+                              <motion.meshLineMaterial 
+                                    initial={'hidden'} 
+                                    animate={'visible'}
+                                    variants={varShow}
+                                    lineWidth={lineWidth} 
+                                    color="#060" />
+                  </mesh>  
+                </>
+            ):(
+                <>
+                  <mesh raycast={raycast} key={index}>
+                              <meshLineGeometry points={object} />
+                              <motion.meshLineMaterial 
+                                    initial={optionToShow === 11 ? 'hidden' : 'visible'} 
+                                    animate={optionToShow === 11 ? 'visible' : 'hidden'}
+                                    variants={optionToShow === 11 ? varShow : varHide}
+                                    lineWidth={lineWidth} 
+                                    color="#060" />
+                  </mesh>  
+                </> 
+            )
+            }
+          </>  
         )
       })
 
       linesDread = resultDread.map((object, index) => {
         return(
-            <mesh raycast={raycast} key={index}>
-              <meshLineGeometry points={object} />
-              <motion.meshLineMaterial initial="hidden" animate="visible" variants={variants} lineWidth={lineWidth} color="#c24" />
-            </mesh>  
+            // <mesh raycast={raycast} onPointerOver={console.log} key={index}>
+            <>
+            {showAllMesh ? (
+                <>
+                <mesh raycast={raycast} key={index}>
+                              <meshLineGeometry points={object} />
+                              <motion.meshLineMaterial 
+                                    initial={'hidden'} 
+                                    animate={'visible'}
+                                    variants={varShow}
+                                    lineWidth={lineWidth} 
+                                    color="#c24" />
+                  </mesh>  
+                </>
+            ):(
+                <>
+                  <mesh raycast={raycast} key={index}>
+                              <meshLineGeometry points={object} />
+                              <motion.meshLineMaterial 
+                                    initial={optionToShow === 12 ? 'hidden' : 'visible'} 
+                                    animate={optionToShow === 12 ? 'visible' : 'hidden'}
+                                    variants={optionToShow === 12 ? varShow : varHide}
+                                    lineWidth={lineWidth} 
+                                    color="#c24" />
+                  </mesh>  
+                </> 
+            )
+            }
+          </>  
         )
       })
 
@@ -280,7 +589,7 @@ const Lines = ({data, layout}) => {
     
     
 
-  },[data, layout])
+  },[data, layout, optionToShow, showAllMesh])
 
 
 

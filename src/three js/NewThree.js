@@ -382,7 +382,10 @@ const Scene = ({ data,
                  storeSelectedPoint,
                  updatePosLoading,
                  setIsVoteByUser,
-                 isVoteByUser
+                 isVoteByUser,
+
+                 optionToShow,
+                 showAllMesh
                  }) => {
     
     //console.log(data[0]);
@@ -444,11 +447,17 @@ const Scene = ({ data,
                 <Lines 
                     data = {data}
                     layout= {layout}
+
+                    optionToShow = {optionToShow}
+                    showAllMesh = {showAllMesh}
                 />
                 
                 <ConvexHull
                     data = {data}
                     layout= {layout}
+
+                    optionToShow = {optionToShow}
+                    showAllMesh = {showAllMesh}
                 />
 
             </Float>

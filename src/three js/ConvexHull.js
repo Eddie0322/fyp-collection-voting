@@ -3,7 +3,12 @@ import * as THREE from "three";
 import { useEffect, useRef } from "react";
 import { motion } from "framer-motion-3d"
 
-const ConvexHull = ({data, layout}) => {
+const ConvexHull = ({
+                      data, 
+                      layout,
+                      optionToShow,
+                      showAllMesh
+                    }) => {
 
 
     const convexRefAmusement = useRef();
@@ -20,10 +25,20 @@ const ConvexHull = ({data, layout}) => {
     const convexRefDread = useRef();
 
 
-    const variants = {
+    const varShow = {
       hidden: { opacity: 0 },
       visible: { 
         opacity: 0.2, 
+        transition: {
+            delay: 0.8,
+            duration: 1.5
+      } },
+    }
+
+    const varHide = {
+      visible: { opacity: 0.2 },
+      hidden: { 
+        opacity: 0, 
         transition: {
             delay: 0.8,
             duration: 1.5
@@ -125,57 +140,204 @@ const ConvexHull = ({data, layout}) => {
 
     if(layout === "grid") return null
 
-    return(
+    return( 
+
         <>
-      
-            <mesh ref={convexRefAmusement}>
-                <motion.meshBasicMaterial initial="hidden" animate="visible" variants={variants} color={`#ff3`} />
-            </mesh>
-      
-            <mesh ref={convexRefIntimate}>
-                <motion.meshBasicMaterial initial="hidden" animate="visible" variants={variants} color={`#f88`} />
-            </mesh>
+          {showAllMesh ? (
+            <>
+                 <mesh ref={convexRefAmusement}>
+                      <motion.meshBasicMaterial 
+                                initial={'hidden'} 
+                                animate={'visible'}
+                                variants={varShow} 
+                                color={'ff3'}/>      
+                  </mesh>
+                  <mesh ref={convexRefIntimate}>
+                      <motion.meshBasicMaterial 
+                                initial={'hidden'} 
+                                animate={'visible'}
+                                variants={varShow} 
+                                color={`#f88`} />
+                  </mesh>
 
-            <mesh ref={convexRefElegant}>
-                <motion.meshBasicMaterial initial="hidden" animate="visible" variants={variants} color={`#88f`} />
-            </mesh>
+                  <mesh ref={convexRefElegant}>
+                      <motion.meshBasicMaterial 
+                                initial={'hidden'} 
+                                animate={'visible'}
+                                variants={varShow}  
+                                color={`#88f`} />
+                  </mesh>
 
-            <mesh ref={convexRefLively}>
-                <motion.meshBasicMaterial initial="hidden" animate="visible" variants={variants} color={`#e72`} />
-            </mesh>
+                  <mesh ref={convexRefLively}>
+                      <motion.meshBasicMaterial 
+                                initial={'hidden'} 
+                                animate={'visible'}
+                                variants={varShow} 
+                                color={`#e72`} />
+                  </mesh>
 
-            <mesh ref={convexRefSpiritual}>
-                <motion.meshBasicMaterial initial="hidden" animate="visible" variants={variants} color={`#4d2`} />
-            </mesh>
+                  <mesh ref={convexRefSpiritual}>
+                      <motion.meshBasicMaterial 
+                                initial={'hidden'} 
+                                animate={'visible'}
+                                variants={varShow} 
+                                color={`#4d2`} />
+                  </mesh>
 
-            <mesh ref={convexRefCalmness}>
-                <motion.meshBasicMaterial initial="hidden" animate="visible" variants={variants} color={`#3ff`} />
-            </mesh>
+                  <mesh ref={convexRefCalmness}>
+                      <motion.meshBasicMaterial 
+                                initial={'hidden'} 
+                                animate={'visible'}
+                                variants={varShow}  
+                                color={`#3ff`} />
+                  </mesh>
 
-            <mesh ref={convexRefBoredom}>
-                <motion.meshBasicMaterial initial="hidden" animate="visible" variants={variants} color={`#663`} />
-            </mesh>
+                  <mesh ref={convexRefBoredom}>
+                      <motion.meshBasicMaterial 
+                                initial={'hidden'} 
+                                animate={'visible'}
+                                variants={varShow} 
+                                color={`#663`} />
+                  </mesh>
 
-            <mesh ref={convexRefStrange}>
-                <motion.meshBasicMaterial initial="hidden" animate="visible" variants={variants} color={`#999`} />
-            </mesh>
+                  <mesh ref={convexRefStrange}>
+                      <motion.meshBasicMaterial 
+                                initial={'hidden'} 
+                                animate={'visible'}
+                                variants={varShow} 
+                                color={`#999`} />
+                  </mesh>
 
-            <mesh ref={convexRefMysterious}>
-                <motion.meshBasicMaterial initial="hidden" animate="visible" variants={variants} color={`#c0f`} />
-            </mesh>
+                  <mesh ref={convexRefMysterious}>
+                      <motion.meshBasicMaterial 
+                                initial={'hidden'} 
+                                animate={'visible'}
+                                variants={varShow}  
+                                color={`#c0f`} />
+                  </mesh>
 
-            <mesh ref={convexRefAnxiety}>
-                <motion.meshBasicMaterial initial="hidden" animate="visible" variants={variants} color={`#40d`} />
-            </mesh>
+                  <mesh ref={convexRefAnxiety}>
+                      <motion.meshBasicMaterial 
+                                initial={'hidden'} 
+                                animate={'visible'}
+                                variants={varShow} 
+                                color={`#40d`} />
+                  </mesh>
 
-            <mesh ref={convexRefSadness}>
-                <motion.meshBasicMaterial initial="hidden" animate="visible" variants={variants} color={`#060`} />
-            </mesh>
+                  <mesh ref={convexRefSadness}>
+                      <motion.meshBasicMaterial 
+                                initial={'hidden'} 
+                                animate={'visible'}
+                                variants={varShow} 
+                                color={`#060`} />
+                  </mesh>
 
-            <mesh ref={convexRefDread}>
-                <motion.meshBasicMaterial initial="hidden" animate="visible" variants={variants} color={`#c24`} />
-            </mesh>
-            
+                  <mesh ref={convexRefDread}>
+                      <motion.meshBasicMaterial 
+                               initial={'hidden'} 
+                               animate={'visible'}
+                               variants={varShow} 
+                                color={`#c24`} />
+                  </mesh>
+            </>
+          ):(
+            <>
+                  <mesh ref={convexRefAmusement}>
+                      <motion.meshBasicMaterial 
+                                initial={optionToShow === 1 ? 'hidden' : 'visible'} 
+                                animate={optionToShow === 1 ? 'visible' : 'hidden'}
+                                variants={optionToShow === 1 ? varShow : varHide} 
+                                color={'ff3'}/>      
+                  </mesh>
+                  <mesh ref={convexRefIntimate}>
+                      <motion.meshBasicMaterial 
+                                initial={optionToShow === 2 ? 'hidden' : 'visible'} 
+                                animate={optionToShow === 2 ? 'visible' : 'hidden'}
+                                variants={optionToShow === 2 ? varShow : varHide} 
+                                color={`#f88`} />
+                  </mesh>
+
+                  <mesh ref={convexRefElegant}>
+                      <motion.meshBasicMaterial 
+                                initial={optionToShow === 3 ? 'hidden' : 'visible'} 
+                                animate={optionToShow === 3 ? 'visible' : 'hidden'}
+                                variants={optionToShow === 3 ? varShow : varHide} 
+                                color={`#88f`} />
+                  </mesh>
+
+                  <mesh ref={convexRefLively}>
+                      <motion.meshBasicMaterial 
+                                initial={optionToShow === 4 ? 'hidden' : 'visible'} 
+                                animate={optionToShow === 4 ? 'visible' : 'hidden'}
+                                variants={optionToShow === 4 ? varShow : varHide}  
+                                color={`#e72`} />
+                  </mesh>
+
+                  <mesh ref={convexRefSpiritual}>
+                      <motion.meshBasicMaterial 
+                                initial={optionToShow === 5 ? 'hidden' : 'visible'} 
+                                animate={optionToShow === 5 ? 'visible' : 'hidden'}
+                                variants={optionToShow === 5 ? varShow : varHide}  
+                                color={`#4d2`} />
+                  </mesh>
+
+                  <mesh ref={convexRefCalmness}>
+                      <motion.meshBasicMaterial 
+                                initial={optionToShow === 6 ? 'hidden' : 'visible'} 
+                                animate={optionToShow === 6 ? 'visible' : 'hidden'}
+                                variants={optionToShow === 6 ? varShow : varHide}  
+                                color={`#3ff`} />
+                  </mesh>
+
+                  <mesh ref={convexRefBoredom}>
+                      <motion.meshBasicMaterial 
+                                initial={optionToShow === 7 ? 'hidden' : 'visible'} 
+                                animate={optionToShow === 7 ? 'visible' : 'hidden'}
+                                variants={optionToShow === 7 ? varShow : varHide}  
+                                color={`#663`} />
+                  </mesh>
+
+                  <mesh ref={convexRefStrange}>
+                      <motion.meshBasicMaterial 
+                                initial={optionToShow === 8 ? 'hidden' : 'visible'} 
+                                animate={optionToShow === 8 ? 'visible' : 'hidden'}
+                                variants={optionToShow === 8 ? varShow : varHide}  
+                                color={`#999`} />
+                  </mesh>
+
+                  <mesh ref={convexRefMysterious}>
+                      <motion.meshBasicMaterial 
+                                initial={optionToShow === 9 ? 'hidden' : 'visible'} 
+                                animate={optionToShow === 9 ? 'visible' : 'hidden'}
+                                variants={optionToShow === 9 ? varShow : varHide}  
+                                color={`#c0f`} />
+                  </mesh>
+
+                  <mesh ref={convexRefAnxiety}>
+                      <motion.meshBasicMaterial 
+                                initial={optionToShow === 10 ? 'hidden' : 'visible'} 
+                                animate={optionToShow === 10 ? 'visible' : 'hidden'}
+                                variants={optionToShow === 10 ? varShow : varHide}  
+                                color={`#40d`} />
+                  </mesh>
+
+                  <mesh ref={convexRefSadness}>
+                      <motion.meshBasicMaterial 
+                                initial={optionToShow === 11 ? 'hidden' : 'visible'} 
+                                animate={optionToShow === 11 ? 'visible' : 'hidden'}
+                                variants={optionToShow === 11 ? varShow : varHide}  
+                                color={`#060`} />
+                  </mesh>
+
+                  <mesh ref={convexRefDread}>
+                      <motion.meshBasicMaterial 
+                                initial={optionToShow === 12 ? 'hidden' : 'visible'} 
+                                animate={optionToShow === 12 ? 'visible' : 'hidden'}
+                                variants={optionToShow === 12 ? varShow : varHide}  
+                                color={`#c24`} />
+                  </mesh>
+              </>
+          )}  
         </>
     )
 

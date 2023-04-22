@@ -19,7 +19,22 @@
 
 .controls {
   position: absolute;
-  z-index: 1;
+  z-index: 2;
+  background: rgba(44, 43, 43, 0.2);
+  padding: 16px;
+  color: #fff;
+  width: 400px;
+  border-radius: 16px;
+  padding-top: 50;
+  margin-top: 100;
+  left: 50%;
+  top: 48px;
+  transform: translate(-50%, -50%);
+}
+
+.controlsUser {
+  position: absolute;
+  z-index: 2;
   background: rgba(44, 43, 43, 0.2);
   padding: 16px;
   color: #fff;
@@ -27,6 +42,8 @@
   border-radius: 16px;
   padding-top: 50;
   margin-top: 100;
+  top: 10px;
+  right: 10px;
 }
 
 .controls > button {
@@ -49,24 +66,6 @@
   font-weight: bold;
   background-color: #333;
   color: #ff0;
-}
-
-.selected-point {
-  font-size: 0.85em;
-  margin-top: 16px;
-}
-
-.hover-tag {
-  text-align: center;
-  position: absolute;
-  top: 16px;
-  left: 0;
-  right: 0;
-  margin-left: auto;
-  margin-right: auto;
-  width: 300px;
-  z-index: 2;
-  color: #fff;
 }
 
 img {
@@ -272,7 +271,7 @@ hr {
   width: 100px;
   border-radius: 16px;
   left: 50%;
-  bottom: 20px;
+  bottom:0%;
   transform: translate(-50%, -50%);
 }
 
@@ -298,3 +297,84 @@ hr {
   background-color: #333;
   color: #ff0;
 }
+
+.hoverBox{
+  display: table;
+  position: absolute;
+  z-index: 2;
+  background: rgba(44, 43, 43, 0.3);
+  padding: 16px;
+  color: #fff;
+  width: 20%;
+  height: 30%;
+  border-radius: 16px;
+  bottom: 5%;
+  right: 30px;
+  border-collapse: separate;
+  border-spacing: 8px;
+}
+
+.hoverBox > div{
+  display:table-row;
+}
+
+.hoverBoxImg{
+  border-radius: 10px;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.selected-point {
+  font-size: 0.85em;
+  margin-top: 8px;
+  text-align: left;
+  height:5%;
+}
+
+.hover-tag {
+  font-size: 0.9em;
+  text-align: left;
+  color: #fff;
+  height: 10%;
+}
+
+.hover-image{
+  height: auto;
+  display: flex;
+
+}
+
+
+.sideBar{
+  position: absolute;
+  z-index: 2;
+  background: rgba(44, 43, 43, 0.2);
+  padding: 16px;
+  color: #fff;
+  width: 20%px;
+  border-radius: 16px;
+  padding-top: 50;
+  margin-top: 100;
+  left: 5%;
+  top: 48px;
+  height: 60%;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+
+}
+
+
+.sideBar > button {
+  padding: 10px;
+  background: #222;
+  color: #ccc;
+  border: none;
+  margin: 2px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  display: block
+}
+
