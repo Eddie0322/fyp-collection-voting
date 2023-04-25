@@ -21,21 +21,6 @@ function gridLayout(data){
     }
 }
 
-// function spiralLayout(data){
-//     let theta = 0;
-//     for (let i = 0; i < data.length; ++i) {
-//         const datum = data[i];
-//         const phi = Math.PI * (3 - Math.sqrt(5))
-
-//         const y = 1 - (i / (data.length - 1) * 2)
-//         const radius = Math.sqrt(1 - y*y) * 12;
-//         theta = phi * i;
-//         datum.y = y;
-//         datum.x = radius * Math.cos(theta);
-//         datum.z = radius * Math.sin(theta);
-
-//       }
-// }
 
 function getRandomPointArray(n, minDistance) {
   const arr = [];
@@ -124,15 +109,17 @@ function spiralLayout(data){
 
 }
 
-export const useLayout = ({ data, layout = 'grid'}) => {
+export const useLayout = ({ data, layout = 'spiral'}) => {
     useEffect(() => {
         switch (layout) {
-            case 'spiral':
-                spiralLayout(data);
-                break;
+
             case 'grid':
-                default: {
                     gridLayout(data);
+                    break;
+
+            case 'spiral':
+                default: {
+                    spiralLayout(data)
                 }
         }
     }, [data, layout]);

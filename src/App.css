@@ -367,11 +367,12 @@ hr {
 
 
 .sideBar > button {
+  margin-top: 5px;
   padding: 10px;
   background: #222;
   color: #ccc;
   border: none;
-  margin: 2px;
+  
   text-transform: uppercase;
   letter-spacing: 1px;
   cursor: pointer;

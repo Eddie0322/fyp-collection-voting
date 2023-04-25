@@ -17,7 +17,7 @@ let objectsImageUrl = [];
 function App() {
 
   const [collections, setCollections] = React.useState();
-  const [layout, setLayout] = React.useState('grid');
+  const [layout, setLayout] = React.useState('spiral');
   const [selectedPoint, setSelectedPoint] = React.useState(null);
   const [openModal, setOpenModal] = React.useState(false);
   const [openVote, setOpenVote] = React.useState(false);
@@ -78,6 +78,7 @@ function App() {
         return;
       }
       setLoading(false);
+      
       //console.log("After collection state updated: ")
       //console.log(collections);
 
@@ -279,8 +280,8 @@ function App() {
 
               <div className='controls'>
                   <br></br>
-                  <button onClick={() => {setLayout('grid'); setShowAllMesh(true)}}>Cube</button>
                   <button onClick={() => {setLayout('spiral')}}>PCA</button>
+                  <button onClick={() => {setLayout('grid'); setShowAllMesh(true)}}>Cube</button>
               </div>
 
 

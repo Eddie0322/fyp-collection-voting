@@ -1,25 +1,12 @@
 import { raycast, MeshLineGeometry, MeshLineMaterial } from 'meshline'
 import { extend } from "@react-three/fiber";
 import * as THREE from "three";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Fragment } from "react";
 import { motion } from "framer-motion-3d"
 
 
 extend({ MeshLineGeometry, MeshLineMaterial })
 
-//Components of emotions lines 
-let linesAmusement
-let linesIntimate
-let linesElegant
-let linesLively
-let linesSpiritual
-let linesCalmness
-let linesBoredom
-let linesStrange
-let linesMysterious
-let linesAnxiety
-let linesSadness
-let linesDread
 
 function storeResult(arr, result){
     for (let i = 0; i < arr.length - 1; i++) {
@@ -31,7 +18,7 @@ function storeResult(arr, result){
 }
 
 
-let lineWidth = 0.004
+let lineWidth = 0.008
 
 const varShow = {
   hidden: { opacity: 0 },
@@ -56,20 +43,33 @@ const varHide = {
 
 const Lines = ({data, layout, optionToShow, showAllMesh}) => {
 
-  //state of emotions line points
-  const [amusementLinePoints, setAmusementLinePoints] = useState([]);
-  const [intimateLinePoints, setIntimateLinePoints] = useState([]);
-  const [elegantLinePoints, setElegantLinePoints] = useState([]);
-  const [livelyLinePoints, setLivelyLinePoints] = useState([]);
-  const [spiritualLinePoints, setSpiritualLinePoints] = useState([]);
-  const [calmnessLinePoints, setCalmnessLinePoints] = useState([]);
-  const [boredomLinePoints, setBoredomLinePoints] = useState([]);
-  const [strangeLinePoints, setStrangeLinePoints] = useState([]);
-  const [mysteriousLinePoints, setMysteriousLinePoints] = useState([]);
-  const [anxietyLinePoints, setAnxietyLinePoints] = useState([]);
-  const [sadnessLinePoints, setSadnessLinePoints] = useState([]);
-  const [dreadLinePoints, setDreadLinePoints] = useState([]);
+  //Components of emotions lines 
+  let linesAmusement
+  let linesIntimate
+  let linesElegant
+  let linesLively
+  let linesSpiritual
+  let linesCalmness
+  let linesBoredom
+  let linesStrange
+  let linesMysterious
+  let linesAnxiety
+  let linesSadness
+  let linesDread
 
+  //state of emotions line points
+  const [amusementLinePoints, setAmusementLinePoints] = useState();
+  const [intimateLinePoints, setIntimateLinePoints] = useState();
+  const [elegantLinePoints, setElegantLinePoints] = useState();
+  const [livelyLinePoints, setLivelyLinePoints] = useState();
+  const [spiritualLinePoints, setSpiritualLinePoints] = useState();
+  const [calmnessLinePoints, setCalmnessLinePoints] = useState();
+  const [boredomLinePoints, setBoredomLinePoints] = useState();
+  const [strangeLinePoints, setStrangeLinePoints] = useState();
+  const [mysteriousLinePoints, setMysteriousLinePoints] = useState();
+  const [anxietyLinePoints, setAnxietyLinePoints] = useState();
+  const [sadnessLinePoints, setSadnessLinePoints] = useState();
+  const [dreadLinePoints, setDreadLinePoints] = useState();
 
   useEffect(() => {
     
@@ -163,410 +163,482 @@ const Lines = ({data, layout, optionToShow, showAllMesh}) => {
     //
     //map to lines components
     linesAmusement = resultAmusement.map((object, index) => {
+
       return(
         // <mesh raycast={raycast} onPointerOver={console.log} key={index}>
-        <>
+        <Fragment key={index}>
         {showAllMesh ? (
-            <>
-            <mesh raycast={raycast} key={index}>
+            
+            <mesh raycast={raycast}>
                           <meshLineGeometry points={object} />
                           <motion.meshLineMaterial 
                                 initial={'hidden'} 
                                 animate={'visible'}
                                 variants={varShow}
+                                transparent = {true}
+                                blending = {THREE.NormalBlending}
+                                depthTest = {false}
                                 lineWidth={lineWidth} 
                                 color="#ff3" />
               </mesh>  
-            </>
+            
         ):(
-            <>
-              <mesh raycast={raycast} key={index}>
+            
+              <mesh raycast={raycast}>
                           <meshLineGeometry points={object} />
                           <motion.meshLineMaterial 
                                 initial={optionToShow === 1 ? 'hidden' : 'visible'} 
                                 animate={optionToShow === 1 ? 'visible' : 'hidden'}
                                 variants={optionToShow === 1 ? varShow : varHide}
+                                transparent = {true}
+                                blending = {THREE.NormalBlending}
+                                depthTest = {false}
                                 lineWidth={lineWidth} 
                                 color="#ff3" />
               </mesh>  
-            </> 
+            
         )
         }
-       </> 
+       </Fragment> 
       )
     })
 
     linesIntimate = resultIntimate.map((object, index) => {
         return(
             // <mesh raycast={raycast} onPointerOver={console.log} key={index}>
-              <>
+            <Fragment key={index}>
               {showAllMesh ? (
-                  <>
-                  <mesh raycast={raycast} key={index}>
+
+                  <mesh raycast={raycast} >
                                 <meshLineGeometry points={object} />
                                 <motion.meshLineMaterial 
                                       initial={'hidden'} 
                                       animate={'visible'}
                                       variants={varShow}
+                                      transparent = {true}
+                                      blending = {THREE.NormalBlending}
+                                      depthTest = {false}
                                       lineWidth={lineWidth} 
                                       color="#f88" />
                     </mesh>  
-                  </>
+
               ):(
-                  <>
-                    <mesh raycast={raycast} key={index}>
+
+                    <mesh raycast={raycast} >
                                 <meshLineGeometry points={object} />
                                 <motion.meshLineMaterial 
                                       initial={optionToShow === 2 ? 'hidden' : 'visible'} 
                                       animate={optionToShow === 2 ? 'visible' : 'hidden'}
                                       variants={optionToShow === 2 ? varShow : varHide}
+                                      transparent = {true}
+                                      blending = {THREE.NormalBlending}
+                                      depthTest = {false}
                                       lineWidth={lineWidth} 
                                       color="#f88" />
                     </mesh>  
-                  </> 
+
               )
               }
-            </>  
+            </Fragment>  
         )
       })
 
     linesElegant = resultElegant.map((object, index) => {
         return(
             // <mesh raycast={raycast} onPointerOver={console.log} key={index}>
-            <>
+            <Fragment key={index}>
             {showAllMesh ? (
-                <>
-                <mesh raycast={raycast} key={index}>
+
+                <mesh raycast={raycast}>
                               <meshLineGeometry points={object} />
                               <motion.meshLineMaterial 
                                     initial={'hidden'} 
                                     animate={'visible'}
                                     variants={varShow}
+                                    transparent = {true}
+                                    blending = {THREE.NormalBlending}
+                                    depthTest = {false}
                                     lineWidth={lineWidth} 
                                     color="#88f" />
                   </mesh>  
-                </>
+
             ):(
-                <>
-                  <mesh raycast={raycast} key={index}>
+
+                  <mesh raycast={raycast} >
                               <meshLineGeometry points={object} />
                               <motion.meshLineMaterial 
                                     initial={optionToShow === 3 ? 'hidden' : 'visible'} 
                                     animate={optionToShow === 3 ? 'visible' : 'hidden'}
                                     variants={optionToShow === 3 ? varShow : varHide}
+                                    transparent = {true}
+                                    blending = {THREE.NormalBlending}
+                                    depthTest = {false}
                                     lineWidth={lineWidth} 
                                     color="#88f" />
                   </mesh>  
-                </> 
+
             )
             }
-          </>   
+          </Fragment>   
         )
     })     
 
     linesLively = resultLively.map((object, index) => {
         return(
             // <mesh raycast={raycast} onPointerOver={console.log} key={index}>
-            <>
+            <Fragment key={index}>
             {showAllMesh ? (
-                <>
-                <mesh raycast={raycast} key={index}>
+                <mesh raycast={raycast}>
                               <meshLineGeometry points={object} />
                               <motion.meshLineMaterial 
                                     initial={'hidden'} 
                                     animate={'visible'}
                                     variants={varShow}
+                                    transparent = {true}
+                                    blending = {THREE.NormalBlending}
+                                    depthTest = {false}
                                     lineWidth={lineWidth} 
                                     color="#e72" />
                   </mesh>  
-                </>
+
             ):(
-                <>
-                  <mesh raycast={raycast} key={index}>
+
+                  <mesh raycast={raycast}>
                               <meshLineGeometry points={object} />
                               <motion.meshLineMaterial 
                                     initial={optionToShow === 4 ? 'hidden' : 'visible'} 
                                     animate={optionToShow === 4 ? 'visible' : 'hidden'}
                                     variants={optionToShow === 4 ? varShow : varHide}
+                                    transparent = {true}
+                                    blending = {THREE.NormalBlending}
+                                    depthTest = {false}
                                     lineWidth={lineWidth} 
                                     color="#e72" />
                   </mesh>  
-                </> 
+
             )
             }
-          </>  
+          </Fragment>  
         )
     })   
 
     linesSpiritual = resultSpiritual.map((object, index) => {
         return(
             // <mesh raycast={raycast} onPointerOver={console.log} key={index}>
-            <>
+            <Fragment key={index}>
             {showAllMesh ? (
-                <>
-                <mesh raycast={raycast} key={index}>
+
+                <mesh raycast={raycast} >
                               <meshLineGeometry points={object} />
                               <motion.meshLineMaterial 
                                     initial={'hidden'} 
                                     animate={'visible'}
                                     variants={varShow}
+                                    transparent = {true}
+                                    blending = {THREE.NormalBlending}
+                                    depthTest = {false}
                                     lineWidth={lineWidth} 
                                     color="#4d2" />
                   </mesh>  
-                </>
+
             ):(
-                <>
-                  <mesh raycast={raycast} key={index}>
+    
+                  <mesh raycast={raycast} >
                               <meshLineGeometry points={object} />
                               <motion.meshLineMaterial 
                                     initial={optionToShow === 5 ? 'hidden' : 'visible'} 
                                     animate={optionToShow === 5 ? 'visible' : 'hidden'}
                                     variants={optionToShow === 5 ? varShow : varHide}
+                                    transparent = {true}
+                                    blending = {THREE.NormalBlending}
+                                    depthTest = {false}
                                     lineWidth={lineWidth} 
                                     color="#4d2" />
                   </mesh>  
-                </> 
+         
             )
             }
-          </>  
+          </Fragment>  
         )
     })   
 
     linesCalmness = resultCalmness.map((object, index) => {
       return(
           // <mesh raycast={raycast} onPointerOver={console.log} key={index}>
-          <>
+          <Fragment key={index}>
           {showAllMesh ? (
-              <>
-              <mesh raycast={raycast} key={index}>
+
+              <mesh raycast={raycast} >
                             <meshLineGeometry points={object} />
                             <motion.meshLineMaterial 
                                   initial={'hidden'} 
                                   animate={'visible'}
                                   variants={varShow}
+                                  transparent = {true}
+                                  blending = {THREE.NormalBlending}
+                                  depthTest = {false}
                                   lineWidth={lineWidth} 
                                   color="#3ff" />
                 </mesh>  
-              </>
+
           ):(
-              <>
-                <mesh raycast={raycast} key={index}>
+       
+                <mesh raycast={raycast} >
                             <meshLineGeometry points={object} />
                             <motion.meshLineMaterial 
                                   initial={optionToShow === 6 ? 'hidden' : 'visible'} 
                                   animate={optionToShow === 6 ? 'visible' : 'hidden'}
                                   variants={optionToShow === 6 ? varShow : varHide}
+                                  transparent = {true}
+                                  blending = {THREE.NormalBlending}
+                                  depthTest = {false}
                                   lineWidth={lineWidth} 
                                   color="#3ff" />
                 </mesh>  
-              </> 
+        
           )
           }
-        </>  
+        </Fragment>  
       )
     })
 
     linesBoredom = resultBoredom.map((object, index) => {
         return(
             // <mesh raycast={raycast} onPointerOver={console.log} key={index}>
-            <>
+            <Fragment key={index}>
             {showAllMesh ? (
-                <>
-                <mesh raycast={raycast} key={index}>
+
+                <mesh raycast={raycast} >
                               <meshLineGeometry points={object} />
                               <motion.meshLineMaterial 
                                     initial={'hidden'} 
                                     animate={'visible'}
                                     variants={varShow}
+                                    transparent = {true}
+                                    blending = {THREE.NormalBlending}
+                                    depthTest = {false}
                                     lineWidth={lineWidth} 
                                     color="#663" />
                   </mesh>  
-                </>
+      
             ):(
-                <>
-                  <mesh raycast={raycast} key={index}>
+            
+                  <mesh raycast={raycast} >
                               <meshLineGeometry points={object} />
                               <motion.meshLineMaterial 
                                     initial={optionToShow === 7 ? 'hidden' : 'visible'} 
                                     animate={optionToShow === 7 ? 'visible' : 'hidden'}
                                     variants={optionToShow === 7 ? varShow : varHide}
+                                    transparent = {true}
+                                    blending = {THREE.NormalBlending}
+                                    depthTest = {false}
                                     lineWidth={lineWidth} 
                                     color="#663" />
                   </mesh>  
-                </> 
+        
             )
             }
-          </>  
+          </Fragment>  
         )
       })
 
       linesStrange = resultStrange.map((object, index) => {
         return(
             // <mesh raycast={raycast} onPointerOver={console.log} key={index}>
-            <>
+            <Fragment key={index}>
             {showAllMesh ? (
-                <>
-                <mesh raycast={raycast} key={index}>
+
+                  <mesh raycast={raycast} >
                               <meshLineGeometry points={object} />
                               <motion.meshLineMaterial 
                                     initial={'hidden'} 
                                     animate={'visible'}
                                     variants={varShow}
+                                    transparent = {true}
+                                    blending = {THREE.NormalBlending}
+                                    depthTest = {false}
                                     lineWidth={lineWidth} 
                                     color="#999" />
                   </mesh>  
-                </>
+   
             ):(
-                <>
-                  <mesh raycast={raycast} key={index}>
+        
+                  <mesh raycast={raycast} >
                               <meshLineGeometry points={object} />
                               <motion.meshLineMaterial 
                                     initial={optionToShow === 8 ? 'hidden' : 'visible'} 
                                     animate={optionToShow === 8 ? 'visible' : 'hidden'}
                                     variants={optionToShow === 8 ? varShow : varHide}
+                                    transparent = {true}
+                                    blending = {THREE.NormalBlending}
+                                    depthTest = {false}
                                     lineWidth={lineWidth} 
                                     color="#999" />
                   </mesh>  
-                </> 
+      
             )
             }
-          </>  
+          </Fragment>  
         )
       })
 
       linesMysterious = resultMysterious.map((object, index) => {
         return(
             // <mesh raycast={raycast} onPointerOver={console.log} key={index}>
-            <>
+            <Fragment key={index}>
             {showAllMesh ? (
-                <>
-                <mesh raycast={raycast} key={index}>
+       
+                <mesh raycast={raycast} >
                               <meshLineGeometry points={object} />
                               <motion.meshLineMaterial 
                                     initial={'hidden'} 
                                     animate={'visible'}
                                     variants={varShow}
+                                    transparent = {true}
+                                    blending = {THREE.NormalBlending}
+                                    depthTest = {false}
                                     lineWidth={lineWidth} 
                                     color="#c0f" />
                   </mesh>  
-                </>
+         
             ):(
-                <>
-                  <mesh raycast={raycast} key={index}>
+
+                  <mesh raycast={raycast} >
                               <meshLineGeometry points={object} />
                               <motion.meshLineMaterial 
                                     initial={optionToShow === 9 ? 'hidden' : 'visible'} 
                                     animate={optionToShow === 9 ? 'visible' : 'hidden'}
                                     variants={optionToShow === 9 ? varShow : varHide}
+                                    transparent = {true}
+                                    blending = {THREE.NormalBlending}
+                                    depthTest = {false}
                                     lineWidth={lineWidth} 
                                     color="#c0f" />
                   </mesh>  
-                </> 
+         
             )
             }
-          </>  
+          </Fragment>  
         )
       })
 
       linesAnxiety = resultAnxiety.map((object, index) => {
         return(
             // <mesh raycast={raycast} onPointerOver={console.log} key={index}>
-            <>
+            <Fragment key={index}>
             {showAllMesh ? (
-                <>
-                <mesh raycast={raycast} key={index}>
+       
+                <mesh raycast={raycast}>
                               <meshLineGeometry points={object} />
                               <motion.meshLineMaterial 
                                     initial={'hidden'} 
                                     animate={'visible'}
                                     variants={varShow}
+                                    transparent = {true}
+                                    blending = {THREE.NormalBlending}
+                                    depthTest = {false}
                                     lineWidth={lineWidth} 
                                     color="#40d" />
                   </mesh>  
-                </>
+          
             ):(
-                <>
-                  <mesh raycast={raycast} key={index}>
+             
+                  <mesh raycast={raycast} >
                               <meshLineGeometry points={object} />
                               <motion.meshLineMaterial 
                                     initial={optionToShow === 10 ? 'hidden' : 'visible'} 
                                     animate={optionToShow === 10 ? 'visible' : 'hidden'}
                                     variants={optionToShow === 10 ? varShow : varHide}
+                                    transparent = {true}
+                                    blending = {THREE.NormalBlending}
+                                    depthTest = {false}
                                     lineWidth={lineWidth} 
                                     color="#40d" />
                   </mesh>  
-                </> 
+      
             )
             }
-          </>  
+          </Fragment>  
         )
       })
 
       linesSadness = resultSadness.map((object, index) => {
         return(
             // <mesh raycast={raycast} onPointerOver={console.log} key={index}>
-            <>
+            <Fragment key={index}>
             {showAllMesh ? (
-                <>
-                <mesh raycast={raycast} key={index}>
+      
+                <mesh raycast={raycast} >
                               <meshLineGeometry points={object} />
                               <motion.meshLineMaterial 
                                     initial={'hidden'} 
                                     animate={'visible'}
                                     variants={varShow}
+                                    transparent = {true}
+                                    blending = {THREE.NormalBlending}
+                                    depthTest = {false}
                                     lineWidth={lineWidth} 
                                     color="#060" />
                   </mesh>  
-                </>
+            
             ):(
-                <>
-                  <mesh raycast={raycast} key={index}>
+            
+                  <mesh raycast={raycast}>
                               <meshLineGeometry points={object} />
                               <motion.meshLineMaterial 
                                     initial={optionToShow === 11 ? 'hidden' : 'visible'} 
                                     animate={optionToShow === 11 ? 'visible' : 'hidden'}
                                     variants={optionToShow === 11 ? varShow : varHide}
+                                    transparent = {true}
+                                    blending = {THREE.NormalBlending}
+                                    depthTest = {false}
                                     lineWidth={lineWidth} 
                                     color="#060" />
                   </mesh>  
-                </> 
+                
             )
             }
-          </>  
+          </Fragment>  
         )
       })
 
       linesDread = resultDread.map((object, index) => {
         return(
             // <mesh raycast={raycast} onPointerOver={console.log} key={index}>
-            <>
+            <Fragment key={index}>
             {showAllMesh ? (
-                <>
-                <mesh raycast={raycast} key={index}>
+        
+                <mesh raycast={raycast} >
                               <meshLineGeometry points={object} />
                               <motion.meshLineMaterial 
                                     initial={'hidden'} 
                                     animate={'visible'}
                                     variants={varShow}
+                                    transparent = {true}
+                                    blending = {THREE.NormalBlending}
+                                    depthTest = {false}
                                     lineWidth={lineWidth} 
                                     color="#c24" />
                   </mesh>  
-                </>
+           
             ):(
-                <>
-                  <mesh raycast={raycast} key={index}>
+         
+                  <mesh raycast={raycast} >
                               <meshLineGeometry points={object} />
                               <motion.meshLineMaterial 
                                     initial={optionToShow === 12 ? 'hidden' : 'visible'} 
                                     animate={optionToShow === 12 ? 'visible' : 'hidden'}
                                     variants={optionToShow === 12 ? varShow : varHide}
+                                    transparent = {true}
+                                    blending = {THREE.NormalBlending}
+                                    depthTest = {false}
                                     lineWidth={lineWidth} 
                                     color="#c24" />
                   </mesh>  
-                </> 
+           
             )
             }
-          </>  
+          </Fragment>  
         )
       })
 
@@ -584,18 +656,18 @@ const Lines = ({data, layout, optionToShow, showAllMesh}) => {
           setAnxietyLinePoints(linesAnxiety)
           setSadnessLinePoints(linesSadness)
           setDreadLinePoints(linesDread)
-
-
     
     
 
   },[data, layout, optionToShow, showAllMesh])
 
 
+  if(layout !== 'spiral') return null
 
-  if(layout === "grid") return null
+  console.log(amusementLinePoints)
 
   return(
+    
     <>
       {amusementLinePoints} 
       {intimateLinePoints}
@@ -609,8 +681,10 @@ const Lines = ({data, layout, optionToShow, showAllMesh}) => {
       {anxietyLinePoints}
       {sadnessLinePoints}
       {dreadLinePoints}
+    
     </>
   )
+  
     
 };
 

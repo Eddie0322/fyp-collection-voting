@@ -415,14 +415,12 @@ const Scene = ({ data,
             /> */}
             {/* <PerspectiveCamera makeDefault fov={75} position={[5, 5, 20]}/> */}
 
-            <Controls zoom={zoom} focus={focus} />
-
-            <ambientLight />
 
             <Float       
                 speed={0.5}
                 rotationIntensity={0.4}
                 floatIntensity={0.6}>
+
 
                 <InstancedPoints 
                     data = {data} 
@@ -444,14 +442,17 @@ const Scene = ({ data,
                     // zoomToView={(focusRef) => (setZoom(!zoom), setFocus(focusRef))}
                 />
 
+
                 <Lines 
                     data = {data}
                     layout= {layout}
 
                     optionToShow = {optionToShow}
                     showAllMesh = {showAllMesh}
+
                 />
-                
+
+
                 <ConvexHull
                     data = {data}
                     layout= {layout}
@@ -459,8 +460,17 @@ const Scene = ({ data,
                     optionToShow = {optionToShow}
                     showAllMesh = {showAllMesh}
                 />
+                
+                
+                
 
             </Float>
+
+
+
+            <Controls zoom={zoom} focus={focus} />
+
+            <ambientLight />
 
 
 
