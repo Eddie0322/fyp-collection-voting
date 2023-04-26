@@ -18,7 +18,7 @@ function storeResult(arr, result){
 }
 
 
-let lineWidth = 0.008
+let lineWidth = 0.005
 
 const varShow = {
   hidden: { opacity: 0 },
@@ -663,8 +663,6 @@ const Lines = ({data, layout, optionToShow, showAllMesh}) => {
 
 
   if(layout !== 'spiral') return null
-
-  console.log(amusementLinePoints)
 
   return(
     

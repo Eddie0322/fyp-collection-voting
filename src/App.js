@@ -3,12 +3,13 @@ import './App.css';
 import Scene from './three js/NewThree';
 import Modal from './Modal';
 import { calculatePCA } from './PCA';
-import { useSubscription } from '@apollo/client';
-import { SUBSCRIPTION_COLLECTION_VALUE, SUBSCRIPTION_TOTAL_COUNT } from './Queries';
+import { useQuery, useSubscription } from '@apollo/client';
+import { SUBSCRIPTION_COLLECTION_VALUE, SUBSCRIPTION_TOTAL_COUNT, COLLECTION_DATA } from './Queries';
 import LoginModal from './loginModal';
 import { UserAuth } from './AuthContext';
 import ImagePreview from './ImagePreview';
 import SideBar from './SideBar';
+//import CollectionsMutation from './collection_mutation';
 
 let initialData = new Array(1000).fill(0).map((d, id) => ({ id, PCAx: 0, PCAy: 0, PCAz: 0, Label: -1, totalVote: 0 }));
 let listObjects;
@@ -55,30 +56,42 @@ function App() {
   //console.log(updatePosLoading)
   //console.log(storeSelectedPoint.current)
 
+  const {loading: collection_data_loading, data: collection_data} = useQuery(COLLECTION_DATA)
 
-    React.useEffect(() => {
-      const getData = async() => {
-          let collectionData = await Promise.all([getCollectionData()]);
-          //console.log("Collection Data from API: ")
-          //console.log(collectionData)
-          // collections.current = collectionData;
-          setCollections(collectionData[0]);
+  React.useEffect(() => {
 
-          //Store all the image URL into an array
-          //console.log("URL---------------------------------")
-          objectsImageUrl = collectionData[0].map(a => a.image_id);
-          //console.log(objectsImageUrl)
-      };
-      getData();
-    },[]);
+    if(!collection_data_loading && collection_data){
+      setCollections(collection_data.collection_poll)
+      objectsImageUrl = collection_data.collection_poll.map(a => a.image_id)
+    }
+
+  },[collection_data_loading, collection_data])
+
+
+    // React.useEffect(() => {
+    //   const getData = async() => {
+    //       let collectionData = await Promise.all([getCollectionData()]);
+    //       //console.log("Collection Data from API: ")
+    //       //console.log(collectionData)
+    //       // collections.current = collectionData;
+    //       setCollections(collectionData[0]);
+
+    //       //Store all the image URL into an array
+    //       //console.log("URL---------------------------------")
+    //       objectsImageUrl = collectionData[0].map(a => a.image_id);
+    //       //console.log(objectsImageUrl)
+    //   };
+    //   getData();
+    // },[]);
     
     React.useLayoutEffect(() => {
       if (firstUpdate.current) {
         firstUpdate.current = false;
         return;
       }
+      console.log(collections)
       setLoading(false);
-      
+
       //console.log("After collection state updated: ")
       //console.log(collections);
 
@@ -270,8 +283,7 @@ function App() {
         }
       }
 
-
-
+  
   return (
         
         <div className="App"> 
@@ -365,7 +377,7 @@ function App() {
                   hoverPoint = {hoverPoint}
                   onHoverPoint = {setHoverPoint}
                   loading = {loading}
-                  collection_value_loading = {collection_value_loading}
+                  collection_data_loading = {collection_data_loading}
                   zoom = {zoom}
                   setZoom = {setZoom}
                   focus = {focus}
@@ -422,6 +434,8 @@ function App() {
             
           </Modal>
           )}
+
+          {/* <CollectionsMutation collections={collections}/> */}
     </div>
 
   );

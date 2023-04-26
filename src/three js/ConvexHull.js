@@ -28,7 +28,7 @@ const ConvexHull = ({
     const varShow = {
       hidden: { opacity: 0 },
       visible: { 
-        opacity: 0.2, 
+        opacity: 0.25, 
         transition: {
             delay: 1,
             duration: 1.5
@@ -36,7 +36,7 @@ const ConvexHull = ({
     }
 
     const varHide = {
-      visible: { opacity: 0.2 },
+      visible: { opacity: 0.25 },
       hidden: { 
         opacity: 0, 
         transition: {

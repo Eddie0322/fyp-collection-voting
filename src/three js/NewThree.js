@@ -374,7 +374,7 @@ const Scene = ({ data,
                  setOpenModal, 
                  setOpenVote, 
                  loading, 
-                 collection_value_loading, 
+                 collection_data_loading, 
                  zoom,
                  setZoom,
                  focus,
@@ -393,7 +393,7 @@ const Scene = ({ data,
     // const [focus, setFocus] = useState({})
 
 
-    if(loading || collection_value_loading){
+    if(loading || collection_data_loading){
 
       return loadingElement
 

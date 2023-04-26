@@ -148,5 +148,21 @@ export const MUTATION_VOTES = gql`
 `
 
 
+export const COLLECTION_DATA = gql`
+        query get_collection_data {
+            collection_poll(order_by: {id: asc}){
+                id
+                title
+                image_id
+                date_display
+                artist_title
+                place_of_origin
+                artwork_type_title
+            }
+        }
+
+`
+
+
 
 
