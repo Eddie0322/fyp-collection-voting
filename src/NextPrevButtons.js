@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import { motion } from "framer-motion"
 
 const NextPrevButtons = ({
                 setOpenModal,
@@ -242,10 +243,58 @@ const NextPrevButtons = ({
 
     }
 
+    let colorsArray = ["#ff3", "#f88", "#88f", "#e72", "#4d2", "#3ff", "#663", "#999", "#c0f", "#40d", "#060", "#c24"]
+    let emoLabel = ["Amusement", "Intimate", "Elegant", "Lively", "Spiritual", "Calmness", "Boredom", "Strange", "Mysterious", "Anxiety", "Sadness", "Dread"]
+
     return(
         <>
-            <button className='nextButton' onClick={() => Next()}>Next</button>
-            <button className='prevButton' onClick={() => Prev()}>Prev</button>
+            <div className='nextContainer'>
+                <motion.p 
+                    className='nextPrevTag'
+                >
+                    <span 
+                        className="nextPrevTagDot" 
+                        style={{backgroundColor: selectedPoint.totalVote === 0 ? "#bbb" : colorsArray[selectedPoint.Label]}}
+                    ></span>
+                    <>&ensp;</>
+                    {selectedPoint.totalVote === 0 ? "Unvoted" : emoLabel[selectedPoint.Label]}
+                </motion.p>
+                <motion.button 
+                    className='nextPrevButton' 
+                    whileHover={{
+                        fontSize: "18px", 
+                        fontWeight: "900", 
+                        color: selectedPoint.totalVote === 0 ? "#fff" : colorsArray[selectedPoint.Label] 
+                    }}
+                    onClick={() => Next()}
+                    >
+                        Next &#8594;
+                </motion.button>
+            </div>
+
+            <div className='prevContainer'>
+                <motion.p 
+                    className='nextPrevTag'
+                    style={{textAlign: "right"}}
+                >
+                    <span 
+                        className="nextPrevTagDot" 
+                        style={{backgroundColor: selectedPoint.totalVote === 0 ? "#bbb" : colorsArray[selectedPoint.Label]}}
+                    ></span>
+                    <>&ensp;</>
+                    {selectedPoint.totalVote === 0 ? "Unvoted" : emoLabel[selectedPoint.Label]}
+                </motion.p>
+                <motion.button 
+                    className='nextPrevButton' 
+                    whileHover={{
+                        fontSize: "18px", 
+                        fontWeight: "900", 
+                        color: selectedPoint.totalVote === 0 ? "#fff" : colorsArray[selectedPoint.Label] 
+                    }}
+                    onClick={() => Prev()}>
+                        &#8592; Prev
+                </motion.button>
+            </div>
         </>
     )
 

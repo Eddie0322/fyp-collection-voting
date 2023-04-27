@@ -379,37 +379,47 @@ hr {
   display: block
 }
 
-.nextButton{
+.nextPrevButton{
+  padding: 10px;
+  background: none;
+  color: #b7b7b7;
+  border: none;
+  font-size: 16px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+
+
+.nextContainer{
   position: absolute;
   z-index: 2;
-
   right: 5%;
-  top: 50%;
+  top: 40%;
 
-  padding: 10px;
-  background: #222;
-  color: #ccc;
-  border: none;
-  
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  cursor: pointer;
 }
 
-.prevButton{
-
+.prevContainer{
   position: absolute;
   z-index: 2;
-
   left: 5%;
-  top: 50%;
+  top: 40%;
 
-  padding: 10px;
-  background: #222;
-  color: #ccc;
-  border: none;
-  
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  cursor: pointer;
 }
+
+.nextPrevTag{
+  margin: 10px;
+  color: #ececec;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 200; 
+  font-size: 50%;
+}
+
+.nextPrevTagDot{
+  height: 8px;
+  width: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
