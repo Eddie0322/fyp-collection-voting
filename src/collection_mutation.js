@@ -22,6 +22,7 @@ const MUTATION_COLLECTIONS = gql`
              update_collection_poll(
 
                     _set: {
+                      title: $title,
                       image_id: $image_id,
                       date_display: $date_display
                       artist_title: $artist_title
@@ -33,7 +34,6 @@ const MUTATION_COLLECTIONS = gql`
 
                   where: {
                       id: {_eq: $id}, 
-                      title: {_eq: $title}
                   }
 
              )  
@@ -45,19 +45,19 @@ const MUTATION_COLLECTIONS = gql`
 }
 `
 
-const CollectionsMutation = ({collections}) => {
+const CollectionsMutation = ({newCollections, imageNullId}) => {
 
     //console.log("!!!!!!!!!!!! ", collections);
 
     const [update_collection_poll, { data, loading, error }] = useMutation(MUTATION_COLLECTIONS);
 
-    const updateDataInLoop = async (collections) => {
-        for (let i = 950; i < 1000; i++) {
+    const updateDataInLoop = async (collections, imageNullId) => {
+        for (let i = 0; i < 44; i++) {
           try { 
            await update_collection_poll({
              variables: {
 
-                id: i,
+                id: imageNullId[i],
                 title: collections[i].title,
 
                 image_id: collections[i].image_id,
@@ -77,7 +77,7 @@ const CollectionsMutation = ({collections}) => {
 
     console.log({ data, loading, error });
 
-    return <div><button onClick={() => updateDataInLoop(collections)}>Update</button></div>
+    return <div className="aaa"><button onClick={() => updateDataInLoop(newCollections, imageNullId)}>Update</button></div>
 }
 
 export default CollectionsMutation;

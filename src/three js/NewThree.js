@@ -1,13 +1,14 @@
 import { OrbitControls, PerspectiveCamera, Float } from "@react-three/drei";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 //import { hover } from "@testing-library/user-event/dist/hover";
-import { useRef, useEffect, useMemo, useState } from "react";
+import { useRef, useEffect, useMemo } from "react";
 import * as THREE from "three";
 import { Object3D } from "three";
 import {  useAnimatedLayout } from "./layout";
 import CameraControls from 'camera-controls'
 import Lines from "./Lines";
 import ConvexHull from "./ConvexHull";
+import { UserAuth } from '../AuthContext';
 
 
 CameraControls.install({ THREE })
@@ -103,12 +104,13 @@ function UpdateInstancedMeshMatrices({ mesh, data, selectedPoint, hoverPoint }) 
 //Color settings
 const SELECTED_COLOR = '#6c6';
 const DEFAULT_COLOR_ORIGIN = '#fff'
+const VOTED_BY_USER_COLOR = '#d53'
 const DEFAULT_COLOR = ["#ff3", "#f88", "#88f", "#e72", "#4d2", "#3ff", "#663", "#999", "#c0f", "#40d", "#060", "#c24"]
 
 //re-use for instance computations
 const scratchColor = new THREE.Color();
 
-const usePointColors = ({ data, selectedPoint, layout, hoverPoint }) => {
+const usePointColors = ({ data, selectedPoint, layout, hoverPoint, user, userVotes }) => {
 
     const numPoints = data.length;
     const layoutSelected = useRef();
@@ -146,14 +148,19 @@ const usePointColors = ({ data, selectedPoint, layout, hoverPoint }) => {
 
           for (let i = 0; i < data.length; ++i) {
 
-                    scratchColor.set(data[i] === (selectedPoint) ? SELECTED_COLOR : DEFAULT_COLOR_ORIGIN);
-                    scratchColor.toArray(colorArray, i*3);
+                if(user && userVotes.includes(i)){
+                     scratchColor.set(data[i] === (selectedPoint) ? SELECTED_COLOR : VOTED_BY_USER_COLOR);
+                }else{
+                     scratchColor.set(data[i] === (selectedPoint) ? SELECTED_COLOR : DEFAULT_COLOR_ORIGIN);
+                }
+                
+                scratchColor.toArray(colorArray, i*3);
 
           }    
 
       }
       colorAttrib.current.needsUpdate = true;
-    }, [data, selectedPoint, colorArray, layout, hoverPoint]);
+    }, [data, selectedPoint, colorArray, layout, hoverPoint, user, userVotes]);
    
     return {colorAttrib, colorArray};
 };
@@ -263,7 +270,9 @@ const InstancedPoints = ({
         storeSelectedPoint,
         updatePosLoading,
         setIsVoteByUser,
-        isVoteByUser
+        isVoteByUser,
+        user,
+        userVotes
       }) => {
 
     const numPoints = data.length;
@@ -321,7 +330,7 @@ const InstancedPoints = ({
     }, [data, selectedPoint, hoverPoint, updatePosLoading]);
 
     // Color settings
-    const { colorAttrib, colorArray } = usePointColors({ data, selectedPoint, layout, hoverPoint });
+    const { colorAttrib, colorArray } = usePointColors({ data, selectedPoint, layout, hoverPoint, user, userVotes });
 
     // Mouse interaction settings
     const { handleClick, handlePointerDown, handlePointerOver, handlePointerOut } = useMousePointInteraction({
@@ -392,6 +401,7 @@ const Scene = ({ data,
     // const [zoom, setZoom] = useState(false)
     // const [focus, setFocus] = useState({})
 
+    const { user, userVotes } = UserAuth()
 
     if(loading || collection_data_loading){
 
@@ -399,7 +409,7 @@ const Scene = ({ data,
 
     } else {
 
-      //console.log(data);
+      //console.log(data)
 
     return(
         <Canvas style={{ background: "black" }} camera={{ position: [25, 25, 25] }}>
@@ -439,6 +449,9 @@ const Scene = ({ data,
                     updatePosLoading = {updatePosLoading}
                     setIsVoteByUser = {setIsVoteByUser}
                     isVoteByUser = {isVoteByUser} 
+
+                    user = {user}
+                    userVotes = {userVotes}
                     // zoomToView={(focusRef) => (setZoom(!zoom), setFocus(focusRef))}
                 />
 

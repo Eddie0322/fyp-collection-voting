@@ -45,55 +45,24 @@ function App() {
   const [optionToShow, setOptionToShow] = React.useState(undefined)
   const [showAllMesh, setShowAllMesh] = React.useState(true)
 
-  //const stackedBarLabel = React.useRef()
 
-  //console.log("Modal open?  ", openModal);
-  //console.log(selectedPoint)
-  //console.log("Loading? ", loading);
-  //console.log("AppJS Data: ", data)
-  //console.log(collections);
-  //console.log(loginUser)
-  //console.log(updatePosLoading)
-  //console.log(storeSelectedPoint.current)
+    const {loading: collection_data_loading, data: collection_data} = useQuery(COLLECTION_DATA)
+      React.useEffect(() => {
 
-  const {loading: collection_data_loading, data: collection_data} = useQuery(COLLECTION_DATA)
+        if(!collection_data_loading && collection_data){
+          setCollections(collection_data.collection_poll)
+          objectsImageUrl = collection_data.collection_poll.map(a => a.image_id)
+        }
 
-  React.useEffect(() => {
+      },[collection_data_loading, collection_data])
 
-    if(!collection_data_loading && collection_data){
-      setCollections(collection_data.collection_poll)
-      objectsImageUrl = collection_data.collection_poll.map(a => a.image_id)
-    }
-
-  },[collection_data_loading, collection_data])
-
-
-    // React.useEffect(() => {
-    //   const getData = async() => {
-    //       let collectionData = await Promise.all([getCollectionData()]);
-    //       //console.log("Collection Data from API: ")
-    //       //console.log(collectionData)
-    //       // collections.current = collectionData;
-    //       setCollections(collectionData[0]);
-
-    //       //Store all the image URL into an array
-    //       //console.log("URL---------------------------------")
-    //       objectsImageUrl = collectionData[0].map(a => a.image_id);
-    //       //console.log(objectsImageUrl)
-    //   };
-    //   getData();
-    // },[]);
     
     React.useLayoutEffect(() => {
       if (firstUpdate.current) {
         firstUpdate.current = false;
         return;
       }
-      console.log(collections)
       setLoading(false);
-
-      //console.log("After collection state updated: ")
-      //console.log(collections);
 
       listObjects = collections.map(
         (object, index) => {
@@ -145,16 +114,6 @@ function App() {
     React.useEffect(() => {
       if(collection_value_data && total_count_data){
 
-            // if(selectedPoint){
-            //     setSelectedPoint(selectedPoint)
-            //     setZoom(true); 
-            //     setFocus(selectedPoint);
-            //     setTimeout(() => {
-            //     setOpenModal(true);
-            //     setOpenVote(false);
-            //     }, 2000)
-            // }
-
             for(let i=0; i<1000; i++){
               collectionValueArray.push(collection_value_data.collection_value_accumulated_results[i].amusement)
             }
@@ -198,12 +157,9 @@ function App() {
               }
             }
 
-            //console.log(votedCollections)
 
-        // setCollectionValue(collection_value_data.collection_value_accumulated_results);
         collectionValue.current = collectionValueArray;
         var testArray = calculatePCA(collectionValue.current, collection_value_data.collection_value_accumulated_results, votedCollections);
-        //console.log(testArray)
           
         setTimeout(() => {
             setData(data.map((object, index) => (
@@ -228,7 +184,6 @@ function App() {
       let labelIndexArray = [];
       let percentageValueArray = [];
       let percentageColorsArray = [];
-      //let finalLabelArray = [];
       let emoLabel = ["amusement", "intimate", "elegant", "lively", "spiritual", "calmness", "boredom", "strange", "mysterious", "anxiety", "sadness", "dread"]
       let colorsArray = ["#ff3", "#f88", "#88f", "#e72", "#4d2", "#3ff", "#663", "#999", "#c0f", "#40d", "#060", "#c24"]
       React.useEffect(() => {
@@ -266,8 +221,7 @@ function App() {
               percentageColorsArray.push(colorsArray[labelIndexArray[0]], colorsArray[labelIndexArray[1]], colorsArray[labelIndexArray[2]])
               setStackedBarLabel(chunkArrayInGroups(percentageLabelArray, 3))
               setStackedBarValue(chunkArrayInGroups(percentageValueArray, 4))
-              setStackedBarColors(chunkArrayInGroups(percentageColorsArray, 3))
-              //stackedBarLabel.current = chunkArrayInGroups(percentageLabelArray, 3)      
+              setStackedBarColors(chunkArrayInGroups(percentageColorsArray, 3))     
               
             }
           }
@@ -366,7 +320,6 @@ function App() {
 
 
               <Scene 
-                  //data = {data.current} 
                   data = {data} 
                   layout = {layout} 
                   setLayout = {setLayout}
@@ -396,6 +349,7 @@ function App() {
           </div> 
 
           {selectedPoint && (
+        
           <Modal 
                 id = {selectedPoint.id}
                 openModal = {openModal} 
@@ -421,6 +375,7 @@ function App() {
                 checkVoteOpen = {openVote}
                 openVote = {() => setOpenVote(true)}
                 closeVote = {() => setOpenVote(false)}
+                setOpenVote = {setOpenVote}
                 setOpenModal = {setOpenModal}
                 stackedBarLabel = {stackedBarLabel[selectedPoint.id]}
                 stackedBarValue = {stackedBarValue[selectedPoint.id]}
@@ -430,34 +385,25 @@ function App() {
                 storeSelectedPoint = {storeSelectedPoint}
                 setUpdatePosLoading = {setUpdatePosLoading}
                 setIsVoteByUser = {setIsVoteByUser}
+
+                selectedPoint = {selectedPoint}
+                setSelectedPoint = {setSelectedPoint}
+                data = {data}
+                zoomToView = {(focusRef) => (setFocus(focusRef))}
+                layout = {layout}
+
           >
             
           </Modal>
+
           )}
 
-          {/* <CollectionsMutation collections={collections}/> */}
+          {/* <CollectionsMutation 
+              newCollections={newCollections} 
+              imageNullId = {imageNullId}/> */}
     </div>
 
   );
-}
-
-
-let allCollections = [];
-const getCollectionData = async() => {
-
-  for (let i = 1; i <= 10; i++) {
-    const response = await fetch(
-      `https://api.artic.edu/api/v1/artworks/search?params=%7B%0D%0A%20%20%20%20%22query%22%3A%20%7B%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20%22bool%22%20%3A%20%7B%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%22must%22%20%3A%20%5B%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7B%22term%22%20%3A%20%7B%20%22is_public_domain%22%20%3A%20true%20%7D%20%7D%2C%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7B%22term%22%20%3A%20%7B%20%22artwork_type_id%22%20%3A%20%221%22%20%7D%20%7D%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5D%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%7D%0D%0A%20%20%20%20%7D%2C%0D%0A%20%20%20%20%22sort%22%3A%20%5B%0D%0A%20%20%20%20%7B%0D%0A%20%20%20%20%20%20%22id%22%3A%20%7B%0D%0A%20%20%20%20%20%20%20%20%22order%22%3A%20%22asc%22%0D%0A%20%20%20%20%20%20%7D%0D%0A%20%20%20%20%7D%0D%0A%20%20%5D%0D%0A%7D%0D%0A&fields=id,title,artist_title,date_display,artwork_type_title,image_id,place_of_origin&limit=100&page=${i}`
-    );
-    const data = await response.json();
-    //console.log(data.data[0]);
-    for(let j = 0; j < 100; j++){
-      allCollections.push(data.data[j]);
-    }
-    
-  }
-  //console.log(allCollections);
-  return allCollections
 }
 
 function findIndicesOfMax(inp, count) {
@@ -479,4 +425,50 @@ function chunkArrayInGroups(ar, num) {
   }, []);
 }
 
+
 export default App;
+
+
+
+
+    //////////////////////////////////////////////////////////////////////////////////
+
+    // const [newCollections, setNewCollections] = React.useState();
+
+    // React.useEffect(() => {
+    //   const getData = async() => {
+    //       let collectionData = await Promise.all([getCollectionData()]);
+    //       //console.log("Collection Data from API: ")
+    //       //console.log(collectionData)
+    //       // collections.current = collectionData;
+    //       setNewCollections(collectionData[0]);
+
+    //       //Store all the image URL into an array
+    //       //console.log("URL---------------------------------")
+    //       objectsImageUrlNew = collectionData[0].map(a => a.image_id);
+    //       //console.log(objectsImageUrl)
+    //   };
+    //   getData();
+    // },[]);
+
+    /////////////////////////////////////////////////////////////////////////////////
+
+    ///////////////////////////////////////////
+
+    // let allCollections = [];
+    // const getCollectionData = async() => {
+
+    //     const response = await fetch(
+    //       `https://api.artic.edu/api/v1/artworks/search?params=%7B%0D%0A%20%20%20%20%22query%22%3A%20%7B%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20%22bool%22%20%3A%20%7B%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%22must%22%20%3A%20%5B%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7B%22term%22%20%3A%20%7B%20%22is_public_domain%22%20%3A%20true%20%7D%20%7D%2C%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7B%22term%22%20%3A%20%7B%20%22artwork_type_id%22%20%3A%20%221%22%20%7D%20%7D%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5D%0D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%7D%0D%0A%20%20%20%20%7D%2C%0D%0A%20%20%20%20%22sort%22%3A%20%5B%0D%0A%20%20%20%20%7B%0D%0A%20%20%20%20%20%20%22id%22%3A%20%7B%0D%0A%20%20%20%20%20%20%20%20%22order%22%3A%20%22desc%22%0D%0A%20%20%20%20%20%20%7D%0D%0A%20%20%20%20%7D%0D%0A%20%20%5D%0D%0A%7D%0D%0A&fields=id,title,artist_title,date_display,artwork_type_title,image_id,place_of_origin&limit=44&page=15`
+    //     );
+    //     const data = await response.json();
+    //     //console.log(data.data[0]);
+    //     for(let j = 0; j < 44; j++){
+    //       allCollections.push(data.data[j]);
+    //     }
+        
+    //   //console.log(allCollections);
+    //   return allCollections
+    // }
+
+    /////////////////////////////////////////////

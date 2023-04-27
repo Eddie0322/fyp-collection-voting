@@ -115,7 +115,7 @@ export const calculatePCA = (valueData, initialValueData, votedCollections) => {
     }
       storeQarr = findIndicesOfMax(q,3)
 
-      console.log(storeQarr)
+      //console.log(storeQarr)
 
       var projection = []
       var pc1 = 0, pc2 = 0, pc3 = 0

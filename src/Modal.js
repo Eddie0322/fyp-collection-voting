@@ -7,6 +7,7 @@ import './button.scss'
 import { motion, AnimatePresence } from "framer-motion"
 import StackedBar from './Chart';
 import { UserAuth } from './AuthContext';
+import NextPrevButtons from './NextPrevButtons';
 
 const Modal = ({ 
                 id, 
@@ -19,6 +20,7 @@ const Modal = ({
                 voteCount, 
                 openVote, 
                 closeVote, 
+                setOpenVote,
                 checkVoteOpen, 
                 setOpenModal, 
                 stackedBarLabel,
@@ -28,7 +30,12 @@ const Modal = ({
                 setZoom,
                 storeSelectedPoint,
                 setUpdatePosLoading,
-                setIsVoteByUser }) => {
+                setIsVoteByUser,
+                selectedPoint,
+                setSelectedPoint,
+                data,
+                zoomToView,
+                layout }) => {
 
 
     const contentRef = React.useRef();
@@ -57,6 +64,24 @@ const Modal = ({
                 className='modalBackground' 
                 onClick={closeModal}
                 >
+
+                    <motion.div 
+                        onClick={e => { e.stopPropagation(); }}
+                    >   
+
+                                <NextPrevButtons 
+                                        id = {id}
+                                        setOpenModal = {setOpenModal}
+                                        setOpenVote = {setOpenVote}
+                                        setZoom = {setZoom}
+                                        storeSelectedPoint = {storeSelectedPoint}
+                                        selectedPoint = {selectedPoint}
+                                        setSelectedPoint = {setSelectedPoint}
+                                        data = {data}
+                                        zoomToView = {zoomToView}
+                                        layout = {layout}
+                                />
+                    </motion.div>
 
                     <motion.div 
                         initial={{
