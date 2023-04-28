@@ -210,6 +210,23 @@ const Modal = ({
                     className='modalBackground' 
                     onClick={closeModal}
                 >
+                     <motion.div 
+                        onClick={e => { e.stopPropagation(); }}
+                    >   
+
+                                <NextPrevButtons 
+                                        id = {id}
+                                        setOpenModal = {setOpenModal}
+                                        setOpenVote = {setOpenVote}
+                                        setZoom = {setZoom}
+                                        storeSelectedPoint = {storeSelectedPoint}
+                                        selectedPoint = {selectedPoint}
+                                        setSelectedPoint = {setSelectedPoint}
+                                        data = {data}
+                                        zoomToView = {zoomToView}
+                                        layout = {layout}
+                                />
+                    </motion.div>
 
                     <div 
                         className='modalContent' 
