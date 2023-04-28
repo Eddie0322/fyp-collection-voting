@@ -187,9 +187,9 @@ const Lines = ({data, layout, optionToShow, showAllMesh}) => {
               <mesh raycast={raycast}>
                           <meshLineGeometry points={object} />
                           <motion.meshLineMaterial 
-                                initial={optionToShow === 1 ? 'hidden' : 'visible'} 
-                                animate={optionToShow === 1 ? 'visible' : 'hidden'}
-                                variants={optionToShow === 1 ? varShow : varHide}
+                                initial={optionToShow === 0 ? 'hidden' : 'visible'} 
+                                animate={optionToShow === 0 ? 'visible' : 'hidden'}
+                                variants={optionToShow === 0 ? varShow : varHide}
                                 transparent = {true}
                                 blending = {THREE.NormalBlending}
                                 depthTest = {false}
@@ -227,9 +227,9 @@ const Lines = ({data, layout, optionToShow, showAllMesh}) => {
                     <mesh raycast={raycast} >
                                 <meshLineGeometry points={object} />
                                 <motion.meshLineMaterial 
-                                      initial={optionToShow === 2 ? 'hidden' : 'visible'} 
-                                      animate={optionToShow === 2 ? 'visible' : 'hidden'}
-                                      variants={optionToShow === 2 ? varShow : varHide}
+                                      initial={optionToShow === 1 ? 'hidden' : 'visible'} 
+                                      animate={optionToShow === 1 ? 'visible' : 'hidden'}
+                                      variants={optionToShow === 1 ? varShow : varHide}
                                       transparent = {true}
                                       blending = {THREE.NormalBlending}
                                       depthTest = {false}
@@ -267,9 +267,9 @@ const Lines = ({data, layout, optionToShow, showAllMesh}) => {
                   <mesh raycast={raycast} >
                               <meshLineGeometry points={object} />
                               <motion.meshLineMaterial 
-                                    initial={optionToShow === 3 ? 'hidden' : 'visible'} 
-                                    animate={optionToShow === 3 ? 'visible' : 'hidden'}
-                                    variants={optionToShow === 3 ? varShow : varHide}
+                                    initial={optionToShow === 2 ? 'hidden' : 'visible'} 
+                                    animate={optionToShow === 2 ? 'visible' : 'hidden'}
+                                    variants={optionToShow === 2 ? varShow : varHide}
                                     transparent = {true}
                                     blending = {THREE.NormalBlending}
                                     depthTest = {false}
@@ -306,9 +306,9 @@ const Lines = ({data, layout, optionToShow, showAllMesh}) => {
                   <mesh raycast={raycast}>
                               <meshLineGeometry points={object} />
                               <motion.meshLineMaterial 
-                                    initial={optionToShow === 4 ? 'hidden' : 'visible'} 
-                                    animate={optionToShow === 4 ? 'visible' : 'hidden'}
-                                    variants={optionToShow === 4 ? varShow : varHide}
+                                    initial={optionToShow === 3 ? 'hidden' : 'visible'} 
+                                    animate={optionToShow === 3 ? 'visible' : 'hidden'}
+                                    variants={optionToShow === 3 ? varShow : varHide}
                                     transparent = {true}
                                     blending = {THREE.NormalBlending}
                                     depthTest = {false}
@@ -346,9 +346,9 @@ const Lines = ({data, layout, optionToShow, showAllMesh}) => {
                   <mesh raycast={raycast} >
                               <meshLineGeometry points={object} />
                               <motion.meshLineMaterial 
-                                    initial={optionToShow === 5 ? 'hidden' : 'visible'} 
-                                    animate={optionToShow === 5 ? 'visible' : 'hidden'}
-                                    variants={optionToShow === 5 ? varShow : varHide}
+                                    initial={optionToShow === 4 ? 'hidden' : 'visible'} 
+                                    animate={optionToShow === 4 ? 'visible' : 'hidden'}
+                                    variants={optionToShow === 4 ? varShow : varHide}
                                     transparent = {true}
                                     blending = {THREE.NormalBlending}
                                     depthTest = {false}
@@ -386,9 +386,9 @@ const Lines = ({data, layout, optionToShow, showAllMesh}) => {
                 <mesh raycast={raycast} >
                             <meshLineGeometry points={object} />
                             <motion.meshLineMaterial 
-                                  initial={optionToShow === 6 ? 'hidden' : 'visible'} 
-                                  animate={optionToShow === 6 ? 'visible' : 'hidden'}
-                                  variants={optionToShow === 6 ? varShow : varHide}
+                                  initial={optionToShow === 5 ? 'hidden' : 'visible'} 
+                                  animate={optionToShow === 5 ? 'visible' : 'hidden'}
+                                  variants={optionToShow === 5 ? varShow : varHide}
                                   transparent = {true}
                                   blending = {THREE.NormalBlending}
                                   depthTest = {false}
@@ -426,9 +426,9 @@ const Lines = ({data, layout, optionToShow, showAllMesh}) => {
                   <mesh raycast={raycast} >
                               <meshLineGeometry points={object} />
                               <motion.meshLineMaterial 
-                                    initial={optionToShow === 7 ? 'hidden' : 'visible'} 
-                                    animate={optionToShow === 7 ? 'visible' : 'hidden'}
-                                    variants={optionToShow === 7 ? varShow : varHide}
+                                    initial={optionToShow === 6 ? 'hidden' : 'visible'} 
+                                    animate={optionToShow === 6 ? 'visible' : 'hidden'}
+                                    variants={optionToShow === 6 ? varShow : varHide}
                                     transparent = {true}
                                     blending = {THREE.NormalBlending}
                                     depthTest = {false}
@@ -466,9 +466,9 @@ const Lines = ({data, layout, optionToShow, showAllMesh}) => {
                   <mesh raycast={raycast} >
                               <meshLineGeometry points={object} />
                               <motion.meshLineMaterial 
-                                    initial={optionToShow === 8 ? 'hidden' : 'visible'} 
-                                    animate={optionToShow === 8 ? 'visible' : 'hidden'}
-                                    variants={optionToShow === 8 ? varShow : varHide}
+                                    initial={optionToShow === 7 ? 'hidden' : 'visible'} 
+                                    animate={optionToShow === 7 ? 'visible' : 'hidden'}
+                                    variants={optionToShow === 7 ? varShow : varHide}
                                     transparent = {true}
                                     blending = {THREE.NormalBlending}
                                     depthTest = {false}
@@ -506,9 +506,9 @@ const Lines = ({data, layout, optionToShow, showAllMesh}) => {
                   <mesh raycast={raycast} >
                               <meshLineGeometry points={object} />
                               <motion.meshLineMaterial 
-                                    initial={optionToShow === 9 ? 'hidden' : 'visible'} 
-                                    animate={optionToShow === 9 ? 'visible' : 'hidden'}
-                                    variants={optionToShow === 9 ? varShow : varHide}
+                                    initial={optionToShow === 8 ? 'hidden' : 'visible'} 
+                                    animate={optionToShow === 8 ? 'visible' : 'hidden'}
+                                    variants={optionToShow === 8 ? varShow : varHide}
                                     transparent = {true}
                                     blending = {THREE.NormalBlending}
                                     depthTest = {false}
@@ -546,9 +546,9 @@ const Lines = ({data, layout, optionToShow, showAllMesh}) => {
                   <mesh raycast={raycast} >
                               <meshLineGeometry points={object} />
                               <motion.meshLineMaterial 
-                                    initial={optionToShow === 10 ? 'hidden' : 'visible'} 
-                                    animate={optionToShow === 10 ? 'visible' : 'hidden'}
-                                    variants={optionToShow === 10 ? varShow : varHide}
+                                    initial={optionToShow === 9 ? 'hidden' : 'visible'} 
+                                    animate={optionToShow === 9 ? 'visible' : 'hidden'}
+                                    variants={optionToShow === 9 ? varShow : varHide}
                                     transparent = {true}
                                     blending = {THREE.NormalBlending}
                                     depthTest = {false}
@@ -586,9 +586,9 @@ const Lines = ({data, layout, optionToShow, showAllMesh}) => {
                   <mesh raycast={raycast}>
                               <meshLineGeometry points={object} />
                               <motion.meshLineMaterial 
-                                    initial={optionToShow === 11 ? 'hidden' : 'visible'} 
-                                    animate={optionToShow === 11 ? 'visible' : 'hidden'}
-                                    variants={optionToShow === 11 ? varShow : varHide}
+                                    initial={optionToShow === 10 ? 'hidden' : 'visible'} 
+                                    animate={optionToShow === 10 ? 'visible' : 'hidden'}
+                                    variants={optionToShow === 10 ? varShow : varHide}
                                     transparent = {true}
                                     blending = {THREE.NormalBlending}
                                     depthTest = {false}
@@ -626,9 +626,9 @@ const Lines = ({data, layout, optionToShow, showAllMesh}) => {
                   <mesh raycast={raycast} >
                               <meshLineGeometry points={object} />
                               <motion.meshLineMaterial 
-                                    initial={optionToShow === 12 ? 'hidden' : 'visible'} 
-                                    animate={optionToShow === 12 ? 'visible' : 'hidden'}
-                                    variants={optionToShow === 12 ? varShow : varHide}
+                                    initial={optionToShow === 11 ? 'hidden' : 'visible'} 
+                                    animate={optionToShow === 11 ? 'visible' : 'hidden'}
+                                    variants={optionToShow === 11 ? varShow : varHide}
                                     transparent = {true}
                                     blending = {THREE.NormalBlending}
                                     depthTest = {false}

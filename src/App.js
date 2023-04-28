@@ -37,13 +37,14 @@ function App() {
   const [openLoginModal, setOpenLoginModal] = React.useState(false)
   const [zoom, setZoom] = React.useState(false)
   const [focus, setFocus] = React.useState({})
-
   const storeSelectedPoint = React.useRef(null)
   const [updatePosLoading, setUpdatePosLoading] = React.useState(false)
   const [isVoteByUser, setIsVoteByUser] = React.useState(false)
-
   const [optionToShow, setOptionToShow] = React.useState(undefined)
   const [showAllMesh, setShowAllMesh] = React.useState(true)
+  const [centroidsArray, setCentroidsArray] = React.useState()
+
+
 
 
     const {loading: collection_data_loading, data: collection_data} = useQuery(COLLECTION_DATA)
@@ -299,6 +300,10 @@ function App() {
                     setOptionToShow = {setOptionToShow}
                     showAllMesh = {showAllMesh}
                     setShowAllMesh = {setShowAllMesh}
+                    setZoom = {setZoom}
+                    zoom = {zoom}
+                    setFocus = {setFocus}
+                    centroidsArray = {centroidsArray}
               />
               
               <LoginModal
@@ -342,7 +347,12 @@ function App() {
                   isVoteByUser = {isVoteByUser}
 
                   optionToShow = {optionToShow}
+                  setOptionToShow = {setOptionToShow}
                   showAllMesh = {showAllMesh}
+                  setShowAllMesh = {setShowAllMesh}
+
+                  centroidsArray = {centroidsArray}
+                  setCentroidsArray = {setCentroidsArray}
 
                   />
 

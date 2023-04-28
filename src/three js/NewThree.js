@@ -1,6 +1,5 @@
-import { OrbitControls, PerspectiveCamera, Float } from "@react-three/drei";
+import { Float } from "@react-three/drei";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-//import { hover } from "@testing-library/user-event/dist/hover";
 import { useRef, useEffect, useMemo } from "react";
 import * as THREE from "three";
 import { Object3D } from "three";
@@ -9,6 +8,7 @@ import CameraControls from 'camera-controls'
 import Lines from "./Lines";
 import ConvexHull from "./ConvexHull";
 import { UserAuth } from '../AuthContext';
+import CentroidButton from "./CentroidButton";
 
 
 CameraControls.install({ THREE })
@@ -18,7 +18,7 @@ const loadingElement = <div id="preloader"></div>;
 
 
 //camera
-function Controls({ zoom, focus, pos = new THREE.Vector3(), look = new THREE.Vector3() }) {
+function Controls({ zoom, focus, pos = new THREE.Vector3(), look = new THREE.Vector3(), optionToShow, selectedPoint }) {
   const camera = useThree((state) => state.camera)
   const gl = useThree((state) => state.gl)
   const controls = useMemo(() => new CameraControls(camera, gl.domElement), [])
@@ -27,7 +27,12 @@ function Controls({ zoom, focus, pos = new THREE.Vector3(), look = new THREE.Vec
     if(!zoom){
       controls.setPosition(13, 13, 13, true)
     }else{
-      controls.setPosition(focus.x + 1.5, focus.y + 1.5, focus.z + 2, true)
+      if(optionToShow === null){
+        controls.setPosition(focus.x + 1.5, focus.y + 1.5, focus.z + 2, true)
+      }else{
+          controls.setPosition(focus.x + 3, focus.y + 3, focus.z + 3.5, true)
+      }
+      
     }
   }, [zoom, focus])
 
@@ -177,7 +182,12 @@ const useMousePointInteraction = ({
                           setOpenModal, 
                           setOpenVote, 
                           zoomToView, 
-                          setZoom }) => {
+                          setZoom,
+                          optionToShow,
+                          setOptionToShow,
+                          setShowAllMesh
+
+                           }) => {
      
       //Track mouse down position to skip click handlers on drags
       const mouseDownRef = useRef([0,0]);
@@ -212,14 +222,30 @@ const useMousePointInteraction = ({
                 onSelectPoint(null)
                 setOpenModal(false);
           } else {
+
+              if(point.Label === optionToShow){
                 storeSelectedPoint.current = index
-                onSelectPoint(point)
-                setZoom(true)
-                zoomToView(point)
-                setTimeout(() => {
-                  setOpenModal(true);
-                  setOpenVote(false);
-                }, 500)
+                    onSelectPoint(point)
+                    setZoom(true)
+                    zoomToView(point)
+                    setTimeout(() => {
+                      setOpenModal(true);
+                      setOpenVote(false);
+                    }, 500)
+              } else {
+                storeSelectedPoint.current = index
+                    onSelectPoint(point)
+                    setZoom(true)
+                    zoomToView(point)
+                    setOptionToShow(null)
+                    setShowAllMesh(true)
+                    setTimeout(() => {
+                      setOpenModal(true);
+                      setOpenVote(false);
+                    }, 500)
+              }
+                
+                
           }
     };
 
@@ -272,7 +298,10 @@ const InstancedPoints = ({
         setIsVoteByUser,
         isVoteByUser,
         user,
-        userVotes
+        userVotes,
+        optionToShow,
+        setOptionToShow,
+        setShowAllMesh
       }) => {
 
     const numPoints = data.length;
@@ -299,6 +328,13 @@ const InstancedPoints = ({
                           onSelectPoint(point);
                           setZoom(true)
                           zoomToView(point)
+
+                          //See if the selected point is outside the current selected cluster
+                          if(point.Label !== optionToShow){
+                                  setOptionToShow(null)
+                                  setShowAllMesh(true)
+                            }
+
                           setTimeout(() => {
                               setOpenModal(true);
                               setOpenVote(false);
@@ -309,8 +345,15 @@ const InstancedPoints = ({
                 } else if (storeSelectedPoint.current !== null && !isVoteByUser && !zoom){
 
                         const point = data[storeSelectedPoint.current];
+                        
                         if(point !== selectedPoint){
                                 onSelectPoint(point);
+
+                                //See if the selected point is outside the current selected cluster
+                                if(point.Label !== optionToShow){
+                                    setOptionToShow(null)
+                                    setShowAllMesh(true)
+                                }
                         }
 
                 } else if (storeSelectedPoint.current !== null && !isVoteByUser && zoom){
@@ -320,6 +363,12 @@ const InstancedPoints = ({
                                 onSelectPoint(point);
                                 setZoom(true)
                                 zoomToView(point)
+
+                                //See if the selected point is outside the current selected cluster
+                                if(point.Label !== optionToShow){
+                                    setOptionToShow(null)
+                                    setShowAllMesh(true)
+                                }
                         }
                 }
                  
@@ -343,7 +392,10 @@ const InstancedPoints = ({
       setOpenModal,
       setOpenVote,
       zoomToView,
-      setZoom
+      setZoom,
+      optionToShow,
+      setOptionToShow,
+      setShowAllMesh
     });
 
     
@@ -387,6 +439,7 @@ const Scene = ({ data,
                  zoom,
                  setZoom,
                  focus,
+                 setFocus,
                  zoomToView,
                  storeSelectedPoint,
                  updatePosLoading,
@@ -394,15 +447,103 @@ const Scene = ({ data,
                  isVoteByUser,
 
                  optionToShow,
-                 showAllMesh
+                 setOptionToShow,
+                 showAllMesh,
+                 setShowAllMesh,
+
+                 centroidsArray,
+                 setCentroidsArray
+
                  }) => {
     
-    //console.log(data[0]);
-    // const [zoom, setZoom] = useState(false)
-    // const [focus, setFocus] = useState({})
 
     const { user, userVotes } = UserAuth()
+    const arrColor = ["#ff3", "#f88", "#88f", "#e72", "#4d2", "#3ff", "#663", "#999", "#c0f", "#40d", "#060", "#c24"]
+    const originPos = {x: 0, y: 0, z: 0}
 
+    // Define an array of button configurations
+    const buttonConfigs = [
+      {
+        position: centroidsArray ? centroidsArray[0] : originPos,
+        text: 'Amusement',
+        color: arrColor[0],
+      },
+      {
+        position: centroidsArray ? centroidsArray[1] : originPos,
+        text: 'Intimate',
+        color: arrColor[1],
+      },
+      {
+        position: centroidsArray ? centroidsArray[2] : originPos,
+        text: 'Elegant',
+        color: arrColor[2],
+      },
+      {
+        position: centroidsArray ? centroidsArray[3] : originPos,
+        text: 'Lively',
+        color: arrColor[3],
+      },
+      {
+        position: centroidsArray ? centroidsArray[4] : originPos,
+        text: 'Spiritual',
+        color: arrColor[4],
+      },
+      {
+        position: centroidsArray ? centroidsArray[5] : originPos,
+        text: 'Calmness',
+        color: arrColor[5],
+      },
+      {
+        position: centroidsArray ? centroidsArray[6] : originPos,
+        text: 'Boredom',
+        color: arrColor[6],
+      },
+      {
+        position: centroidsArray ? centroidsArray[7] : originPos,
+        text: 'Strange',
+        color: arrColor[7],
+      },
+      {
+        position: centroidsArray ? centroidsArray[8] : originPos,
+        text: 'Mysterious',
+        color: arrColor[8],
+      },
+      {
+        position: centroidsArray ? centroidsArray[9] : originPos,
+        text: 'Anxiety',
+        color: arrColor[9],
+      },
+      {
+        position: centroidsArray ? centroidsArray[10] : originPos,
+        text: 'Sadness',
+        color: arrColor[10],
+      },
+      {
+        position: centroidsArray ? centroidsArray[11] : originPos,
+        text: 'Dread',
+        color: arrColor[11],
+      }
+      
+    ];
+
+    //Define button onClick
+    const handleClick = (buttonIndex) => {
+      if(optionToShow !== buttonIndex){
+        setOptionToShow(buttonIndex); 
+        setShowAllMesh(false)
+        setZoom(true)
+        setFocus(centroidsArray[buttonIndex])
+
+      }else{
+        setOptionToShow(null)
+        setShowAllMesh(!showAllMesh)
+        setZoom(false)
+      }
+    };
+
+
+
+    //Return components for rendering
     if(loading || collection_data_loading){
 
       return loadingElement
@@ -415,16 +556,6 @@ const Scene = ({ data,
         <Canvas style={{ background: "black" }} camera={{ position: [25, 25, 25] }}>
 
             {/* <primitive object={new THREE.AxesHelper(10)} /> */}
-
-            {/* <OrbitControls
-                  target={[5 ,5 ,5 ]}
-                  // minAzimuthAngle={-Math.PI / 18}
-                  // maxAzimuthAngle={Math.PI / 2}
-                  // minPolarAngle={Math.PI / 6}
-                  // maxPolarAngle={Math.PI - Math.PI / 6}
-            /> */}
-            {/* <PerspectiveCamera makeDefault fov={75} position={[5, 5, 20]}/> */}
-
 
             <Float       
                 speed={0.5}
@@ -450,11 +581,25 @@ const Scene = ({ data,
                     setIsVoteByUser = {setIsVoteByUser}
                     isVoteByUser = {isVoteByUser} 
 
+                    optionToShow = {optionToShow}
+                    setOptionToShow = {setOptionToShow}
+                    setShowAllMesh = {setShowAllMesh}
+             
                     user = {user}
                     userVotes = {userVotes}
                     // zoomToView={(focusRef) => (setZoom(!zoom), setFocus(focusRef))}
                 />
 
+                
+                {buttonConfigs.map((config, index) => (
+                  <CentroidButton
+                    key={index}
+                    position={config.position}
+                    text={config.text}
+                    color={config.color}
+                    onClick={() => handleClick(index)}
+                  />
+                ))}
 
                 <Lines 
                     data = {data}
@@ -472,6 +617,8 @@ const Scene = ({ data,
 
                     optionToShow = {optionToShow}
                     showAllMesh = {showAllMesh}
+
+                    setCentroidsArray = {setCentroidsArray}
                 />
                 
                 
@@ -481,7 +628,7 @@ const Scene = ({ data,
 
 
 
-            <Controls zoom={zoom} focus={focus} />
+            <Controls zoom={zoom} focus={focus} optionToShow={optionToShow} selectedPoint={selectedPoint}/>
 
             <ambientLight />
 

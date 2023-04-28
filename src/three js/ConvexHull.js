@@ -7,7 +7,8 @@ const ConvexHull = ({
                       data, 
                       layout,
                       optionToShow,
-                      showAllMesh
+                      showAllMesh,
+                      setCentroidsArray
                     }) => {
 
 
@@ -23,6 +24,19 @@ const ConvexHull = ({
     const convexRefAnxiety = useRef();
     const convexRefSadness = useRef();
     const convexRefDread = useRef();
+
+    const centroidRefAmusement = useRef();
+    const centroidRefIntimate = useRef();
+    const centroidRefElegant = useRef();
+    const centroidRefLively = useRef();
+    const centroidRefSpiritual = useRef();
+    const centroidRefCalmness = useRef();
+    const centroidRefBoredom = useRef();
+    const centroidRefStrange = useRef();
+    const centroidRefMysterious = useRef();
+    const centroidRefAnxiety = useRef();
+    const centroidRefSadness = useRef();
+    const centroidRefDread = useRef();
 
 
     const varShow = {
@@ -62,6 +76,7 @@ const ConvexHull = ({
             let arrAnxiety = [];
             let arrSadness = [];
             let arrDread = [];
+            let arrCentroids = [];
 
 
             if(layout === 'spiral') {
@@ -131,6 +146,22 @@ const ConvexHull = ({
                 convexRefAnxiety.current.geometry = new ConvexGeometry(arrAnxiety)
                 convexRefSadness.current.geometry = new ConvexGeometry(arrSadness)
                 convexRefDread.current.geometry = new ConvexGeometry(arrDread)
+
+
+                arrCentroids.push(centroidRefAmusement.current = getConvexHullCentroid(convexRefAmusement.current.geometry))
+                arrCentroids.push(centroidRefIntimate.current = getConvexHullCentroid(convexRefIntimate.current.geometry))
+                arrCentroids.push(centroidRefElegant.current = getConvexHullCentroid(convexRefElegant.current.geometry))
+                arrCentroids.push(centroidRefLively.current = getConvexHullCentroid(convexRefLively.current.geometry))
+                arrCentroids.push(centroidRefSpiritual.current = getConvexHullCentroid(convexRefSpiritual.current.geometry))
+                arrCentroids.push(centroidRefCalmness.current = getConvexHullCentroid(convexRefCalmness.current.geometry))
+                arrCentroids.push(centroidRefBoredom.current = getConvexHullCentroid(convexRefBoredom.current.geometry))
+                arrCentroids.push(centroidRefStrange.current = getConvexHullCentroid(convexRefStrange.current.geometry))
+                arrCentroids.push(centroidRefMysterious.current = getConvexHullCentroid(convexRefMysterious.current.geometry))
+                arrCentroids.push(centroidRefAnxiety.current = getConvexHullCentroid(convexRefAnxiety.current.geometry))
+                arrCentroids.push(centroidRefSadness.current = getConvexHullCentroid(convexRefSadness.current.geometry))
+                arrCentroids.push(centroidRefDread.current = getConvexHullCentroid(convexRefDread.current.geometry))
+              
+                setCentroidsArray(arrCentroids)
 
                 }
 
@@ -268,18 +299,18 @@ const ConvexHull = ({
             <>
                   <mesh ref={convexRefAmusement}>
                       <motion.meshBasicMaterial 
-                                initial={optionToShow === 1 ? 'hidden' : 'visible'} 
-                                animate={optionToShow === 1 ? 'visible' : 'hidden'}
-                                variants={optionToShow === 1 ? varShow : varHide} 
+                                initial={optionToShow === 0 ? 'hidden' : 'visible'} 
+                                animate={optionToShow === 0 ? 'visible' : 'hidden'}
+                                variants={optionToShow === 0 ? varShow : varHide} 
                                 blending = {THREE.NormalBlending}
                                 depthTest = {false}
                                 color={'ff3'}/>      
                   </mesh>
                   <mesh ref={convexRefIntimate}>
                       <motion.meshBasicMaterial 
-                                initial={optionToShow === 2 ? 'hidden' : 'visible'} 
-                                animate={optionToShow === 2 ? 'visible' : 'hidden'}
-                                variants={optionToShow === 2 ? varShow : varHide} 
+                                initial={optionToShow === 1 ? 'hidden' : 'visible'} 
+                                animate={optionToShow === 1 ? 'visible' : 'hidden'}
+                                variants={optionToShow === 1 ? varShow : varHide} 
                                 blending = {THREE.NormalBlending}
                                 depthTest = {false}
                                 color={`#f88`} />
@@ -287,9 +318,9 @@ const ConvexHull = ({
 
                   <mesh ref={convexRefElegant}>
                       <motion.meshBasicMaterial 
-                                initial={optionToShow === 3 ? 'hidden' : 'visible'} 
-                                animate={optionToShow === 3 ? 'visible' : 'hidden'}
-                                variants={optionToShow === 3 ? varShow : varHide} 
+                                initial={optionToShow === 2 ? 'hidden' : 'visible'} 
+                                animate={optionToShow === 2 ? 'visible' : 'hidden'}
+                                variants={optionToShow === 2 ? varShow : varHide} 
                                 blending = {THREE.NormalBlending}
                                 depthTest = {false}
                                 color={`#88f`} />
@@ -297,9 +328,9 @@ const ConvexHull = ({
 
                   <mesh ref={convexRefLively}>
                       <motion.meshBasicMaterial 
-                                initial={optionToShow === 4 ? 'hidden' : 'visible'} 
-                                animate={optionToShow === 4 ? 'visible' : 'hidden'}
-                                variants={optionToShow === 4 ? varShow : varHide}  
+                                initial={optionToShow === 3 ? 'hidden' : 'visible'} 
+                                animate={optionToShow === 3 ? 'visible' : 'hidden'}
+                                variants={optionToShow === 3 ? varShow : varHide}  
                                 blending = {THREE.NormalBlending}
                                 depthTest = {false}
                                 color={`#e72`} />
@@ -307,9 +338,9 @@ const ConvexHull = ({
 
                   <mesh ref={convexRefSpiritual}>
                       <motion.meshBasicMaterial 
-                                initial={optionToShow === 5 ? 'hidden' : 'visible'} 
-                                animate={optionToShow === 5 ? 'visible' : 'hidden'}
-                                variants={optionToShow === 5 ? varShow : varHide}  
+                                initial={optionToShow === 4 ? 'hidden' : 'visible'} 
+                                animate={optionToShow === 4 ? 'visible' : 'hidden'}
+                                variants={optionToShow === 4 ? varShow : varHide}  
                                 blending = {THREE.NormalBlending}
                                 depthTest = {false}
                                 color={`#4d2`} />
@@ -317,9 +348,9 @@ const ConvexHull = ({
 
                   <mesh ref={convexRefCalmness}>
                       <motion.meshBasicMaterial 
-                                initial={optionToShow === 6 ? 'hidden' : 'visible'} 
-                                animate={optionToShow === 6 ? 'visible' : 'hidden'}
-                                variants={optionToShow === 6 ? varShow : varHide}  
+                                initial={optionToShow === 5 ? 'hidden' : 'visible'} 
+                                animate={optionToShow === 5 ? 'visible' : 'hidden'}
+                                variants={optionToShow === 5 ? varShow : varHide}  
                                 blending = {THREE.NormalBlending}
                                 depthTest = {false}
                                 color={`#3ff`} />
@@ -327,9 +358,9 @@ const ConvexHull = ({
 
                   <mesh ref={convexRefBoredom}>
                       <motion.meshBasicMaterial 
-                                initial={optionToShow === 7 ? 'hidden' : 'visible'} 
-                                animate={optionToShow === 7 ? 'visible' : 'hidden'}
-                                variants={optionToShow === 7 ? varShow : varHide}  
+                                initial={optionToShow === 6 ? 'hidden' : 'visible'} 
+                                animate={optionToShow === 6 ? 'visible' : 'hidden'}
+                                variants={optionToShow === 6 ? varShow : varHide}  
                                 blending = {THREE.NormalBlending}
                                 depthTest = {false}
                                 color={`#663`} />
@@ -337,9 +368,9 @@ const ConvexHull = ({
 
                   <mesh ref={convexRefStrange}>
                       <motion.meshBasicMaterial 
-                                initial={optionToShow === 8 ? 'hidden' : 'visible'} 
-                                animate={optionToShow === 8 ? 'visible' : 'hidden'}
-                                variants={optionToShow === 8 ? varShow : varHide}  
+                                initial={optionToShow === 7 ? 'hidden' : 'visible'} 
+                                animate={optionToShow === 7 ? 'visible' : 'hidden'}
+                                variants={optionToShow === 7 ? varShow : varHide}  
                                 blending = {THREE.NormalBlending}
                                 depthTest = {false}
                                 color={`#999`} />
@@ -347,9 +378,9 @@ const ConvexHull = ({
 
                   <mesh ref={convexRefMysterious}>
                       <motion.meshBasicMaterial 
-                                initial={optionToShow === 9 ? 'hidden' : 'visible'} 
-                                animate={optionToShow === 9 ? 'visible' : 'hidden'}
-                                variants={optionToShow === 9 ? varShow : varHide}  
+                                initial={optionToShow === 8 ? 'hidden' : 'visible'} 
+                                animate={optionToShow === 8 ? 'visible' : 'hidden'}
+                                variants={optionToShow === 8 ? varShow : varHide}  
                                 blending = {THREE.NormalBlending}
                                 depthTest = {false}
                                 color={`#c0f`} />
@@ -357,9 +388,9 @@ const ConvexHull = ({
 
                   <mesh ref={convexRefAnxiety}>
                       <motion.meshBasicMaterial 
-                                initial={optionToShow === 10 ? 'hidden' : 'visible'} 
-                                animate={optionToShow === 10 ? 'visible' : 'hidden'}
-                                variants={optionToShow === 10 ? varShow : varHide}  
+                                initial={optionToShow === 9 ? 'hidden' : 'visible'} 
+                                animate={optionToShow === 9 ? 'visible' : 'hidden'}
+                                variants={optionToShow === 9 ? varShow : varHide}  
                                 blending = {THREE.NormalBlending}
                                 depthTest = {false}
                                 color={`#40d`} />
@@ -367,9 +398,9 @@ const ConvexHull = ({
 
                   <mesh ref={convexRefSadness}>
                       <motion.meshBasicMaterial 
-                                initial={optionToShow === 11 ? 'hidden' : 'visible'} 
-                                animate={optionToShow === 11 ? 'visible' : 'hidden'}
-                                variants={optionToShow === 11 ? varShow : varHide}  
+                                initial={optionToShow === 10 ? 'hidden' : 'visible'} 
+                                animate={optionToShow === 10 ? 'visible' : 'hidden'}
+                                variants={optionToShow === 10 ? varShow : varHide}  
                                 blending = {THREE.NormalBlending}
                                 depthTest = {false}
                                 color={`#060`} />
@@ -377,9 +408,9 @@ const ConvexHull = ({
 
                   <mesh ref={convexRefDread}>
                       <motion.meshBasicMaterial 
-                                initial={optionToShow === 12 ? 'hidden' : 'visible'} 
-                                animate={optionToShow === 12 ? 'visible' : 'hidden'}
-                                variants={optionToShow === 12 ? varShow : varHide}  
+                                initial={optionToShow === 11 ? 'hidden' : 'visible'} 
+                                animate={optionToShow === 11 ? 'visible' : 'hidden'}
+                                variants={optionToShow === 11 ? varShow : varHide}  
                                 blending = {THREE.NormalBlending}
                                 depthTest = {false}
                                 color={`#c24`} />
@@ -392,3 +423,42 @@ const ConvexHull = ({
 }
 
 export default ConvexHull;
+
+
+function getConvexHullCentroid(geometry) {
+
+  const positions = geometry.attributes.position.array;
+  const numVertices = positions.length / 3;
+
+  let convexHullIndices = [];
+
+    // Assume all vertices are part of the convex hull
+    for (let i = 0; i < numVertices; i++) {
+      convexHullIndices.push(i);
+    }
+  
+
+  let centroid = new THREE.Vector3();
+  let numPoints = 0;
+
+  // Calculate the centroid of the points that make up the convex hull
+  for (let i = 0; i < numVertices; i++) {
+    if (convexHullIndices.includes(i)) {
+      const position = new THREE.Vector3(
+        positions[i * 3],
+        positions[i * 3 + 1],
+        positions[i * 3 + 2]
+      );
+      centroid.add(position);
+      numPoints++;
+    }
+  }
+
+  if (numPoints > 0) {
+    centroid.divideScalar(numPoints);
+  }
+
+  return centroid;
+}
+
+
