@@ -18,7 +18,7 @@ const loadingElement = <div id="preloader"></div>;
 
 
 //camera
-function Controls({ zoom, focus, pos = new THREE.Vector3(), look = new THREE.Vector3(), optionToShow, selectedPoint }) {
+function Controls({ zoom, focus, pos = new THREE.Vector3(), look = new THREE.Vector3(), optionToShow }) {
   const camera = useThree((state) => state.camera)
   const gl = useThree((state) => state.gl)
   const controls = useMemo(() => new CameraControls(camera, gl.domElement), [])
@@ -59,7 +59,7 @@ function Controls({ zoom, focus, pos = new THREE.Vector3(), look = new THREE.Vec
 
 
 //update
-function UpdateInstancedMeshMatrices({ mesh, data, selectedPoint, hoverPoint }) {
+function UpdateInstancedMeshMatrices({ mesh, data, selectedPoint, hoverPoint, hoverOnCentroid }) {
     if (!mesh) return;
     // set the transform matrix for each instance
     for (let i = 0; i < data.length; ++i) {
@@ -67,14 +67,15 @@ function UpdateInstancedMeshMatrices({ mesh, data, selectedPoint, hoverPoint }) 
   
       tempObject.position.set(x, y, z);
 
-
       if(data[i].totalVote !== 0) {
 
                   if (data[i] === selectedPoint) {
-                    tempObject.scale.set(2.5, 2.5, 2.5);
+                    tempObject.scale.set(2, 2, 2);
                     //console.log(data[i])
                   } else if(data[i] === hoverPoint) {
-                    tempObject.scale.set(2, 2, 2);
+                    tempObject.scale.set(1.5, 1.5, 1.5);
+                  } else if(hoverOnCentroid === data[i].Label){
+                    tempObject.scale.set(1.1, 1.1, 1.1);
                   } else {
                     tempObject.scale.set(1, 1, 1);
                   }
@@ -85,7 +86,7 @@ function UpdateInstancedMeshMatrices({ mesh, data, selectedPoint, hoverPoint }) 
 
                   if (data[i] === selectedPoint) {
                     tempObject.scale.set(2.5, 2.5, 2.5);
-                  } else if(data[i] === hoverPoint) {
+                  } else if(data[i] === hoverPoint ) {
                     tempObject.scale.set(0.6, 0.6, 0.6);
                   } else {
                     tempObject.scale.set(0.3, 0.3, 0.3);
@@ -111,11 +112,13 @@ const SELECTED_COLOR = '#6c6';
 const DEFAULT_COLOR_ORIGIN = '#fff'
 const VOTED_BY_USER_COLOR = '#d53'
 const DEFAULT_COLOR = ["#ff3", "#f88", "#88f", "#e72", "#4d2", "#3ff", "#663", "#999", "#c0f", "#40d", "#060", "#c24"]
+const DARK_COLOR = ["#4c4c00", "#620000", "#000062", "#3f1d05", "#113709", "#004c4c", "#19190d", "#262626", "#330040", "#110037", "#001a00", "#330811"]
+const LIGHT_COLOR = ["#ffff99", "#ffc3c3", "#c3c3ff", "#f6bb90", "#7ce764", "#99ffff", "#c3c388", "#cccccc", "#e580ff", "#9b6eff", "#33ff33", "#ec8a9e"]
 
 //re-use for instance computations
 const scratchColor = new THREE.Color();
 
-const usePointColors = ({ data, selectedPoint, layout, hoverPoint, user, userVotes }) => {
+const usePointColors = ({ data, selectedPoint, layout, hoverPoint, user, userVotes, optionToShow, hoverOnCentroid }) => {
 
     const numPoints = data.length;
     const layoutSelected = useRef();
@@ -127,6 +130,8 @@ const usePointColors = ({ data, selectedPoint, layout, hoverPoint, user, userVot
     useEffect(() => {
   
       if (layoutSelected.current === "spiral"){
+
+        if(optionToShow === null){
 
           for (let i = 0; i < data.length; ++i) {
 
@@ -140,13 +145,44 @@ const usePointColors = ({ data, selectedPoint, layout, hoverPoint, user, userVot
 
                     } else  {
 
-                      scratchColor.set(DEFAULT_COLOR[data[i].Label])
-
+                      if(data[i] === (hoverPoint) || hoverOnCentroid === data[i].Label){
+                        scratchColor.set(LIGHT_COLOR[data[i].Label])
+                      }else{
+                        scratchColor.set(DEFAULT_COLOR[data[i].Label])
+                      }
+                      
                     }
 
                   scratchColor.toArray(colorArray, i*3);
               }
-                    
+
+        } else {
+                  for (let i = 0; i < data.length; ++i) {
+
+                    if (data[i] === (selectedPoint)) {
+
+                        scratchColor.set(SELECTED_COLOR)
+
+                    } else if (data[i].totalVote === 0) {
+
+                        scratchColor.set(DEFAULT_COLOR_ORIGIN)
+
+                    } else  {
+
+                          if(optionToShow === data[i].Label || data[i] === (hoverPoint) || hoverOnCentroid === data[i].Label){
+                             scratchColor.set(DEFAULT_COLOR[data[i].Label])
+                          }
+                          else {
+                             scratchColor.set(DARK_COLOR[data[i].Label])
+                          }
+                       
+
+                    }
+
+                  scratchColor.toArray(colorArray, i*3);
+      
+                  }
+               }          
             }
 
        else {
@@ -164,8 +200,10 @@ const usePointColors = ({ data, selectedPoint, layout, hoverPoint, user, userVot
           }    
 
       }
+
       colorAttrib.current.needsUpdate = true;
-    }, [data, selectedPoint, colorArray, layout, hoverPoint, user, userVotes]);
+      
+    }, [data, selectedPoint, colorArray, layout, hoverPoint, user, userVotes, optionToShow, hoverOnCentroid]);
    
     return {colorAttrib, colorArray};
 };
@@ -301,7 +339,8 @@ const InstancedPoints = ({
         userVotes,
         optionToShow,
         setOptionToShow,
-        setShowAllMesh
+        setShowAllMesh,
+        hoverOnCentroid
       }) => {
 
     const numPoints = data.length;
@@ -312,7 +351,7 @@ const InstancedPoints = ({
       data,
       layout,
       onFrame: () => {
-        UpdateInstancedMeshMatrices({ mesh: meshRef.current, data, selectedPoint, hoverPoint });
+        UpdateInstancedMeshMatrices({ mesh: meshRef.current, data, selectedPoint, hoverPoint, hoverOnCentroid });
       },
     });
   
@@ -372,14 +411,14 @@ const InstancedPoints = ({
                         }
                 }
                  
-                  UpdateInstancedMeshMatrices({ mesh: meshRef.current, data, selectedPoint, hoverPoint });
+                  UpdateInstancedMeshMatrices({ mesh: meshRef.current, data, selectedPoint, hoverPoint, hoverOnCentroid });
 
       }
 
-    }, [data, selectedPoint, hoverPoint, updatePosLoading]);
+    }, [data, selectedPoint, hoverPoint, updatePosLoading, hoverOnCentroid]);
 
     // Color settings
-    const { colorAttrib, colorArray } = usePointColors({ data, selectedPoint, layout, hoverPoint, user, userVotes });
+    const { colorAttrib, colorArray } = usePointColors({ data, selectedPoint, layout, hoverPoint, user, userVotes, optionToShow, hoverOnCentroid });
 
     // Mouse interaction settings
     const { handleClick, handlePointerDown, handlePointerOver, handlePointerOut } = useMousePointInteraction({
@@ -398,8 +437,8 @@ const InstancedPoints = ({
       setShowAllMesh
     });
 
-    
-    return (
+      
+      return (
         <instancedMesh 
           ref={meshRef} 
           args={[null, null, numPoints]} 
@@ -422,6 +461,8 @@ const InstancedPoints = ({
             />
         </instancedMesh>
       );
+
+
 };
 
 
@@ -452,76 +493,93 @@ const Scene = ({ data,
                  setShowAllMesh,
 
                  centroidsArray,
-                 setCentroidsArray
+                 setCentroidsArray,
+
+                 hoverOnCentroid,
+                 setHoverOnCentroid
 
                  }) => {
     
 
     const { user, userVotes } = UserAuth()
-    const arrColor = ["#ff3", "#f88", "#88f", "#e72", "#4d2", "#3ff", "#663", "#999", "#c0f", "#40d", "#060", "#c24"]
+    const LIGHT_COLOR = ["#ffff99", "#ffc3c3", "#c3c3ff", "#f6bb90", "#7ce764", "#99ffff", "#c3c388", "#cccccc", "#e580ff", "#9b6eff", "#33ff33", "#ec8a9e"]
+    const DARK_COLOR = ["#4c4c00", "#620000", "#000062", "#3f1d05", "#113709", "#004c4c", "#19190d", "#262626", "#330040", "#110037", "#001a00", "#330811"]
     const originPos = {x: 0, y: 0, z: 0}
+
 
     // Define an array of button configurations
     const buttonConfigs = [
       {
+        id: 0,
         position: centroidsArray ? centroidsArray[0] : originPos,
         text: 'Amusement',
-        color: arrColor[0],
+        color: optionToShow === null || optionToShow === 0 || hoverOnCentroid === 0 ? LIGHT_COLOR[0] : DARK_COLOR[0],
       },
       {
+        id: 1,
         position: centroidsArray ? centroidsArray[1] : originPos,
         text: 'Intimate',
-        color: arrColor[1],
+        color: optionToShow === null || optionToShow === 1 || hoverOnCentroid === 1 ? LIGHT_COLOR[1] : DARK_COLOR[1],
       },
       {
+        id: 2,
         position: centroidsArray ? centroidsArray[2] : originPos,
         text: 'Elegant',
-        color: arrColor[2],
+        color: optionToShow === null || optionToShow === 2 || hoverOnCentroid === 2 ? LIGHT_COLOR[2] : DARK_COLOR[2],
       },
       {
+        id: 3,
         position: centroidsArray ? centroidsArray[3] : originPos,
         text: 'Lively',
-        color: arrColor[3],
+        color: optionToShow === null || optionToShow === 3 || hoverOnCentroid === 3 ? LIGHT_COLOR[3] : DARK_COLOR[3],
       },
       {
+        id: 4,
         position: centroidsArray ? centroidsArray[4] : originPos,
         text: 'Spiritual',
-        color: arrColor[4],
+        color: optionToShow === null || optionToShow === 4 || hoverOnCentroid === 4 ? LIGHT_COLOR[4] : DARK_COLOR[4],
       },
       {
+        id: 5,
         position: centroidsArray ? centroidsArray[5] : originPos,
         text: 'Calmness',
-        color: arrColor[5],
+        color: optionToShow === null || optionToShow === 5 || hoverOnCentroid === 5 ? LIGHT_COLOR[5] : DARK_COLOR[5],
       },
       {
+        id: 6,
         position: centroidsArray ? centroidsArray[6] : originPos,
         text: 'Boredom',
-        color: arrColor[6],
+        color: optionToShow === null || optionToShow === 6 || hoverOnCentroid === 6 ? LIGHT_COLOR[6] : DARK_COLOR[6],
       },
       {
+        id: 7,
         position: centroidsArray ? centroidsArray[7] : originPos,
         text: 'Strange',
-        color: arrColor[7],
+        color: optionToShow === null || optionToShow === 7 || hoverOnCentroid === 7 ? LIGHT_COLOR[7] : DARK_COLOR[7],
       },
       {
+        id: 8,
         position: centroidsArray ? centroidsArray[8] : originPos,
         text: 'Mysterious',
-        color: arrColor[8],
+        color: optionToShow === null || optionToShow === 8 || hoverOnCentroid === 8 ? LIGHT_COLOR[8] : DARK_COLOR[8],
       },
       {
+        id: 9,
         position: centroidsArray ? centroidsArray[9] : originPos,
         text: 'Anxiety',
-        color: arrColor[9],
+        color: optionToShow === null || optionToShow === 9 || hoverOnCentroid === 9 ? LIGHT_COLOR[9] : DARK_COLOR[9],
       },
       {
+        id: 10,
         position: centroidsArray ? centroidsArray[10] : originPos,
         text: 'Sadness',
-        color: arrColor[10],
+        color: optionToShow === null || optionToShow === 10 || hoverOnCentroid === 10 ? LIGHT_COLOR[10] : DARK_COLOR[10],
       },
       {
+        id: 11,
         position: centroidsArray ? centroidsArray[11] : originPos,
         text: 'Dread',
-        color: arrColor[11],
+        color: optionToShow === null || optionToShow === 11 || hoverOnCentroid === 11 ? LIGHT_COLOR[11] : DARK_COLOR[11],
       }
       
     ];
@@ -533,7 +591,6 @@ const Scene = ({ data,
         setShowAllMesh(false)
         setZoom(true)
         setFocus(centroidsArray[buttonIndex])
-
       }else{
         setOptionToShow(null)
         setShowAllMesh(!showAllMesh)
@@ -553,7 +610,7 @@ const Scene = ({ data,
       //console.log(data)
 
     return(
-        <Canvas style={{ background: "black" }} camera={{ position: [25, 25, 25] }}>
+        <Canvas style={{ background: "#111" }} camera={{ position: [25, 25, 25] }}>
 
             {/* <primitive object={new THREE.AxesHelper(10)} /> */}
 
@@ -587,19 +644,26 @@ const Scene = ({ data,
              
                     user = {user}
                     userVotes = {userVotes}
+
+                    hoverOnCentroid = {hoverOnCentroid}
                     // zoomToView={(focusRef) => (setZoom(!zoom), setFocus(focusRef))}
                 />
 
-                
-                {buttonConfigs.map((config, index) => (
+                { layout === 'spiral' && 
+                  buttonConfigs.map((config, index) => (
                   <CentroidButton
                     key={index}
+                    id={config.id}
                     position={config.position}
                     text={config.text}
                     color={config.color}
                     onClick={() => handleClick(index)}
+                    setHoverOnCentroid = {setHoverOnCentroid}
                   />
-                ))}
+                ))
+                
+                }
+                
 
                 <Lines 
                     data = {data}
@@ -619,6 +683,7 @@ const Scene = ({ data,
                     showAllMesh = {showAllMesh}
 
                     setCentroidsArray = {setCentroidsArray}
+                    hoverOnCentroid = {hoverOnCentroid}
                 />
                 
                 

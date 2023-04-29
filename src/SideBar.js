@@ -9,7 +9,8 @@ const SideBar = ({
                     setZoom, 
                     zoom, 
                     setFocus, 
-                    centroidsArray
+                    centroidsArray,
+                    setHoverOnCentroid
 
                   }) => {
 
@@ -209,9 +210,15 @@ const SideBar = ({
                     
                     <button onClick={() => {
                                             
-                                              setOptionToShow(null)
                                               setShowAllMesh(true)
-                                              setZoom(!zoom)
+                                              if(optionToShow && zoom){
+                                                setZoom(true)
+                                                setOptionToShow(null)
+                                              }else{
+                                                setZoom(!zoom)
+                                                setOptionToShow(null)
+                                              }
+                                              
                                               setFocus({x: 0, y: 0, z: 0})
 
                                             
@@ -223,6 +230,7 @@ const SideBar = ({
                                               setOptionToShow(null)
                                               setShowAllMesh(true)
                                               setZoom(false)
+                                              setHoverOnCentroid(null)
 
                                             }
                                             

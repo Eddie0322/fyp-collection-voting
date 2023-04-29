@@ -40,12 +40,10 @@ function App() {
   const storeSelectedPoint = React.useRef(null)
   const [updatePosLoading, setUpdatePosLoading] = React.useState(false)
   const [isVoteByUser, setIsVoteByUser] = React.useState(false)
-  const [optionToShow, setOptionToShow] = React.useState(undefined)
+  const [optionToShow, setOptionToShow] = React.useState(null)
   const [showAllMesh, setShowAllMesh] = React.useState(true)
   const [centroidsArray, setCentroidsArray] = React.useState()
-
-
-
+  const [hoverOnCentroid, setHoverOnCentroid] = React.useState(null)
 
     const {loading: collection_data_loading, data: collection_data} = useQuery(COLLECTION_DATA)
       React.useEffect(() => {
@@ -248,7 +246,16 @@ function App() {
               <div className='controls'>
                   <br></br>
                   <button onClick={() => {setLayout('spiral')}}>PCA</button>
-                  <button onClick={() => {setLayout('grid'); setShowAllMesh(true)}}>Cube</button>
+                  <button onClick={() => {
+                        setLayout('grid'); 
+                        setShowAllMesh(true); 
+                        setOptionToShow(null)
+                        setHoverOnCentroid(null)
+                        if(zoom){
+                          setZoom(false)
+                        }
+                      }}
+                        >Cube</button>
               </div>
 
 
@@ -304,6 +311,7 @@ function App() {
                     zoom = {zoom}
                     setFocus = {setFocus}
                     centroidsArray = {centroidsArray}
+                    setHoverOnCentroid = {setHoverOnCentroid}
               />
               
               <LoginModal
@@ -353,6 +361,9 @@ function App() {
 
                   centroidsArray = {centroidsArray}
                   setCentroidsArray = {setCentroidsArray}
+
+                  hoverOnCentroid = {hoverOnCentroid}
+                  setHoverOnCentroid = {setHoverOnCentroid}
 
                   />
 

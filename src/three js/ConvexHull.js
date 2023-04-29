@@ -8,7 +8,8 @@ const ConvexHull = ({
                       layout,
                       optionToShow,
                       showAllMesh,
-                      setCentroidsArray
+                      setCentroidsArray,
+                      hoverOnCentroid
                     }) => {
 
 
@@ -42,21 +43,43 @@ const ConvexHull = ({
     const varShow = {
       hidden: { opacity: 0 },
       visible: { 
-        opacity: 0.25, 
+        opacity: 0.2, 
         transition: {
-            delay: 1,
-            duration: 1.5
+            delay: 0,
+            duration: 0.2
       } },
     }
 
     const varHide = {
-      visible: { opacity: 0.25 },
+      visible: { opacity: 0.2 },
       hidden: { 
         opacity: 0, 
         transition: {
-            delay: 1,
-            duration: 1.5
+            delay: 0,
+            duration: 0.2
       } },
+    }
+
+    const varHoverStart = {
+      normal: { opacity: 0.2 },
+      hover: {
+        opacity:0.5,
+        transition: {
+          delay: 0.2,
+          duration:0.2
+        }
+      }
+    }
+
+    const varHoverHide = {
+      normal: { opacity: 0.2 },
+      hover: {
+        opacity:0.1,
+        transition: {
+          delay: 0.1,
+          duration:0.1
+        }
+      }
     }
     
 
@@ -175,126 +198,255 @@ const ConvexHull = ({
 
         <>
           {showAllMesh ? (
+
             <>
-                 <mesh ref={convexRefAmusement}>
-                      <motion.meshBasicMaterial 
-                                initial={'hidden'} 
-                                animate={'visible'}
-                                variants={varShow} 
-                                blending = {THREE.NormalBlending}
-                                depthTest = {false}
-                                color={'ff3'}/>      
-                  </mesh>
-                  <mesh ref={convexRefIntimate}>
-                      <motion.meshBasicMaterial 
-                                initial={'hidden'} 
-                                animate={'visible'}
-                                variants={varShow} 
-                                blending = {THREE.NormalBlending}
-                                depthTest = {false}
-                                color={`#f88`} />
-                  </mesh>
 
-                  <mesh ref={convexRefElegant}>
-                      <motion.meshBasicMaterial 
-                                initial={'hidden'} 
-                                animate={'visible'}
-                                variants={varShow}  
-                                blending = {THREE.NormalBlending}
-                                depthTest = {false}
-                                color={`#88f`} />
-                  </mesh>
+            {hoverOnCentroid === null ? (
+                <>
+                    <mesh ref={convexRefAmusement}>
+                          <motion.meshBasicMaterial 
+                                    initial={'hidden'} 
+                                    animate={'visible'}
+                                    variants={varShow} 
+                                    blending = {THREE.NormalBlending}
+                                    depthTest = {false}
+                                    color={'ff3'}/>      
+                      </mesh>
+                      <mesh ref={convexRefIntimate}>
+                          <motion.meshBasicMaterial 
+                                    initial={'hidden'} 
+                                    animate={'visible'}
+                                    variants={varShow} 
+                                    blending = {THREE.NormalBlending}
+                                    depthTest = {false}
+                                    color={`#f88`} />
+                      </mesh>
 
-                  <mesh ref={convexRefLively}>
-                      <motion.meshBasicMaterial 
-                                initial={'hidden'} 
-                                animate={'visible'}
-                                variants={varShow} 
-                                blending = {THREE.NormalBlending}
-                                depthTest = {false}
-                                color={`#e72`} />
-                  </mesh>
+                      <mesh ref={convexRefElegant}>
+                          <motion.meshBasicMaterial 
+                                    initial={'hidden'} 
+                                    animate={'visible'}
+                                    variants={varShow}  
+                                    blending = {THREE.NormalBlending}
+                                    depthTest = {false}
+                                    color={`#88f`} />
+                      </mesh>
 
-                  <mesh ref={convexRefSpiritual}>
-                      <motion.meshBasicMaterial 
-                                initial={'hidden'} 
-                                animate={'visible'}
-                                variants={varShow} 
-                                blending = {THREE.NormalBlending}
-                                depthTest = {false}
-                                color={`#4d2`} />
-                  </mesh>
+                      <mesh ref={convexRefLively}>
+                          <motion.meshBasicMaterial 
+                                    initial={'hidden'} 
+                                    animate={'visible'}
+                                    variants={varShow} 
+                                    blending = {THREE.NormalBlending}
+                                    depthTest = {false}
+                                    color={`#e72`} />
+                      </mesh>
 
-                  <mesh ref={convexRefCalmness}>
-                      <motion.meshBasicMaterial 
-                                initial={'hidden'} 
-                                animate={'visible'}
-                                variants={varShow}  
-                                blending = {THREE.NormalBlending}
-                                depthTest = {false}
-                                color={`#3ff`} />
-                  </mesh>
+                      <mesh ref={convexRefSpiritual}>
+                          <motion.meshBasicMaterial 
+                                    initial={'hidden'} 
+                                    animate={'visible'}
+                                    variants={varShow} 
+                                    blending = {THREE.NormalBlending}
+                                    depthTest = {false}
+                                    color={`#4d2`} />
+                      </mesh>
 
-                  <mesh ref={convexRefBoredom}>
-                      <motion.meshBasicMaterial 
-                                initial={'hidden'} 
-                                animate={'visible'}
-                                variants={varShow} 
-                                blending = {THREE.NormalBlending}
-                                depthTest = {false}
-                                color={`#663`} />
-                  </mesh>
+                      <mesh ref={convexRefCalmness}>
+                          <motion.meshBasicMaterial 
+                                    initial={'hidden'} 
+                                    animate={'visible'}
+                                    variants={varShow}  
+                                    blending = {THREE.NormalBlending}
+                                    depthTest = {false}
+                                    color={`#3ff`} />
+                      </mesh>
 
-                  <mesh ref={convexRefStrange}>
-                      <motion.meshBasicMaterial 
-                                initial={'hidden'} 
-                                animate={'visible'}
-                                variants={varShow} 
-                                blending = {THREE.NormalBlending}
-                                depthTest = {false}
-                                color={`#999`} />
-                  </mesh>
+                      <mesh ref={convexRefBoredom}>
+                          <motion.meshBasicMaterial 
+                                    initial={'hidden'} 
+                                    animate={'visible'}
+                                    variants={varShow} 
+                                    blending = {THREE.NormalBlending}
+                                    depthTest = {false}
+                                    color={`#663`} />
+                      </mesh>
 
-                  <mesh ref={convexRefMysterious}>
-                      <motion.meshBasicMaterial 
-                                initial={'hidden'} 
-                                animate={'visible'}
-                                variants={varShow}  
-                                blending = {THREE.NormalBlending}
-                                depthTest = {false}
-                                color={`#c0f`} />
-                  </mesh>
+                      <mesh ref={convexRefStrange}>
+                          <motion.meshBasicMaterial 
+                                    initial={'hidden'} 
+                                    animate={'visible'}
+                                    variants={varShow} 
+                                    blending = {THREE.NormalBlending}
+                                    depthTest = {false}
+                                    color={`#999`} />
+                      </mesh>
 
-                  <mesh ref={convexRefAnxiety}>
-                      <motion.meshBasicMaterial 
-                                initial={'hidden'} 
-                                animate={'visible'}
-                                variants={varShow} 
-                                blending = {THREE.NormalBlending}
-                                depthTest = {false}
-                                color={`#40d`} />
-                  </mesh>
+                      <mesh ref={convexRefMysterious}>
+                          <motion.meshBasicMaterial 
+                                    initial={'hidden'} 
+                                    animate={'visible'}
+                                    variants={varShow}  
+                                    blending = {THREE.NormalBlending}
+                                    depthTest = {false}
+                                    color={`#c0f`} />
+                      </mesh>
 
-                  <mesh ref={convexRefSadness}>
-                      <motion.meshBasicMaterial 
-                                initial={'hidden'} 
-                                animate={'visible'}
-                                variants={varShow} 
-                                blending = {THREE.NormalBlending}
-                                depthTest = {false}
-                                color={`#060`} />
-                  </mesh>
+                      <mesh ref={convexRefAnxiety}>
+                          <motion.meshBasicMaterial 
+                                    initial={'hidden'} 
+                                    animate={'visible'}
+                                    variants={varShow} 
+                                    blending = {THREE.NormalBlending}
+                                    depthTest = {false}
+                                    color={`#40d`} />
+                      </mesh>
 
-                  <mesh ref={convexRefDread}>
-                      <motion.meshBasicMaterial 
-                               initial={'hidden'} 
-                               animate={'visible'}
-                               variants={varShow} 
-                               blending = {THREE.NormalBlending}
-                               depthTest = {false}
-                                color={`#c24`} />
-                  </mesh>
-            </>
+                      <mesh ref={convexRefSadness}>
+                          <motion.meshBasicMaterial 
+                                    initial={'hidden'} 
+                                    animate={'visible'}
+                                    variants={varShow} 
+                                    blending = {THREE.NormalBlending}
+                                    depthTest = {false}
+                                    color={`#060`} />
+                      </mesh>
+
+                      <mesh ref={convexRefDread}>
+                          <motion.meshBasicMaterial 
+                                  initial={'hidden'} 
+                                  animate={'visible'}
+                                  variants={varShow} 
+                                  blending = {THREE.NormalBlending}
+                                  depthTest = {false}
+                                    color={`#c24`} />
+                      </mesh>
+                </>
+              ):(
+                <>
+                    <mesh ref={convexRefAmusement}>
+                          <motion.meshBasicMaterial 
+                                    initial={'normal'} 
+                                    animate={'hover'}
+                                    variants={hoverOnCentroid === 0 ? varHoverStart : varHoverHide} 
+                                    blending = {THREE.NormalBlending}
+                                    depthTest = {false}
+                                    color={'ff3'}/>      
+                      </mesh>
+                      <mesh ref={convexRefIntimate}>
+                          <motion.meshBasicMaterial 
+                                    initial={'normal'} 
+                                    animate={'hover'}
+                                    variants={hoverOnCentroid === 1 ? varHoverStart : varHoverHide} 
+                                    blending = {THREE.NormalBlending}
+                                    depthTest = {false}
+                                    color={`#f88`} />
+                      </mesh>
+
+                      <mesh ref={convexRefElegant}>
+                          <motion.meshBasicMaterial 
+                                    initial={'normal'} 
+                                    animate={'hover'}
+                                    variants={hoverOnCentroid === 2 ? varHoverStart : varHoverHide}  
+                                    blending = {THREE.NormalBlending}
+                                    depthTest = {false}
+                                    color={`#88f`} />
+                      </mesh>
+
+                      <mesh ref={convexRefLively}>
+                          <motion.meshBasicMaterial 
+                                    initial={'normal'} 
+                                    animate={'hover'}
+                                    variants={hoverOnCentroid === 3 ? varHoverStart : varHoverHide} 
+                                    blending = {THREE.NormalBlending}
+                                    depthTest = {false}
+                                    color={`#e72`} />
+                      </mesh>
+
+                      <mesh ref={convexRefSpiritual}>
+                          <motion.meshBasicMaterial 
+                                    initial={'normal'} 
+                                    animate={'hover'}
+                                    variants={hoverOnCentroid === 4 ? varHoverStart : varHoverHide} 
+                                    blending = {THREE.NormalBlending}
+                                    depthTest = {false}
+                                    color={`#4d2`} />
+                      </mesh>
+
+                      <mesh ref={convexRefCalmness}>
+                          <motion.meshBasicMaterial 
+                                    initial={'normal'} 
+                                    animate={'hover'}
+                                    variants={hoverOnCentroid === 5 ? varHoverStart : varHoverHide}  
+                                    blending = {THREE.NormalBlending}
+                                    depthTest = {false}
+                                    color={`#3ff`} />
+                      </mesh>
+
+                      <mesh ref={convexRefBoredom}>
+                          <motion.meshBasicMaterial 
+                                    initial={'normal'} 
+                                    animate={'hover'}
+                                    variants={hoverOnCentroid === 6 ? varHoverStart : varHoverHide} 
+                                    blending = {THREE.NormalBlending}
+                                    depthTest = {false}
+                                    color={`#663`} />
+                      </mesh>
+
+                      <mesh ref={convexRefStrange}>
+                          <motion.meshBasicMaterial 
+                                    initial={'normal'} 
+                                    animate={'hover'}
+                                    variants={hoverOnCentroid === 7 ? varHoverStart : varHoverHide} 
+                                    blending = {THREE.NormalBlending}
+                                    depthTest = {false}
+                                    color={`#999`} />
+                      </mesh>
+
+                      <mesh ref={convexRefMysterious}>
+                          <motion.meshBasicMaterial 
+                                    initial={'normal'} 
+                                    animate={'hover'}
+                                    variants={hoverOnCentroid === 8 ? varHoverStart : varHoverHide}  
+                                    blending = {THREE.NormalBlending}
+                                    depthTest = {false}
+                                    color={`#c0f`} />
+                      </mesh>
+
+                      <mesh ref={convexRefAnxiety}>
+                          <motion.meshBasicMaterial 
+                                    initial={'normal'} 
+                                    animate={'hover'}
+                                    variants={hoverOnCentroid === 9 ? varHoverStart : varHoverHide} 
+                                    blending = {THREE.NormalBlending}
+                                    depthTest = {false}
+                                    color={`#40d`} />
+                      </mesh>
+
+                      <mesh ref={convexRefSadness}>
+                          <motion.meshBasicMaterial 
+                                    initial={'normal'} 
+                                    animate={'hover'}
+                                    variants={hoverOnCentroid === 10 ? varHoverStart : varHoverHide} 
+                                    blending = {THREE.NormalBlending}
+                                    depthTest = {false}
+                                    color={`#060`} />
+                      </mesh>
+
+                      <mesh ref={convexRefDread}>
+                          <motion.meshBasicMaterial 
+                                  initial={'normal'} 
+                                  animate={'hover'}
+                                  variants={hoverOnCentroid === 11 ? varHoverStart : varHoverHide} 
+                                  blending = {THREE.NormalBlending}
+                                  depthTest = {false}
+                                    color={`#c24`} />
+                      </mesh>
+                </>
+              )}
+
+              </>
+
           ):(
             <>
                   <mesh ref={convexRefAmusement}>

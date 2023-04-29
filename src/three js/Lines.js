@@ -18,15 +18,15 @@ function storeResult(arr, result){
 }
 
 
-let lineWidth = 0.005
+let lineWidth = 0.004
 
 const varShow = {
   hidden: { opacity: 0 },
   visible: { 
     opacity: 0.5, 
     transition: {
-        delay: 0.5,
-        duration: 1
+        delay: 0,
+        duration: 0.5
   } },
 }
 
@@ -35,8 +35,8 @@ const varHide = {
   hidden: { 
     opacity: 0, 
     transition: {
-        delay: 0.5,
-        duration: 1
+        delay: 0,
+        duration: 0.5
   } },
 }
 
