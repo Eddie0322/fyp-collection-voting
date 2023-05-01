@@ -2,6 +2,8 @@ import { ConvexGeometry } from 'three/addons/geometries/ConvexGeometry.js';
 import * as THREE from "three";
 import { useEffect, useRef } from "react";
 import { motion } from "framer-motion-3d"
+import { useFrame } from '@react-three/fiber';
+import { Text } from '@react-three/drei';
 
 const ConvexHull = ({
                       data, 
@@ -9,7 +11,13 @@ const ConvexHull = ({
                       optionToShow,
                       showAllMesh,
                       setCentroidsArray,
-                      hoverOnCentroid
+                      hoverOnCentroid,
+                      setZoom,
+                      setFocus,
+                      setShowAllMesh,
+                      setOptionToShow,
+                      centroidsArray,
+                      setHoverOnCentroid
                     }) => {
 
 
@@ -39,14 +47,19 @@ const ConvexHull = ({
     const centroidRefSadness = useRef();
     const centroidRefDread = useRef();
 
+    const flag = useRef(true);
+    const flag2 = useRef(true);
+
+    const count = useRef(1)
+
 
     const varShow = {
       hidden: { opacity: 0 },
       visible: { 
         opacity: 0.2, 
         transition: {
-            delay: 0,
-            duration: 0.2
+            delay: 0.6,
+            duration: 0.4
       } },
     }
 
@@ -55,8 +68,8 @@ const ConvexHull = ({
       hidden: { 
         opacity: 0, 
         transition: {
-            delay: 0,
-            duration: 0.2
+            delay: 1,
+            duration: 0.5
       } },
     }
 
@@ -81,8 +94,136 @@ const ConvexHull = ({
         }
       }
     }
-    
 
+    //Text
+    let refArr = []
+
+    const textRef0 = useRef();
+    const textRef1 = useRef();
+    const textRef2 = useRef();
+    const textRef3 = useRef();
+    const textRef4 = useRef();
+    const textRef5 = useRef();
+    const textRef6 = useRef();
+    const textRef7 = useRef();
+    const textRef8 = useRef();
+    const textRef9 = useRef();
+    const textRef10 = useRef();
+    const textRef11 = useRef();
+
+
+    refArr.push(textRef0, textRef1, textRef2, textRef3, textRef4, textRef5, textRef6, textRef7, textRef8, textRef9, textRef10, textRef11)
+
+    const LIGHT_COLOR = ["#ffff99", "#ffc3c3", "#c3c3ff", "#f6bb90", "#7ce764", "#99ffff", "#c3c388", "#cccccc", "#e580ff", "#9b6eff", "#33ff33", "#ec8a9e"]
+    const DARK_COLOR = ["#4c4c00", "#620000", "#000062", "#3f1d05", "#113709", "#004c4c", "#19190d", "#262626", "#330040", "#110037", "#001a00", "#330811"]
+
+       // Define an array of button configurations
+       const buttonConfigs = [
+        {
+          text: 'Amusement',
+          color: optionToShow === null || optionToShow === 0 || hoverOnCentroid === 0 ? LIGHT_COLOR[0] : DARK_COLOR[0],
+        },
+        {
+          text: 'Intimate',
+          color: optionToShow === null || optionToShow === 1 || hoverOnCentroid === 1 ? LIGHT_COLOR[1] : DARK_COLOR[1],
+        },
+        {
+          text: 'Elegant',
+          color: optionToShow === null || optionToShow === 2 || hoverOnCentroid === 2 ? LIGHT_COLOR[2] : DARK_COLOR[2],
+        },
+        {
+          text: 'Lively',
+          color: optionToShow === null || optionToShow === 3 || hoverOnCentroid === 3 ? LIGHT_COLOR[3] : DARK_COLOR[3],
+        },
+        {
+          text: 'Spiritual',
+          color: optionToShow === null || optionToShow === 4 || hoverOnCentroid === 4 ? LIGHT_COLOR[4] : DARK_COLOR[4],
+        },
+        {
+          text: 'Calmness',
+          color: optionToShow === null || optionToShow === 5 || hoverOnCentroid === 5 ? LIGHT_COLOR[5] : DARK_COLOR[5],
+        },
+        {
+          text: 'Boredom',
+          color: optionToShow === null || optionToShow === 6 || hoverOnCentroid === 6 ? LIGHT_COLOR[6] : DARK_COLOR[6],
+        },
+        {
+          text: 'Strange',
+          color: optionToShow === null || optionToShow === 7 || hoverOnCentroid === 7 ? LIGHT_COLOR[7] : DARK_COLOR[7],
+        },
+        {
+          text: 'Mysterious',
+          color: optionToShow === null || optionToShow === 8 || hoverOnCentroid === 8 ? LIGHT_COLOR[8] : DARK_COLOR[8],
+        },
+        {
+          text: 'Anxiety',
+          color: optionToShow === null || optionToShow === 9 || hoverOnCentroid === 9 ? LIGHT_COLOR[9] : DARK_COLOR[9],
+        },
+        {
+          text: 'Sadness',
+          color: optionToShow === null || optionToShow === 10 || hoverOnCentroid === 10 ? LIGHT_COLOR[10] : DARK_COLOR[10],
+        },
+        {
+          text: 'Dread',
+          color: optionToShow === null || optionToShow === 11 || hoverOnCentroid === 11 ? LIGHT_COLOR[11] : DARK_COLOR[11],
+        }
+        
+      ];
+  
+      //Define button onClick
+      const handleClick = (buttonIndex) => {
+        if(optionToShow !== buttonIndex){
+          setOptionToShow(buttonIndex); 
+          setShowAllMesh(false)
+          setZoom(true)
+          setFocus(centroidsArray[buttonIndex])
+          setHoverOnCentroid(null)
+        }else{
+          setOptionToShow(null)
+          setShowAllMesh(!showAllMesh)
+          setZoom(false)
+          setHoverOnCentroid(null)
+        }
+      };
+
+      const handleHover = (buttonIndex) => {
+
+        if (flag2.current) {
+          flag2.current = false;
+        } else {
+          setHoverOnCentroid(buttonIndex)
+          console.log("hover")
+          flag2.current = true;
+        }
+      };
+
+      const handleHoverOut = (buttonIndex) => {
+
+        if (flag2.current) {
+          flag2.current = false;
+          setHoverOnCentroid(null)
+        } else {
+          setHoverOnCentroid(null)
+          console.log("out")
+          flag2.current = true;
+        }
+      };
+  
+
+    // Update the text rotation on each frame to face the camera
+    useFrame(({ camera }) => {
+
+
+      for(let i=0; i<12; i++){
+        if (refArr[i].current) {
+          refArr[i].current.lookAt(camera.position);
+        }
+      }
+  
+    });
+
+    const AnimatedText = motion(Text);
+    
 
     useEffect(() => {
 
@@ -183,8 +324,18 @@ const ConvexHull = ({
                 arrCentroids.push(centroidRefAnxiety.current = getConvexHullCentroid(convexRefAnxiety.current.geometry))
                 arrCentroids.push(centroidRefSadness.current = getConvexHullCentroid(convexRefSadness.current.geometry))
                 arrCentroids.push(centroidRefDread.current = getConvexHullCentroid(convexRefDread.current.geometry))
+
+
+                count.current = count.current + 1
               
-                setCentroidsArray(arrCentroids)
+                if (flag.current && centroidsArray[0].x != 0 && flag2.current && count.current < 3) {
+                  flag.current = false;
+                  flag2.current = false
+                }else{
+                  setCentroidsArray(arrCentroids)
+                }
+                
+            
 
                 }
 
@@ -569,7 +720,48 @@ const ConvexHull = ({
                   </mesh>
               </>
           )}  
+
+
+              <>
+              { centroidsArray && !flag.current && count.current > 2 &&
+              buttonConfigs.map((config, index) => (
+
+                      <AnimatedText
+                        key={index}
+                        ref={refArr[index]}
+                        position={centroidsArray[index]}
+                        onClick={() => handleClick(index)}
+                        //font={"Georgia,'Times New Roman', Times, serif"}
+                        fontSize={0.3}
+                        color={config.color}
+                        anchorX="center"
+                        anchorY="middle"
+
+                        onPointerOver={() => {
+                          // setHoverOnCentroid(index); 
+                          handleHover(index)
+                          
+                        }}
+                        onPointerLeave={() => {handleHoverOut(index)}}
+                        onPointerOut={() => {handleHoverOut(index)}}
+                        onPointerMissed={() => setHoverOnCentroid(null)}     
+
+                          
+                        whileHover={{
+                            scale: 1.2,
+                            transition: { duration: 0.15 },
+                          }}
+                      >
+                        {config.text}
+                      </AnimatedText>
+
+
+                      )
+                      )}
+              
+              </>
         </>
+
     )
 
 }

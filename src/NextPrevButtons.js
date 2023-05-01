@@ -498,7 +498,6 @@ const NextPrevButtons = ({
     }
 
     let colorsArray = ["#ff3", "#f88", "#88f", "#e72", "#4d2", "#3ff", "#663", "#999", "#c0f", "#40d", "#060", "#c24"]
-    let colorCubeArray = ["#fff", "#d53"]
     let emoLabel = ["Amusement", "Intimate", "Elegant", "Lively", "Spiritual", "Calmness", "Boredom", "Strange", "Mysterious", "Anxiety", "Sadness", "Dread"]
 
     if (layout === 'spiral'){

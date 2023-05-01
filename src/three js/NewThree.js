@@ -8,7 +8,7 @@ import CameraControls from 'camera-controls'
 import Lines from "./Lines";
 import ConvexHull from "./ConvexHull";
 import { UserAuth } from '../AuthContext';
-import CentroidButton from "./CentroidButton";
+
 
 
 CameraControls.install({ THREE })
@@ -59,7 +59,7 @@ function Controls({ zoom, focus, pos = new THREE.Vector3(), look = new THREE.Vec
 
 
 //update
-function UpdateInstancedMeshMatrices({ mesh, data, selectedPoint, hoverPoint, hoverOnCentroid }) {
+function UpdateInstancedMeshMatrices({ mesh, data, selectedPoint, hoverPoint }) {
     if (!mesh) return;
     // set the transform matrix for each instance
     for (let i = 0; i < data.length; ++i) {
@@ -74,8 +74,6 @@ function UpdateInstancedMeshMatrices({ mesh, data, selectedPoint, hoverPoint, ho
                     //console.log(data[i])
                   } else if(data[i] === hoverPoint) {
                     tempObject.scale.set(1.5, 1.5, 1.5);
-                  } else if(hoverOnCentroid === data[i].Label){
-                    tempObject.scale.set(1.1, 1.1, 1.1);
                   } else {
                     tempObject.scale.set(1, 1, 1);
                   }
@@ -223,7 +221,8 @@ const useMousePointInteraction = ({
                           setZoom,
                           optionToShow,
                           setOptionToShow,
-                          setShowAllMesh
+                          setShowAllMesh,
+                          setHoverOnCentroid
 
                            }) => {
      
@@ -259,6 +258,7 @@ const useMousePointInteraction = ({
                 storeSelectedPoint.current = null;
                 onSelectPoint(null)
                 setOpenModal(false);
+                setHoverOnCentroid(null)
           } else {
 
               if(point.Label === optionToShow){
@@ -266,6 +266,7 @@ const useMousePointInteraction = ({
                     onSelectPoint(point)
                     setZoom(true)
                     zoomToView(point)
+                    setHoverOnCentroid(null)
                     setTimeout(() => {
                       setOpenModal(true);
                       setOpenVote(false);
@@ -275,6 +276,7 @@ const useMousePointInteraction = ({
                     onSelectPoint(point)
                     setZoom(true)
                     zoomToView(point)
+                    setHoverOnCentroid(null)
                     setOptionToShow(null)
                     setShowAllMesh(true)
                     setTimeout(() => {
@@ -295,8 +297,10 @@ const useMousePointInteraction = ({
 
           if (point === hoverPoint) {
             onHoverPoint(null);
+            setHoverOnCentroid(null)
           }else{
             onHoverPoint(point)
+            setHoverOnCentroid(null)
           }
     }
 
@@ -340,7 +344,8 @@ const InstancedPoints = ({
         optionToShow,
         setOptionToShow,
         setShowAllMesh,
-        hoverOnCentroid
+        hoverOnCentroid,
+        setHoverOnCentroid
       }) => {
 
     const numPoints = data.length;
@@ -351,7 +356,7 @@ const InstancedPoints = ({
       data,
       layout,
       onFrame: () => {
-        UpdateInstancedMeshMatrices({ mesh: meshRef.current, data, selectedPoint, hoverPoint, hoverOnCentroid });
+        UpdateInstancedMeshMatrices({ mesh: meshRef.current, data, selectedPoint, hoverPoint });
       },
     });
   
@@ -411,11 +416,11 @@ const InstancedPoints = ({
                         }
                 }
                  
-                  UpdateInstancedMeshMatrices({ mesh: meshRef.current, data, selectedPoint, hoverPoint, hoverOnCentroid });
+                  UpdateInstancedMeshMatrices({ mesh: meshRef.current, data, selectedPoint, hoverPoint });
 
       }
 
-    }, [data, selectedPoint, hoverPoint, updatePosLoading, hoverOnCentroid]);
+    }, [data, selectedPoint, hoverPoint, updatePosLoading]);
 
     // Color settings
     const { colorAttrib, colorArray } = usePointColors({ data, selectedPoint, layout, hoverPoint, user, userVotes, optionToShow, hoverOnCentroid });
@@ -434,7 +439,8 @@ const InstancedPoints = ({
       setZoom,
       optionToShow,
       setOptionToShow,
-      setShowAllMesh
+      setShowAllMesh,
+      setHoverOnCentroid
     });
 
       
@@ -502,102 +508,6 @@ const Scene = ({ data,
     
 
     const { user, userVotes } = UserAuth()
-    const LIGHT_COLOR = ["#ffff99", "#ffc3c3", "#c3c3ff", "#f6bb90", "#7ce764", "#99ffff", "#c3c388", "#cccccc", "#e580ff", "#9b6eff", "#33ff33", "#ec8a9e"]
-    const DARK_COLOR = ["#4c4c00", "#620000", "#000062", "#3f1d05", "#113709", "#004c4c", "#19190d", "#262626", "#330040", "#110037", "#001a00", "#330811"]
-    const originPos = {x: 0, y: 0, z: 0}
-
-
-    // Define an array of button configurations
-    const buttonConfigs = [
-      {
-        id: 0,
-        position: centroidsArray ? centroidsArray[0] : originPos,
-        text: 'Amusement',
-        color: optionToShow === null || optionToShow === 0 || hoverOnCentroid === 0 ? LIGHT_COLOR[0] : DARK_COLOR[0],
-      },
-      {
-        id: 1,
-        position: centroidsArray ? centroidsArray[1] : originPos,
-        text: 'Intimate',
-        color: optionToShow === null || optionToShow === 1 || hoverOnCentroid === 1 ? LIGHT_COLOR[1] : DARK_COLOR[1],
-      },
-      {
-        id: 2,
-        position: centroidsArray ? centroidsArray[2] : originPos,
-        text: 'Elegant',
-        color: optionToShow === null || optionToShow === 2 || hoverOnCentroid === 2 ? LIGHT_COLOR[2] : DARK_COLOR[2],
-      },
-      {
-        id: 3,
-        position: centroidsArray ? centroidsArray[3] : originPos,
-        text: 'Lively',
-        color: optionToShow === null || optionToShow === 3 || hoverOnCentroid === 3 ? LIGHT_COLOR[3] : DARK_COLOR[3],
-      },
-      {
-        id: 4,
-        position: centroidsArray ? centroidsArray[4] : originPos,
-        text: 'Spiritual',
-        color: optionToShow === null || optionToShow === 4 || hoverOnCentroid === 4 ? LIGHT_COLOR[4] : DARK_COLOR[4],
-      },
-      {
-        id: 5,
-        position: centroidsArray ? centroidsArray[5] : originPos,
-        text: 'Calmness',
-        color: optionToShow === null || optionToShow === 5 || hoverOnCentroid === 5 ? LIGHT_COLOR[5] : DARK_COLOR[5],
-      },
-      {
-        id: 6,
-        position: centroidsArray ? centroidsArray[6] : originPos,
-        text: 'Boredom',
-        color: optionToShow === null || optionToShow === 6 || hoverOnCentroid === 6 ? LIGHT_COLOR[6] : DARK_COLOR[6],
-      },
-      {
-        id: 7,
-        position: centroidsArray ? centroidsArray[7] : originPos,
-        text: 'Strange',
-        color: optionToShow === null || optionToShow === 7 || hoverOnCentroid === 7 ? LIGHT_COLOR[7] : DARK_COLOR[7],
-      },
-      {
-        id: 8,
-        position: centroidsArray ? centroidsArray[8] : originPos,
-        text: 'Mysterious',
-        color: optionToShow === null || optionToShow === 8 || hoverOnCentroid === 8 ? LIGHT_COLOR[8] : DARK_COLOR[8],
-      },
-      {
-        id: 9,
-        position: centroidsArray ? centroidsArray[9] : originPos,
-        text: 'Anxiety',
-        color: optionToShow === null || optionToShow === 9 || hoverOnCentroid === 9 ? LIGHT_COLOR[9] : DARK_COLOR[9],
-      },
-      {
-        id: 10,
-        position: centroidsArray ? centroidsArray[10] : originPos,
-        text: 'Sadness',
-        color: optionToShow === null || optionToShow === 10 || hoverOnCentroid === 10 ? LIGHT_COLOR[10] : DARK_COLOR[10],
-      },
-      {
-        id: 11,
-        position: centroidsArray ? centroidsArray[11] : originPos,
-        text: 'Dread',
-        color: optionToShow === null || optionToShow === 11 || hoverOnCentroid === 11 ? LIGHT_COLOR[11] : DARK_COLOR[11],
-      }
-      
-    ];
-
-    //Define button onClick
-    const handleClick = (buttonIndex) => {
-      if(optionToShow !== buttonIndex){
-        setOptionToShow(buttonIndex); 
-        setShowAllMesh(false)
-        setZoom(true)
-        setFocus(centroidsArray[buttonIndex])
-      }else{
-        setOptionToShow(null)
-        setShowAllMesh(!showAllMesh)
-        setZoom(false)
-      }
-    };
-
 
 
     //Return components for rendering
@@ -646,24 +556,9 @@ const Scene = ({ data,
                     userVotes = {userVotes}
 
                     hoverOnCentroid = {hoverOnCentroid}
+                    setHoverOnCentroid = {setHoverOnCentroid}
                     // zoomToView={(focusRef) => (setZoom(!zoom), setFocus(focusRef))}
                 />
-
-                { layout === 'spiral' && 
-                  buttonConfigs.map((config, index) => (
-                  <CentroidButton
-                    key={index}
-                    id={config.id}
-                    position={config.position}
-                    text={config.text}
-                    color={config.color}
-                    onClick={() => handleClick(index)}
-                    setHoverOnCentroid = {setHoverOnCentroid}
-                  />
-                ))
-                
-                }
-                
 
                 <Lines 
                     data = {data}
@@ -674,17 +569,27 @@ const Scene = ({ data,
 
                 />
 
-
                 <ConvexHull
+
+                    setZoom = {setZoom}
+                    setFocus = {setFocus}
+
                     data = {data}
                     layout= {layout}
 
                     optionToShow = {optionToShow}
+                    setOptionToShow = {setOptionToShow}
                     showAllMesh = {showAllMesh}
 
                     setCentroidsArray = {setCentroidsArray}
                     hoverOnCentroid = {hoverOnCentroid}
+                    setShowAllMesh = {setShowAllMesh}
+
+                    centroidsArray = {centroidsArray}
+                    setHoverOnCentroid = {setHoverOnCentroid}
+
                 />
+              
                 
                 
                 

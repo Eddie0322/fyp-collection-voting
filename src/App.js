@@ -11,7 +11,8 @@ import ImagePreview from './ImagePreview';
 import SideBar from './SideBar';
 //import CollectionsMutation from './collection_mutation';
 
-let initialData = new Array(1000).fill(0).map((d, id) => ({ id, PCAx: 0, PCAy: 0, PCAz: 0, Label: -1, totalVote: 0 }));
+let initialTextPos = new Array(12).fill(0).map(() => ({x: 100, y:100, z: 100}))
+let initialData = new Array(1000).fill(0).map((d, id) => ({ id, PCAx: 100, PCAy: 100, PCAz: 100, Label: -1, totalVote: 0 }));
 let listObjects;
 let objectsImageUrl = [];
 
@@ -42,7 +43,7 @@ function App() {
   const [isVoteByUser, setIsVoteByUser] = React.useState(false)
   const [optionToShow, setOptionToShow] = React.useState(null)
   const [showAllMesh, setShowAllMesh] = React.useState(true)
-  const [centroidsArray, setCentroidsArray] = React.useState()
+  const [centroidsArray, setCentroidsArray] = React.useState(initialTextPos)
   const [hoverOnCentroid, setHoverOnCentroid] = React.useState(null)
 
     const {loading: collection_data_loading, data: collection_data} = useQuery(COLLECTION_DATA)
@@ -311,6 +312,7 @@ function App() {
                     zoom = {zoom}
                     setFocus = {setFocus}
                     centroidsArray = {centroidsArray}
+                    hoverOnCentroid={hoverOnCentroid}
                     setHoverOnCentroid = {setHoverOnCentroid}
               />
               
@@ -321,7 +323,7 @@ function App() {
              
 
               <div className='threeBtnGroup'>
-                <button onClick={() => setZoom(false)}>Zoom Out</button>
+                <button onClick={() => {setZoom(false); setHoverOnCentroid(null)}}>Zoom Out</button>
               </div>
              
               

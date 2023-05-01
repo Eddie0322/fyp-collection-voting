@@ -349,16 +349,14 @@ hr {
 .sideBar{
   position: absolute;
   z-index: 2;
-  background: rgba(44, 43, 43, 0.2);
-  padding: 16px;
+  background: rgba(44, 43, 43, 0.3);
+  padding-top: 24px;
+  padding-bottom: 32px;
   color: #fff;
-  width: 20%px;
   border-radius: 16px;
-  padding-top: 50;
-  margin-top: 100;
   left: 5%;
   top: 48px;
-  height: 60%;
+  height: 70%;
   top: 50%;
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
@@ -366,18 +364,57 @@ hr {
 }
 
 
-.sideBar > button {
-  margin-top: 5px;
-  padding: 10px;
-  background: #222;
-  color: #ccc;
-  border: none;
-  
+.sideBarTagDot{
+  height: 8px;
+  width: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 8px;
+}
+
+.sideBarTagButtonContainer{
+
+  padding: 12px;
+  margin-left: 12px;
+  margin-right: 12px;
+  border-radius: 10px;
+  background-color: #ffffff00;
+  cursor: pointer;
+
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  color:#b7b7b7;
+  font-weight: 500;
+
   text-transform: uppercase;
   letter-spacing: 1px;
-  cursor: pointer;
-  display: block
+
+  display: flex;
+
 }
+
+.sideBarTagButtonContainerShowAll{
+
+  padding: 12px;
+  margin-left: 12px;
+  margin-right: 12px;
+  margin-top: 24px;
+  border-radius: 30px;
+  background-color: #3a3a3a00;
+  cursor: pointer;
+  border-width: 1px;
+  border-color: #fff;
+  border-style: solid;
+
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  color:#b7b7b7;
+  font-weight: 500;
+
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
 
 .nextPrevButton{
   padding: 10px;
