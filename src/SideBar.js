@@ -1,6 +1,7 @@
 import './App.css';
-import { motion } from "framer-motion"
-import { useState } from 'react'
+import { motion, AnimatePresence } from "framer-motion"
+import { useState, useEffect } from 'react'
+import { UserAuth } from './AuthContext';
 
 const SideBar = ({
 
@@ -13,19 +14,39 @@ const SideBar = ({
                     setFocus, 
                     centroidsArray,
                     hoverOnCentroid,
-                    setHoverOnCentroid
+                    setHoverOnCentroid,
+
+                    layout,
+
+                    cubeOptionToShow,
+                    setCubeOptionToShow,
+
+                    selectYourVotes,
+                    setSelectYourVotes,
+                    selectHasVotes,
+                    setSelectHasVotes,
+                    selectCubeUnvoted,
+                    setSelectCubeUnvoted
 
                   }) => {
 
+    const { user, userVotes } = UserAuth()
+    
     const [hoverOnUnvoted, setHoverOnUnvoted] = useState(false)
     const [selectUnvoted, setSelectUnvoted] = useState(false)
     const [hoverShowAll, setHoverShowAll] = useState(false)
+
+    const [hoverOnYourVotes, setHoverOnYourVotes] = useState(false)
+    const [hoverOnHasVotes, setHoverOnHasVotes] = useState(false)
+    const [hoverOnCubeUnvoted, setHoverOnCubeUnvoted] = useState(false)
+
 
     const LIGHT_COLOR = ["#ffff99", "#ffc3c3", "#c3c3ff", "#f6bb90", "#7ce764", "#99ffff", "#c3c388", "#cccccc", "#e580ff", "#9b6eff", "#33ff33", "#ec8a9e"]
     const LIGHT_COLOR_HOVER = ["#ffff990c", "#ffc3c30c", "#c3c3ff0c", "#f6bb900c", "#7ce7640c", "#99ffff0c", "#c3c3880c", "#cccccc0c", "#e580ff0c", "#9b6eff0c", "#33ff330c", "#ec8a9e0c"]
     const DEFAULT_COLOR = ["#ff3", "#f88", "#88f", "#e72", "#4d2", "#3ff", "#663", "#999", "#c0f", "#40d", "#060", "#c24"]
     let emoLabel = ["amusement", "intimate", "elegant", "lively", "spiritual", "calmness", "boredom", "strange", "mysterious", "anxiety", "sadness", "dread"]
-    const buttonsConfig = [
+    
+    const PCAbuttonsConfig = [
         {
             text: emoLabel[0],
             backgroundColor: optionToShow === 0 ? LIGHT_COLOR_HOVER[0]  : "#00000000",
@@ -101,11 +122,56 @@ const SideBar = ({
 
     ]
 
-    return(
-        <div className='sideBar'>
+    const CubeButtonsConfig = [
+        {
+          text: "Your Votes",
+          backgroundColor: cubeOptionToShow === 0 ? "#d53d530c"  : "#00000000",
+          color: hoverOnYourVotes ? "#d53" : (selectYourVotes ? "#d53" : "#b7b7b7"),
+          hoverDotColor: hoverOnYourVotes ? "#d53" : "#d53"
 
-             {
-                buttonsConfig.map((config, index) => (
+        },
+        {
+          text: "Has Votes",
+          backgroundColor: cubeOptionToShow === 1 ? "#ffffff0c"  : "#00000000",
+          color: hoverOnHasVotes ? "#ffffff" : (selectHasVotes ? "#ffffff" : "#b7b7b7"),
+          hoverDotColor: hoverOnHasVotes ? "#ffffff" : "#b7b7b7"
+        },
+        {
+          text: "Unvoted",
+          backgroundColor: cubeOptionToShow === 2 ? "#ffffff0c"  : "#00000000",
+          color: hoverOnCubeUnvoted ? "#ffffff" : (selectCubeUnvoted ? "#ffffff" : "#b7b7b7"),
+          hoverDotColor: hoverOnCubeUnvoted ? "#ffffff" : "#b7b7b7"
+        }
+    ]
+
+    
+    return(
+
+      <>
+       
+
+          {layout === 'spiral' ? (
+
+              <AnimatePresence mode='wait'>
+
+                <>
+                <motion.div
+                      initial={{
+                        opacity: 0
+                      }}
+                      animate={{
+                        opacity: 1,
+                        transition: {
+                            duration: 1.5
+                        }
+                      }}
+                      exit={{
+                        opacity: 0
+                      }}
+                      className='sideBarPCA'>
+
+                {
+                PCAbuttonsConfig.map((config, index) => (
 
                   <motion.div 
 
@@ -118,11 +184,13 @@ const SideBar = ({
                                 setShowAllMesh(false)
                                 setZoom(true)
                                 setFocus(centroidsArray[index])
+                                setSelectUnvoted(false)
 
                               }else{
                                 setOptionToShow(null)
                                 setShowAllMesh(!showAllMesh)
                                 setZoom(false)
+                                setSelectUnvoted(false)
                               }
                               
                             }}
@@ -157,7 +225,7 @@ const SideBar = ({
                           
                     </motion.div>
 
-             ))}
+                ))}
 
 
                     <motion.div 
@@ -226,6 +294,7 @@ const SideBar = ({
                                     setShowAllMesh(true)
                                     setZoom(false)
                                     setHoverOnCentroid(null)
+                                    setSelectUnvoted(false)
 
                                 }}
 
@@ -253,8 +322,235 @@ const SideBar = ({
                                 Show All
 
                             </motion.div>
-                    
-        </div>
+
+                      </motion.div>
+
+                </>
+
+                </AnimatePresence>
+
+              ):(
+                <>
+                  <motion.div
+                      initial={{
+                        opacity: 0
+                      }}
+                      animate={{
+                        opacity: 1,
+                        transition: {
+                            duration: 0.5
+                        }
+                      }}
+                      exit={{
+                        opacity: 0
+                      }}
+                      className='sideBarCube'>
+
+                      {user && userVotes.length !== 0 ? (
+                          <>
+
+                           <motion.div 
+
+                              className='sideBarTagButtonContainer'
+                              onClick={() => {
+
+                                      if(selectYourVotes){
+                                        setSelectYourVotes(false)
+                                        setCubeOptionToShow(null)
+                                      }else{
+                                        setSelectYourVotes(true)
+                                        setCubeOptionToShow(0)
+                                        setSelectHasVotes(false)
+                                        setSelectCubeUnvoted(false)
+                                      }
+
+                                  }}
+
+                              onHoverStart={() => {setHoverOnYourVotes(true);}}
+                              onHoverEnd={() => {setHoverOnYourVotes(false);}}
+
+                              style={{
+                                    backgroundColor: CubeButtonsConfig[0].backgroundColor,
+                                    color: CubeButtonsConfig[0].color,
+                                    fontWeight: selectYourVotes ? "600" : "500"                                  
+                                }}
+
+                              whileHover={{
+                                  scale: 1.1,
+                                  letterSpacing: "1.5px",
+                                  transition: { duration: 0.3 },
+                                }}
+
+                                whileTap={{
+                                  scale: 1.2,
+                                  transition: { duration: 0.1 },
+                                }}
+                              >
+
+                              <motion.span 
+                                      className="sideBarTagDot" 
+                                      style={{backgroundColor: CubeButtonsConfig[0].hoverDotColor}}
+                              ></motion.span>
+
+                                  {CubeButtonsConfig[0].text}
+
+                           </motion.div>
+                          
+                        </>):(
+                          <>
+                            <div style={{height: "15%"}}>
+                              
+                            </div>
+                          </>
+                        )
+                      
+                      }
+
+                        <motion.div 
+
+                              className='sideBarTagButtonContainer'
+                              onClick={() => {
+
+                                      if(selectHasVotes){
+                                        setSelectHasVotes(false)
+                                        setCubeOptionToShow(null)
+                                      }else{
+                                        setSelectHasVotes(true)
+                                        setCubeOptionToShow(1)
+
+                                        setSelectYourVotes(false)
+                                        setSelectCubeUnvoted(false)
+                                      }
+
+                                  }}
+
+                              onHoverStart={() => {setHoverOnHasVotes(true);}}
+                              onHoverEnd={() => {setHoverOnHasVotes(false);}}
+
+                              style={{
+                                    backgroundColor: CubeButtonsConfig[1].backgroundColor,
+                                    color: CubeButtonsConfig[1].color,
+                                    fontWeight: selectHasVotes ? "600" : "500"                                  
+                                }}
+
+                              whileHover={{
+                                  scale: 1.1,
+                                  letterSpacing: "1.5px",
+                                  transition: { duration: 0.3 },
+                                }}
+
+                                whileTap={{
+                                  scale: 1.2,
+                                  transition: { duration: 0.1 },
+                                }}
+                              >
+
+                              <motion.span 
+                                      className="sideBarTagDotLarge" 
+                                      style={{backgroundColor: CubeButtonsConfig[1].hoverDotColor}}
+                              ></motion.span>                         
+
+                                  {CubeButtonsConfig[1].text}
+
+                        </motion.div>
+
+                        <motion.div 
+
+                              className='sideBarTagButtonContainer'
+                              onClick={() => {
+
+                                      if(selectCubeUnvoted){
+                                        setSelectCubeUnvoted(false)
+                                        setCubeOptionToShow(null)
+                                      }else{
+                                        setSelectCubeUnvoted(true)
+                                        setCubeOptionToShow(2)
+
+                                        setSelectYourVotes(false)
+                                        setSelectHasVotes(false)
+                                      }
+
+                                  }}
+
+                              onHoverStart={() => {setHoverOnCubeUnvoted(true);}}
+                              onHoverEnd={() => {setHoverOnCubeUnvoted(false);}}
+
+                              style={{
+                                    backgroundColor: CubeButtonsConfig[2].backgroundColor,
+                                    color: CubeButtonsConfig[2].color,
+                                    fontWeight: selectCubeUnvoted ? "600" : "500"                                  
+                                }}
+
+                              whileHover={{
+                                  scale: 1.1,
+                                  letterSpacing: "1.5px",
+                                  transition: { duration: 0.3 },
+                                }}
+
+                                whileTap={{
+                                  scale: 1.2,
+                                  transition: { duration: 0.1 },
+                                }}
+                              >
+
+                              <motion.span 
+                                      className="sideBarTagDot" 
+                                      style={{backgroundColor: CubeButtonsConfig[2].hoverDotColor}}
+                              ></motion.span>     
+
+                                  {CubeButtonsConfig[2].text}
+
+                        </motion.div>
+
+                        <motion.div 
+
+                              className='sideBarTagButtonContainerShowAll'
+                              onClick={() => {
+                                                      
+                                      setCubeOptionToShow(null)
+                                      setSelectYourVotes(false)
+                                      setSelectHasVotes(false)
+                                      setSelectCubeUnvoted(false)
+
+                                  }}
+
+                              onHoverStart={() => {setHoverShowAll(true);}}
+                              onHoverEnd={() => {setHoverShowAll(false);}}
+
+                              style={{
+                                  color: hoverShowAll ? "eeeeee" : "#b7b7b7",
+                                  fontWeight: "500"
+                                  
+                                }}
+
+                              whileHover={{
+                                  scale: 1.1,
+                                  letterSpacing: "1.5px",
+                                  transition: { duration: 0.3 },
+                                }}
+
+                                whileTap={{
+                                  scale: 1.2,
+                                  transition: { duration: 0.1 },
+                                }}
+                              >
+
+                                  Show All
+
+                              </motion.div>
+
+                    </motion.div>
+                
+                </>
+
+                
+              )
+              
+              }
+
+
+      </>
+
     )
 
 }

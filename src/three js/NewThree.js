@@ -59,7 +59,7 @@ function Controls({ zoom, focus, pos = new THREE.Vector3(), look = new THREE.Vec
 
 
 //update
-function UpdateInstancedMeshMatrices({ mesh, data, selectedPoint, hoverPoint }) {
+function UpdateInstancedMeshMatrices({ mesh, data, selectedPoint, hoverPoint, cubeOptionToShow, userVotes, layout }) {
     if (!mesh) return;
     // set the transform matrix for each instance
     for (let i = 0; i < data.length; ++i) {
@@ -67,8 +67,33 @@ function UpdateInstancedMeshMatrices({ mesh, data, selectedPoint, hoverPoint }) 
   
       tempObject.position.set(x, y, z);
 
-      if(data[i].totalVote !== 0) {
+      if(layout === 'spiral' || (layout === 'grid' && cubeOptionToShow === null)){
+          if(data[i].totalVote !== 0) {
 
+                if (data[i] === selectedPoint) {
+                  tempObject.scale.set(2, 2, 2);
+                  //console.log(data[i])
+                } else if(data[i] === hoverPoint) {
+                  tempObject.scale.set(1.5, 1.5, 1.5);
+                } else {
+                  tempObject.scale.set(1, 1, 1);
+                }
+
+              }
+
+              else {
+
+                        if (data[i] === selectedPoint) {
+                          tempObject.scale.set(2, 2, 2);
+                        } else if(data[i] === hoverPoint ) {
+                          tempObject.scale.set(0.6, 0.6, 0.6);
+                        } else {
+                          tempObject.scale.set(0.3, 0.3, 0.3);
+                        }
+
+              }
+      }else{
+              if(cubeOptionToShow === 0 && userVotes.includes(i)){
                   if (data[i] === selectedPoint) {
                     tempObject.scale.set(2, 2, 2);
                     //console.log(data[i])
@@ -77,23 +102,29 @@ function UpdateInstancedMeshMatrices({ mesh, data, selectedPoint, hoverPoint }) 
                   } else {
                     tempObject.scale.set(1, 1, 1);
                   }
-
-            }
-
-       else {
-
-                  if (data[i] === selectedPoint) {
-                    tempObject.scale.set(2.5, 2.5, 2.5);
-                  } else if(data[i] === hoverPoint ) {
-                    tempObject.scale.set(0.6, 0.6, 0.6);
-                  } else {
-                    tempObject.scale.set(0.3, 0.3, 0.3);
-                  }
-
+              } else if (cubeOptionToShow === 1 && data[i].totalVote !== 0 && !userVotes.includes(i)) {
+                if (data[i] === selectedPoint) {
+                  tempObject.scale.set(2, 2, 2);
+                  //console.log(data[i])
+                } else if(data[i] === hoverPoint) {
+                  tempObject.scale.set(1.5, 1.5, 1.5);
+                } else {
+                  tempObject.scale.set(1, 1, 1);
+                }
+              } else if (cubeOptionToShow === 2 && data[i].totalVote === 0) {
+                if (data[i] === selectedPoint) {
+                  tempObject.scale.set(2, 2, 2);
+                } else if(data[i] === hoverPoint ) {
+                  tempObject.scale.set(0.6, 0.6, 0.6);
+                } else {
+                  tempObject.scale.set(0.3, 0.3, 0.3);
+                }
+              } else {
+                tempObject.scale.set(0, 0, 0)
+              }
       }
 
-
-
+      
       tempObject.updateMatrix(); 
       mesh.setMatrixAt(i, tempObject.matrix);
     }
@@ -317,7 +348,7 @@ const useMousePointInteraction = ({
 }
 
 
-      return { handlePointerDown, handleClick , handlePointerOver, handlePointerOut}; 
+      return { handlePointerDown, handleClick , handlePointerOver, handlePointerOut }; 
 };
 
 
@@ -345,7 +376,9 @@ const InstancedPoints = ({
         setOptionToShow,
         setShowAllMesh,
         hoverOnCentroid,
-        setHoverOnCentroid
+        setHoverOnCentroid,
+
+        cubeOptionToShow
       }) => {
 
     const numPoints = data.length;
@@ -356,7 +389,7 @@ const InstancedPoints = ({
       data,
       layout,
       onFrame: () => {
-        UpdateInstancedMeshMatrices({ mesh: meshRef.current, data, selectedPoint, hoverPoint });
+        UpdateInstancedMeshMatrices({ mesh: meshRef.current, data, selectedPoint, hoverPoint, cubeOptionToShow, userVotes, layout });
       },
     });
   
@@ -416,11 +449,11 @@ const InstancedPoints = ({
                         }
                 }
                  
-                  UpdateInstancedMeshMatrices({ mesh: meshRef.current, data, selectedPoint, hoverPoint });
+                  UpdateInstancedMeshMatrices({ mesh: meshRef.current, data, selectedPoint, hoverPoint, userVotes, cubeOptionToShow, layout });
 
       }
 
-    }, [data, selectedPoint, hoverPoint, updatePosLoading]);
+    }, [data, selectedPoint, hoverPoint, updatePosLoading, userVotes]);
 
     // Color settings
     const { colorAttrib, colorArray } = usePointColors({ data, selectedPoint, layout, hoverPoint, user, userVotes, optionToShow, hoverOnCentroid });
@@ -502,13 +535,14 @@ const Scene = ({ data,
                  setCentroidsArray,
 
                  hoverOnCentroid,
-                 setHoverOnCentroid
+                 setHoverOnCentroid,
+
+                 cubeOptionToShow
 
                  }) => {
     
 
     const { user, userVotes } = UserAuth()
-
 
     //Return components for rendering
     if(loading || collection_data_loading){
@@ -557,7 +591,8 @@ const Scene = ({ data,
 
                     hoverOnCentroid = {hoverOnCentroid}
                     setHoverOnCentroid = {setHoverOnCentroid}
-                    // zoomToView={(focusRef) => (setZoom(!zoom), setFocus(focusRef))}
+                    
+                    cubeOptionToShow = {cubeOptionToShow}
                 />
 
                 <Lines 

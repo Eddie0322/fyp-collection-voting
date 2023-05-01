@@ -46,6 +46,12 @@ function App() {
   const [centroidsArray, setCentroidsArray] = React.useState(initialTextPos)
   const [hoverOnCentroid, setHoverOnCentroid] = React.useState(null)
 
+  const [cubeOptionToShow, setCubeOptionToShow] = React.useState(null)
+
+  const [selectYourVotes, setSelectYourVotes] = React.useState(false)
+  const [selectHasVotes, setSelectHasVotes] = React.useState(false)
+  const [selectCubeUnvoted, setSelectCubeUnvoted] = React.useState(false)
+
     const {loading: collection_data_loading, data: collection_data} = useQuery(COLLECTION_DATA)
       React.useEffect(() => {
 
@@ -245,8 +251,17 @@ function App() {
 
 
               <div className='controls'>
+
                   <br></br>
-                  <button onClick={() => {setLayout('spiral')}}>PCA</button>
+
+                  <button onClick={() => {
+                        setLayout('spiral');
+                        setCubeOptionToShow(null);
+                        setSelectYourVotes(false);
+                        setSelectHasVotes(false);
+                        setSelectCubeUnvoted(false);
+                        }}>PCA</button>
+
                   <button onClick={() => {
                         setLayout('grid'); 
                         setShowAllMesh(true); 
@@ -314,6 +329,20 @@ function App() {
                     centroidsArray = {centroidsArray}
                     hoverOnCentroid={hoverOnCentroid}
                     setHoverOnCentroid = {setHoverOnCentroid}
+
+                    layout = {layout}
+
+                    cubeOptionToShow = {cubeOptionToShow}
+                    setCubeOptionToShow = {setCubeOptionToShow}
+
+                    selectYourVotes = {selectYourVotes}
+                    setSelectYourVotes = {setSelectYourVotes}
+                    selectHasVotes = {selectHasVotes}
+                    setSelectHasVotes = {setSelectHasVotes}
+                    selectCubeUnvoted = {selectCubeUnvoted}
+                    setSelectCubeUnvoted = {setSelectCubeUnvoted}
+
+
               />
               
               <LoginModal
@@ -366,6 +395,8 @@ function App() {
 
                   hoverOnCentroid = {hoverOnCentroid}
                   setHoverOnCentroid = {setHoverOnCentroid}
+
+                  cubeOptionToShow = {cubeOptionToShow}
 
                   />
 
