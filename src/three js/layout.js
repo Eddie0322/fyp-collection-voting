@@ -1,26 +1,6 @@
 import { useRef, useEffect } from "react";
-import { useSpring, config } from 'react-spring';
-
-
-function gridLayout(data){
-
-    const numPoints = data.length;
-    let i = 0;
-    //const datum = data[i];
-    for (let x = 0; x < (numPoints/100); x += 1){
-        for (let y = 0; y < (numPoints/100); y += 1){
-          for (let z = 0; z < (numPoints/100); z += 1){
-            const datum = data[i];
-            i += 1;
-            datum.y = y+1;
-            datum.x = x;
-            datum.z = z;
-            //data[i] = {x, y, z};
-          }
-        }
-    }
-}
-
+import { useSpring } from 'react-spring';
+import { UserAuth } from '../AuthContext';
 
 function getRandomPointArray(n, minDistance) {
   const arr = [];
@@ -42,6 +22,25 @@ function getRandomPointArray(n, minDistance) {
     }
   }
   return arr;
+}
+
+function gridLayout(data){
+
+    const numPoints = data.length;
+    let i = 0;
+    //const datum = data[i];
+    for (let x = 0; x < (numPoints/100); x += 1){
+        for (let y = 0; y < (numPoints/100); y += 1){
+          for (let z = 0; z < (numPoints/100); z += 1){
+            const datum = data[i];
+            i += 1;
+            datum.y = y+1;
+            datum.x = x;
+            datum.z = z;
+            //data[i] = {x, y, z};
+          }
+        }
+    }
 }
 
 
@@ -109,12 +108,132 @@ function spiralLayout(data){
 
 }
 
+
+function votedByUserLayout(data, user, userVotes) {
+    let votedByUser = [];
+    let hidePoints = [];
+    let userVoteCubePos = [];
+    //let userVoteCubePosCentroid = [];
+
+
+    for (let i = 0; i < data.length; ++i) {
+      const datum = data[i];
+
+      if( datum.totalVote !== 0 && user && userVotes.includes(i) ){
+        votedByUser.push(datum)
+      } else {
+        hidePoints.push(datum)
+      }
+
+    }
+
+    userVoteCubePos = generatePositions(votedByUser).positions
+    //userVoteCubePosCentroid = generatePositions(votedByUser).centroid
+
+    for(let i = 0; i < votedByUser.length; i++ ){
+      data[votedByUser[i].id].y = userVoteCubePos[i][0]
+      data[votedByUser[i].id].x = userVoteCubePos[i][1]
+      data[votedByUser[i].id].z = userVoteCubePos[i][2]
+    }
+
+    for(let i = 0; i < hidePoints.length; i++){
+      data[hidePoints[i].id].x = 10
+      data[hidePoints[i].id].y = 10
+      data[hidePoints[i].id].z = 10
+    }
+}
+
+  function hasVotesLayout(data, userVotes) {
+    let hasVotes = [];
+    let hidePoints = [];
+    let hasVotesCubePos = [];
+    //let userVoteCubePosCentroid = [];
+
+
+    for (let i = 0; i < data.length; ++i) {
+      const datum = data[i];
+
+      if( datum.totalVote !== 0 && !userVotes.includes(i) ){
+        hasVotes.push(datum)
+      } else {
+        hidePoints.push(datum)
+      }
+
+    }
+
+    hasVotesCubePos = generatePositions(hasVotes).positions
+    //userVoteCubePosCentroid = generatePositions(votedByUser).centroid
+
+    for(let i = 0; i < hasVotes.length; i++ ){
+      data[hasVotes[i].id].y = hasVotesCubePos[i][0]
+      data[hasVotes[i].id].x = hasVotesCubePos[i][1]
+      data[hasVotes[i].id].z = hasVotesCubePos[i][2]
+    }
+
+    for(let i = 0; i < hidePoints.length; i++){
+      data[hidePoints[i].id].x = 10
+      data[hidePoints[i].id].y = 10
+      data[hidePoints[i].id].z = 10
+    }
+  }
+
+  function unVotedLayout(data, userVotes) {
+    let unVoted = [];
+    let hidePoints = [];
+    let unVotedCubePos = [];
+    //let userVoteCubePosCentroid = [];
+
+
+    for (let i = 0; i < data.length; ++i) {
+      const datum = data[i];
+
+      if( datum.totalVote === 0){
+        unVoted.push(datum)
+      } else {
+        hidePoints.push(datum)
+      }
+
+    }
+
+    unVotedCubePos = generatePositions(unVoted).positions
+    //userVoteCubePosCentroid = generatePositions(votedByUser).centroid
+
+    for(let i = 0; i < unVoted.length; i++ ){
+      data[unVoted[i].id].y = unVotedCubePos[i][0]
+      data[unVoted[i].id].x = unVotedCubePos[i][1]
+      data[unVoted[i].id].z = unVotedCubePos[i][2]
+    }
+
+    for(let i = 0; i < hidePoints.length; i++){
+      data[hidePoints[i].id].x = 10
+      data[hidePoints[i].id].y = 10
+      data[hidePoints[i].id].z = 10
+    }
+  }
+
+
+
+
+
 export const useLayout = ({ data, layout = 'spiral'}) => {
+    const { user, userVotes } = UserAuth()
     useEffect(() => {
         switch (layout) {
 
             case 'grid':
                     gridLayout(data);
+                    break;
+            
+            case 'userVotes':
+                    votedByUserLayout(data, user, userVotes);
+                    break;
+
+            case 'hasVotes':
+                    hasVotesLayout(data, userVotes);
+                    break;
+
+            case 'unVoted':
+                    unVotedLayout(data);
                     break;
 
             case 'spiral':
@@ -164,6 +283,7 @@ export function useAnimatedLayout({ data, layout, onFrame }) {
   //console.log(layout);
   useSourceTargetLayout({ data, layout });
 
+
   // do the actual animation when layout changes
   const prevLayout = useRef(layout);
   useSpring({
@@ -181,4 +301,40 @@ export function useAnimatedLayout({ data, layout, onFrame }) {
   prevLayout.current = layout;
 }
 
-  
+
+function generatePositions(dataPoints) {
+  const numPoints = dataPoints.length;
+  const maxSideLength = 10;
+  const maxNumPoints = maxSideLength ** 3;
+  const sideLength = Math.ceil(Math.cbrt(Math.min(numPoints, maxNumPoints)));
+  const startCoord = 5 - Math.floor(sideLength / 2);
+
+  let x = startCoord;
+  let y = startCoord;
+  let z = startCoord;
+  let positions = [];
+
+  for (let i = 0; i < numPoints; i++) {
+    positions.push([x, y, z]);
+    x++;
+
+    if (x >= startCoord + sideLength) {
+      x = startCoord;
+      y++;
+
+      if (y >= startCoord + sideLength) {
+        y = startCoord;
+        z++;
+      }
+    }
+  }
+
+
+  const centroid = positions.reduce((acc, cur) => [acc[0] + cur[0], acc[1] + cur[1], acc[2] + cur[2]], [0, 0, 0]);
+  centroid[0] /= numPoints;
+  centroid[1] /= numPoints;
+  centroid[2] /= numPoints;
+
+  return { positions, centroid };
+}
+

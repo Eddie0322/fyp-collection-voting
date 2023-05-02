@@ -1,6 +1,6 @@
 import './App.css';
 import { motion, AnimatePresence } from "framer-motion"
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { UserAuth } from './AuthContext';
 
 const SideBar = ({
@@ -17,6 +17,7 @@ const SideBar = ({
                     setHoverOnCentroid,
 
                     layout,
+                    setLayout,
 
                     cubeOptionToShow,
                     setCubeOptionToShow,
@@ -357,11 +358,14 @@ const SideBar = ({
                                       if(selectYourVotes){
                                         setSelectYourVotes(false)
                                         setCubeOptionToShow(null)
+                                        setLayout('grid')
                                       }else{
                                         setSelectYourVotes(true)
                                         setCubeOptionToShow(0)
                                         setSelectHasVotes(false)
                                         setSelectCubeUnvoted(false)
+                                        setLayout('userVotes')
+                                        setZoom(false)
                                       }
 
                                   }}
@@ -414,12 +418,18 @@ const SideBar = ({
                                       if(selectHasVotes){
                                         setSelectHasVotes(false)
                                         setCubeOptionToShow(null)
+
+                                        setLayout('grid')
+
                                       }else{
                                         setSelectHasVotes(true)
                                         setCubeOptionToShow(1)
 
                                         setSelectYourVotes(false)
                                         setSelectCubeUnvoted(false)
+
+                                        setLayout('hasVotes')
+                                        setZoom(false)
                                       }
 
                                   }}
@@ -462,12 +472,16 @@ const SideBar = ({
                                       if(selectCubeUnvoted){
                                         setSelectCubeUnvoted(false)
                                         setCubeOptionToShow(null)
+                                        setLayout('grid')
                                       }else{
                                         setSelectCubeUnvoted(true)
                                         setCubeOptionToShow(2)
 
                                         setSelectYourVotes(false)
                                         setSelectHasVotes(false)
+
+                                        setLayout('unVoted')
+                                        setZoom(false)
                                       }
 
                                   }}
@@ -511,6 +525,7 @@ const SideBar = ({
                                       setSelectYourVotes(false)
                                       setSelectHasVotes(false)
                                       setSelectCubeUnvoted(false)
+                                      setLayout('grid')
 
                                   }}
 

@@ -343,7 +343,7 @@ const ConvexHull = ({
     }, [data, layout])
 
 
-    if(layout === "grid") return null
+    if(layout !== "spiral") return null
 
     return( 
 

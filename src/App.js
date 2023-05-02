@@ -52,6 +52,8 @@ function App() {
   const [selectHasVotes, setSelectHasVotes] = React.useState(false)
   const [selectCubeUnvoted, setSelectCubeUnvoted] = React.useState(false)
 
+  //const [userVoteCubePosCentroid, setUserVoteCubePosCentroid] = React.useState(null)
+
     const {loading: collection_data_loading, data: collection_data} = useQuery(COLLECTION_DATA)
       React.useEffect(() => {
 
@@ -263,6 +265,13 @@ function App() {
                         }}>PCA</button>
 
                   <button onClick={() => {
+                    
+                    if(layout !== 'spiral'){
+                        if(zoom){
+                          setZoom(false)
+                        }
+                        setOptionToShow(null)
+                    }else
                         setLayout('grid'); 
                         setShowAllMesh(true); 
                         setOptionToShow(null)
@@ -331,6 +340,7 @@ function App() {
                     setHoverOnCentroid = {setHoverOnCentroid}
 
                     layout = {layout}
+                    setLayout = {setLayout}
 
                     cubeOptionToShow = {cubeOptionToShow}
                     setCubeOptionToShow = {setCubeOptionToShow}
