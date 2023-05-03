@@ -171,6 +171,21 @@ const SideBar = ({
                       }}
                       className='sideBarPCA'>
 
+                      <span 
+                        style={{
+                          display: "flex",
+                          fontSize: "15px",
+                          padding: "12px",
+                          marginLeft: "12px",
+                          marginBottom: "8px",
+                          fontFamily: "Arial, Helvetica, sans-serif",
+                          fontWeight: "600",
+                          letterSpacing: "1.2px",
+                          textTransform: "uppercase"
+                        }}
+                      
+                      >Emotions</span>
+
                 {
                 PCAbuttonsConfig.map((config, index) => (
 
@@ -347,6 +362,21 @@ const SideBar = ({
                       }}
                       className='sideBarCube'>
 
+                          <span 
+                            style={{
+                              display: "flex",
+                              fontSize: "15px",
+                              padding: "12px",
+                              marginLeft: "12px",
+                              marginBottom: "8px",
+                              fontFamily: "Arial, Helvetica, sans-serif",
+                              fontWeight: "600",
+                              letterSpacing: "1.2px",
+                              textTransform: "uppercase"
+                            }}
+                          
+                          >Votes</span>
+
                       {user && userVotes.length !== 0 ? (
                           <>
 
@@ -402,7 +432,7 @@ const SideBar = ({
                           
                         </>):(
                           <>
-                            <div style={{height: "15%"}}>
+                            <div style={{height: "0%"}}>
                               
                             </div>
                           </>

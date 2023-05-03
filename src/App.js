@@ -9,6 +9,8 @@ import LoginModal from './loginModal';
 import { UserAuth } from './AuthContext';
 import ImagePreview from './ImagePreview';
 import SideBar from './SideBar';
+import LayoutButtons from './LayoutButtons';
+import UserCard from './UserCard';
 //import CollectionsMutation from './collection_mutation';
 
 let initialTextPos = new Array(12).fill(0).map(() => ({x: 100, y:100, z: 100}))
@@ -252,80 +254,30 @@ function App() {
           <div className='Scene'>
 
 
-              <div className='controls'>
+              <LayoutButtons 
+                layout = {layout}
+                setLayout = {setLayout}
+                setCubeOptionToShow = {setCubeOptionToShow}
+                setSelectYourVotes = {setSelectYourVotes}
+                setSelectHasVotes = {setSelectHasVotes}
+                setSelectCubeUnvoted = {setSelectCubeUnvoted}
+                zoom = {zoom}
+                setZoom = {setZoom}
+                setShowAllMesh = {setShowAllMesh}
+                setHoverOnCentroid = {setHoverOnCentroid}
+                setOptionToShow = {setOptionToShow}
+              
+              />
 
-                  <br></br>
+              <UserCard 
+                user = {user}
+                database_loading = {database_loading}
+                handleSignOut = {handleSignOut}
+                setOpenLoginModal = {setOpenLoginModal}
 
-                  <button onClick={() => {
-                        setLayout('spiral');
-                        setCubeOptionToShow(null);
-                        setSelectYourVotes(false);
-                        setSelectHasVotes(false);
-                        setSelectCubeUnvoted(false);
-                        }}>PCA</button>
-
-                  <button onClick={() => {
-                    
-                    if(layout !== 'spiral'){
-                        if(zoom){
-                          setZoom(false)
-                        }
-                        setOptionToShow(null)
-                    }else
-                        setLayout('grid'); 
-                        setShowAllMesh(true); 
-                        setOptionToShow(null)
-                        setHoverOnCentroid(null)
-                        if(zoom){
-                          setZoom(false)
-                        }
-                      }}
-                        >Cube</button>
-              </div>
+              />
 
 
-              <div className='controlsUser'>
-
-                  {/*Display the login info here first */}
-                  <div>
-                     
-                            {user?(
-                              <>
-                              <br></br>
-                              <div style={{fontSize: "14px", color: "rgba(255, 229, 180)", fontFamily: "Arial, Helvetica, sans-serif"}}>{user.displayName}</div>
-                              <br></br>
-                              <div style={{fontSize: "14px", color: "rgba(255, 229, 180)", fontFamily: "Arial, Helvetica, sans-serif"}}>{user.email}</div>
-                              <br></br>
-                                <>
-                                {database_loading?(
-                                    <></>
-                                ):(
-                                  <>
-                                    <br></br>
-                                    <button onClick={handleSignOut} className="btn"><p>LOGOUT</p></button>
-                                    </>
-                                )}
-                                   
-                                </>
-                              </>
-                            ):(
-                              <>
-                              {database_loading?(
-                                <>
-                                 <br></br>
-                                 <div style={{fontSize: "14px", color: "rgba(255, 229, 180)", fontFamily: "Arial, Helvetica, sans-serif"}}>Loading...</div>
-                                </>
-                              ):(
-                                <>
-                                <br></br>
-                                 <button onClick={() => setOpenLoginModal(true)} className="btn"><p>LOGIN</p></button>
-                                 </>
-                              )}
-                             </>
-                            )}
-                          
-                  </div>
-              </div>
 
               <SideBar
                     optionToShow = {optionToShow}

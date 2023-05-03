@@ -316,14 +316,14 @@ function generatePositions(dataPoints) {
 
   for (let i = 0; i < numPoints; i++) {
     positions.push([x, y, z]);
-    x++;
+    y++;
 
-    if (x >= startCoord + sideLength) {
-      x = startCoord;
-      y++;
+    if (y >= startCoord + sideLength) {
+      y = startCoord;
+      x++;
 
-      if (y >= startCoord + sideLength) {
-        y = startCoord;
+      if (x >= startCoord + sideLength) {
+        x = startCoord;
         z++;
       }
     }
