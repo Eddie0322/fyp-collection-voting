@@ -4,7 +4,7 @@ import { createClient } from "graphql-ws";
 import { getMainDefinition } from "@apollo/client/utilities";
 
 const scheme = (proto) =>
-  window.location.protocol === "https:" ? `${proto}s` : proto;
+  window.location.protocol === "https:" ? `${proto}` : proto;
 
 const splitter = ({ query }) => {
   const { kind, operation } = getMainDefinition(query) || {};
