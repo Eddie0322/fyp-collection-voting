@@ -553,4 +553,60 @@ hr {
   z-index: 1;
 }
 
+.notification-container {
+  position: absolute;
+  margin-top: 200px;
+  right: 0;
+  z-index: 2;
+  overflow: hidden;
+  background-color: rgba(44, 43, 43, 0.1);
+  padding: 16px;
+  margin-right: 2%;
+  border-radius: 16px;
+
+  
+}
+
+.notification{
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  padding: 12px;
+  margin-bottom: 6px;
+  background-color: rgba(99, 99, 99, 0.1);
+  cursor: pointer;
+  
+}
+
+.notification-dot {
+  height: 6px;
+  width: 6px;
+  border-radius: 50%;
+  background-color: #D1FF71;
+  margin-right: 10px;
+}
+
+.notification-text {
+  flex: 1;
+  font-size: 14px;
+  color: rgb(210, 210, 210);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.notification-container-title{
+  font-size: 15px;
+  margin-bottom: 12px;
+  margin-top: 12px;
+  margin-left: 12px;
+  margin-right: 12px;
+  text-align: left;
+  font-family: Arial, Helvetica, sans-serif;
+  color: rgb(243, 243, 243);
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  font-weight: 600;
+}
+
+
 

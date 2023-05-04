@@ -18,7 +18,7 @@ function storeResult(arr, result){
 }
 
 
-let lineWidth = 0.004
+let lineWidth = 0.003
 
 const varShow = {
   hidden: { opacity: 0 },

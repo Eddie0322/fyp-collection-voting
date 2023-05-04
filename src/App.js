@@ -11,6 +11,7 @@ import ImagePreview from './ImagePreview';
 import SideBar from './SideBar';
 import LayoutButtons from './LayoutButtons';
 import UserCard from './UserCard';
+import NotificationComponent from './NotificationContainer';
 //import CollectionsMutation from './collection_mutation';
 
 let initialTextPos = new Array(12).fill(0).map(() => ({x: 100, y:100, z: 100}))
@@ -277,6 +278,15 @@ function App() {
 
               />
 
+              <NotificationComponent 
+                data = {data}
+                storeSelectedPoint = {storeSelectedPoint}
+                setSelectedPoint = {setSelectedPoint}
+                setZoom = {setZoom}
+                zoomToView = {(focusRef) => (setFocus(focusRef))}
+                setOpenModal = {setOpenModal}
+                setOpenVote = {setOpenVote}
+              />
 
 
               <SideBar

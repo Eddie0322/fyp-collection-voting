@@ -163,6 +163,16 @@ export const COLLECTION_DATA = gql`
 
 `
 
+export const SUBSCRIPTION_LAST_THREE_VOTES = gql`
+
+    subscription last_three_votes {
+        vote(limit: 3, order_by: {id: desc}){
+            collection_poll_id
+        }
+    }
+
+`
+
 
 
 
