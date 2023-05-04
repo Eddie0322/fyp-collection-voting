@@ -272,7 +272,11 @@ function App() {
           <div className='Scene'>
 
               { (windowWidth < 1080 || windowHeight < 600) && (
-                 <p>Please enlarge your browser view</p>
+                  <div className="message-container">
+                       {/* <img src={logo} alt="Logo" className="logo" /> */}
+                       <p className="secondary-text">Working On RWD...</p>
+                       <p>Please enlarge your browser view</p>
+                  </div>
               )}
 
               {(loading || ConvexHullLoading) && (

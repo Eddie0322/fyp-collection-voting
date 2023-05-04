@@ -16,6 +16,44 @@
   z-index: 0;
 }
 
+.message-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 2vw;
+  z-index: 999;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.message-container p {
+  color: white;
+  text-align: center;
+}
+
+.message-container img {
+  max-width: 80%;
+  height: auto;
+  margin-bottom: 2rem;
+}
+
+.message-container .secondary-text {
+  color: #c4d4a0;
+  font-size: 1.5vw;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  border: 0.08em solid red;
+  padding: 2em;
+  border-radius:  15px;
+  border-color: white;
+}
+
 .controls {
   position: absolute;
   z-index: 2;
