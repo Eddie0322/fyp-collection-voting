@@ -35,7 +35,14 @@ const Modal = ({
                 setSelectedPoint,
                 data,
                 zoomToView,
-                layout }) => {
+                layout,
+                setLayout,
+            
+                setCubeOptionToShow,
+                setSelectYourVotes,
+                setSelectHasVotes,
+                setSelectCubeUnvoted,
+            }) => {
 
 
     const contentRef = React.useRef();
@@ -279,6 +286,13 @@ const Modal = ({
                                 storeSelectedPoint = {storeSelectedPoint}
                                 setUpdatePosLoading = {setUpdatePosLoading}
                                 setIsVoteByUser = {setIsVoteByUser}
+                                layout = {layout}
+                                setLayout = {setLayout}
+                                setCubeOptionToShow = {setCubeOptionToShow}
+                                setSelectYourVotes = {setSelectYourVotes}
+                                setSelectHasVotes = {setSelectHasVotes}
+                                setSelectCubeUnvoted = {setSelectCubeUnvoted}
+
                             />
                        
 

@@ -14,7 +14,6 @@ import { UserAuth } from '../AuthContext';
 CameraControls.install({ THREE })
 
 const tempObject = new Object3D();
-const loadingElement = <div id="preloader"></div>;
 
 
 //camera
@@ -514,8 +513,6 @@ const Scene = ({ data,
                  onHoverPoint, 
                  setOpenModal, 
                  setOpenVote, 
-                 loading, 
-                 collection_data_loading, 
                  zoom,
                  setZoom,
                  focus,
@@ -537,23 +534,16 @@ const Scene = ({ data,
                  hoverOnCentroid,
                  setHoverOnCentroid,
 
-                 cubeOptionToShow
+                 cubeOptionToShow,
+                 setConvexHullLoading
 
                  }) => {
     
 
     const { user, userVotes } = UserAuth()
 
-    //Return components for rendering
-    if(loading || collection_data_loading){
-
-      return loadingElement
-
-    } else {
-
-      //console.log(data)
-
     return(
+
         <Canvas style={{ background: "#111" }} camera={{ position: [25, 25, 25] }}>
 
             {/* <primitive object={new THREE.AxesHelper(10)} /> */}
@@ -562,7 +552,6 @@ const Scene = ({ data,
                 speed={0.5}
                 rotationIntensity={0.4}
                 floatIntensity={0.6}>
-
 
                 <InstancedPoints 
                     data = {data} 
@@ -623,6 +612,8 @@ const Scene = ({ data,
                     centroidsArray = {centroidsArray}
                     setHoverOnCentroid = {setHoverOnCentroid}
 
+                    setConvexHullLoading = {setConvexHullLoading}
+
                 />
               
                 
@@ -632,8 +623,10 @@ const Scene = ({ data,
             </Float>
 
 
-
+            
             <Controls zoom={zoom} focus={focus} optionToShow={optionToShow} selectedPoint={selectedPoint}/>
+          
+            
 
             <ambientLight />
 
@@ -644,6 +637,6 @@ const Scene = ({ data,
     );
     
     }
-}
+
 
 export default Scene;

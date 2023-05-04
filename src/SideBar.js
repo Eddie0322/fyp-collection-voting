@@ -19,6 +19,9 @@ const SideBar = ({
                     layout,
                     setLayout,
 
+                    setSelectedPoint,
+                    storeSelectedPoint,
+
                     cubeOptionToShow,
                     setCubeOptionToShow,
 
@@ -396,6 +399,8 @@ const SideBar = ({
                                         setSelectCubeUnvoted(false)
                                         setLayout('userVotes')
                                         setZoom(false)
+                                        storeSelectedPoint.current = null;
+                                        setSelectedPoint(null)
                                       }
 
                                   }}
@@ -460,6 +465,9 @@ const SideBar = ({
 
                                         setLayout('hasVotes')
                                         setZoom(false)
+
+                                        storeSelectedPoint.current = null;
+                                        setSelectedPoint(null)
                                       }
 
                                   }}
@@ -512,6 +520,9 @@ const SideBar = ({
 
                                         setLayout('unVoted')
                                         setZoom(false)
+
+                                        storeSelectedPoint.current = null;
+                                        setSelectedPoint(null)
                                       }
 
                                   }}

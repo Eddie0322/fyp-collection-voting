@@ -17,7 +17,8 @@ const ConvexHull = ({
                       setShowAllMesh,
                       setOptionToShow,
                       centroidsArray,
-                      setHoverOnCentroid
+                      setHoverOnCentroid,
+                      setConvexHullLoading
                     }) => {
 
 
@@ -333,10 +334,13 @@ const ConvexHull = ({
                   flag2.current = false
                 }else{
                   setCentroidsArray(arrCentroids)
+                  
+                  setTimeout(() => {
+                    setConvexHullLoading(false)
+                  }, 500)
+                  
                 }
                 
-            
-
                 }
 
 

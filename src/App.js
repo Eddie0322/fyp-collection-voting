@@ -21,6 +21,9 @@ let objectsImageUrl = [];
 
 function App() {
 
+  const [windowWidth, setWindowWidth] = React.useState(window.innerWidth);
+  const [windowHeight, setWindowHeight] = React.useState(window.innerHeight);
+
   const [collections, setCollections] = React.useState();
   const [layout, setLayout] = React.useState('spiral');
   const [selectedPoint, setSelectedPoint] = React.useState(null);
@@ -31,6 +34,7 @@ function App() {
   //const data = React.useRef(initialData);
   const [data, setData] = React.useState(initialData);
   const [loading, setLoading] = React.useState(true);
+  const [ConvexHullLoading, setConvexHullLoading] = React.useState(true)
   //const [collectionValue, setCollectionValue] = React.useState([])
   const collectionValue = React.useRef();
   const [stackedBarLabel, setStackedBarLabel] = React.useState()
@@ -56,6 +60,19 @@ function App() {
   const [selectCubeUnvoted, setSelectCubeUnvoted] = React.useState(false)
 
   //const [userVoteCubePosCentroid, setUserVoteCubePosCentroid] = React.useState(null)
+
+    React.useEffect(() => {
+      function handleResize() {
+        setWindowWidth(window.innerWidth);
+        setWindowHeight(window.innerHeight);
+      }
+
+      window.addEventListener('resize', handleResize);
+
+      return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+
 
     const {loading: collection_data_loading, data: collection_data} = useQuery(COLLECTION_DATA)
       React.useEffect(() => {
@@ -254,6 +271,13 @@ function App() {
         <div className="App"> 
           <div className='Scene'>
 
+              { (windowWidth < 1080 || windowHeight < 600) && (
+                 <p>Please enlarge your browser view</p>
+              )}
+
+              {(loading || ConvexHullLoading) && (
+                  <div id="preloader"></div>
+              )}
 
               <LayoutButtons 
                 layout = {layout}
@@ -278,7 +302,8 @@ function App() {
 
               />
 
-              <NotificationComponent 
+              {!ConvexHullLoading && (
+                <NotificationComponent 
                 data = {data}
                 storeSelectedPoint = {storeSelectedPoint}
                 setSelectedPoint = {setSelectedPoint}
@@ -287,6 +312,7 @@ function App() {
                 setOpenModal = {setOpenModal}
                 setOpenVote = {setOpenVote}
               />
+              )} 
 
 
               <SideBar
@@ -303,6 +329,8 @@ function App() {
 
                     layout = {layout}
                     setLayout = {setLayout}
+                    setSelectedPoint = {setSelectedPoint}
+                    storeSelectedPoint = {storeSelectedPoint}
 
                     cubeOptionToShow = {cubeOptionToShow}
                     setCubeOptionToShow = {setCubeOptionToShow}
@@ -369,6 +397,7 @@ function App() {
                   setHoverOnCentroid = {setHoverOnCentroid}
 
                   cubeOptionToShow = {cubeOptionToShow}
+                  setConvexHullLoading = {setConvexHullLoading}
 
                   />
 
@@ -417,6 +446,12 @@ function App() {
                 data = {data}
                 zoomToView = {(focusRef) => (setFocus(focusRef))}
                 layout = {layout}
+                setLayout = {setLayout}
+
+                setCubeOptionToShow = {setCubeOptionToShow}
+                setSelectYourVotes = {setSelectYourVotes}
+                setSelectHasVotes = {setSelectHasVotes}
+                setSelectCubeUnvoted = {setSelectCubeUnvoted}
 
           >
             

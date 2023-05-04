@@ -177,7 +177,7 @@ function votedByUserLayout(data, user, userVotes) {
     }
   }
 
-  function unVotedLayout(data, userVotes) {
+  function unVotedLayout(data) {
     let unVoted = [];
     let hidePoints = [];
     let unVotedCubePos = [];

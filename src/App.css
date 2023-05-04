@@ -608,5 +608,16 @@ hr {
   font-weight: 600;
 }
 
+.notificationInfo{
+  font-size: 12px;
+  margin-bottom: 12px;
+  margin-top: 24px;
+  margin-left: 12px;
+  margin-right: 12px;
+  font-weight: 600;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #c4d4a0;
+}
+
 
 

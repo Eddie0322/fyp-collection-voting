@@ -60,6 +60,7 @@ const NotificationCards = ({
 
                     </motion.div>
                 ))}
+            
         </>
     )
     }
@@ -117,6 +118,11 @@ const NotificationComponent = ({
                         setOpenVote = {setOpenVote}
                     /> 
                 </AnimatePresence>
+                <div 
+                    className='notificationInfo'
+                    > 
+                        - Collecting real-time votes from all users
+                </div>
             </div>
         )
         }

@@ -28,7 +28,15 @@ const EmotionSelection = ({
                             setZoom, 
                             storeSelectedPoint, 
                             setUpdatePosLoading,
-                            setIsVoteByUser 
+                            setIsVoteByUser,
+
+                            layout,
+                            setLayout,
+
+                            setCubeOptionToShow,
+                            setSelectYourVotes,
+                            setSelectHasVotes,
+                            setSelectCubeUnvoted,
                           }) => {
   const [selected, setSelected] = useState([]);
   const [insert_vote_poll, { data: insert_vote_data, loading, error }] = useMutation(INSERT_VOTES);
@@ -119,14 +127,30 @@ const EmotionSelection = ({
               },
             });
 
+
+            if(layout !== 'grid' && layout !== 'spiral'){
+              setSelectYourVotes(false)
+              setSelectHasVotes(false)
+              setSelectCubeUnvoted(false)
+              setCubeOptionToShow(null)
+            }
+          
             storeSelectedPoint.current = selected[0].collectionId
             setUpdatePosLoading(true)
             setIsVoteByUser(true)
 
-            setTimeout(() => {
-              setOpenModal(false)
-              setZoom(false)         
-            }, 1500)
+            if(layout !== 'grid' && layout !== 'spiral'){
+              setTimeout(() => {
+                setOpenModal(false)
+                setZoom(false) 
+                setLayout('grid') 
+              }, 1500)
+             } else  {
+              setTimeout(() => {
+                        setOpenModal(false)
+                        setZoom(false)         
+                      }, 1500)
+           }
 
         } else {
             console.log("Please Log In!")
@@ -145,14 +169,31 @@ const EmotionSelection = ({
           },
         });
 
+        if(layout !== 'grid' && layout !== 'spiral'){
+          setSelectYourVotes(false)
+          setSelectHasVotes(false)
+          setSelectCubeUnvoted(false)
+          setCubeOptionToShow(null)
+        }
+
         storeSelectedPoint.current = selected[0].collectionId
         setUpdatePosLoading(true)
         setIsVoteByUser(true)
 
-        setTimeout(() => {
-          setOpenModal(false)
-          setZoom(false)         
-        }, 1500)
+        if(layout !== 'grid' && layout !== 'spiral'){
+            setTimeout(() => {
+              setOpenModal(false)
+              setZoom(false) 
+              setLayout('grid') 
+            }, 1500)
+        } else  {
+            setTimeout(() => {
+                      setOpenModal(false)
+                      setZoom(false)         
+                    }, 1500)
+        }
+
+        
 
     } else {
         console.log("Please Log In!")
