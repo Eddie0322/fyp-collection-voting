@@ -72,7 +72,9 @@ function App() {
       return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-
+    React.useEffect(() => {
+      document.body.style.cursor = hoverOnCentroid !== null  ? 'pointer' : 'auto'
+    }, [hoverOnCentroid])
 
     const {loading: collection_data_loading, data: collection_data} = useQuery(COLLECTION_DATA)
       React.useEffect(() => {
@@ -132,10 +134,10 @@ function App() {
 
 
     //Get the Total Count 
-    const { error: total_count_error, loading: total_count_loading, data:total_count_data } = useSubscription(SUBSCRIPTION_TOTAL_COUNT);
+    const { data:total_count_data } = useSubscription(SUBSCRIPTION_TOTAL_COUNT);
 
     //Get Collection Value from API
-    const { error, loading: collection_value_loading, data:collection_value_data } = useSubscription(SUBSCRIPTION_COLLECTION_VALUE);
+    const { data:collection_value_data } = useSubscription(SUBSCRIPTION_COLLECTION_VALUE);
     let collectionValueArray = [];
     let votedCollections = [];
     

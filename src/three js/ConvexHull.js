@@ -19,7 +19,8 @@ const ConvexHull = ({
                       centroidsArray,
                       setHoverOnCentroid,
                       setConvexHullLoading
-                    }) => {
+                    }) => {    
+
 
     const [textRefArr, setTextRefArr] = useState();
 
@@ -188,34 +189,30 @@ const ConvexHull = ({
 
       const handleHover = (buttonIndex) => {
 
-        if (flag2.current) {
-          flag2.current = false;
-        } else {
           setHoverOnCentroid(buttonIndex)
-          flag2.current = true;
-        }
+        
       };
 
-      const handleHoverOut = (buttonIndex) => {
+      const handleHoverOut = () => {
 
-        if (flag2.current) {
-          flag2.current = false;
+
           setHoverOnCentroid(null)
-        } else {
-          setHoverOnCentroid(null)
-          flag2.current = true;
-        }
+        
+
       };
   
 
+    
     // Update the text rotation on each frame to face the camera
+
     useFrame(({ camera }) => {
 
       if(textRefArr){
         for(let i=0; i<12; i++){
-        if (textRefArr[i].current) {
-          textRefArr[i].current.lookAt(camera.position);
-        }
+
+          if (textRefArr[i].current) {
+            textRefArr[i].current.lookAt(camera.position)
+          }
       }
       }
       
@@ -223,7 +220,7 @@ const ConvexHull = ({
     });
 
     const AnimatedText = motion(Text);
-    
+
 
     useEffect(() => {
 
@@ -331,7 +328,7 @@ const ConvexHull = ({
 
                 count.current = count.current + 1
               
-                if (flag.current && centroidsArray[0].x != 0 && flag2.current && count.current < 3) {
+                if (flag.current && centroidsArray[0].x !== 0 && flag2.current && count.current < 3) {
                   flag.current = false;
                   flag2.current = false
                 }else{
@@ -733,13 +730,14 @@ const ConvexHull = ({
               { centroidsArray && !flag.current && count.current > 2 && textRefArr &&
               buttonConfigs.map((config, index) => (
 
+
                       <Text
                         key={index}
                         ref={textRefArr[index]}
                         position={centroidsArray[index]}
                         onClick={() => handleClick(index)}
                         //font={"Georgia,'Times New Roman', Times, serif"}
-                        fontSize={0.3}
+                        fontSize={hoverOnCentroid === index ? 0.33 : 0.3}
                         color={config.color}
                         anchorX="center"
                         anchorY="middle"
@@ -749,8 +747,8 @@ const ConvexHull = ({
                           handleHover(index)
                           
                         }}
-                        onPointerLeave={() => {handleHoverOut(index)}}
-                        onPointerOut={() => {handleHoverOut(index)}}
+                        onPointerLeave={() => {handleHoverOut()}}
+                        onPointerOut={() => {handleHoverOut()}}
                         onPointerMissed={() => setHoverOnCentroid(null)}               
                           
                         // whileHover={{
@@ -760,7 +758,6 @@ const ConvexHull = ({
                       >
                         {config.text}
                       </Text>
-
 
                       )
                       )}
