@@ -158,9 +158,6 @@ const Lines = ({data, layout, optionToShow, showAllMesh}) => {
           setAnxietyLinePoints(resultAnxiety)
           setSadnessLinePoints(resultSadness)
           setDreadLinePoints(resultDread)
-
-          console.log("Line updates!")
-    
     
 
   },[data, layout])
