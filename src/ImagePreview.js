@@ -23,6 +23,10 @@ return(
                                     opacity: 0
                                 }}
                                 className='hoverBox'>
+
+                                {/* <div className="vote-tag">
+                                       <div>You have voted for this collection</div>
+                                </div>    */}
                     
                                 <div className="selected-point">
                                         <div>Collection {hoverPoint.id}</div>
