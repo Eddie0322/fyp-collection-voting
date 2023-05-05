@@ -219,7 +219,7 @@ const ConvexHull = ({
   
     });
 
-    const AnimatedText = motion(Text);
+    //const AnimatedText = motion(Text);
 
 
     useEffect(() => {

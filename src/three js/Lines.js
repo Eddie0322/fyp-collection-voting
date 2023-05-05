@@ -160,7 +160,7 @@ const Lines = ({data, layout, optionToShow, showAllMesh}) => {
           setDreadLinePoints(resultDread)
     
 
-  },[data, layout])
+  },[data])
 
 
   if(layout !== 'spiral') return null
