@@ -25,7 +25,7 @@ return(
                                 className='hoverBox'>
                     
                                 <div className="selected-point">
-                                        <div>Cube {hoverPoint.id}</div>
+                                        <div>Collection {hoverPoint.id}</div>
                                 </div>    
                                 
                                 

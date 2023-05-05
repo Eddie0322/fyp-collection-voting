@@ -334,16 +334,10 @@ const useMousePointInteraction = ({
           }
     }
 
-    const handlePointerOut = evt => {
-      const { instanceId } = evt;
-      const index = instanceId;
-      const point = data[index];
-
-      if (point === hoverPoint) {
+    const handlePointerOut = () => {
+      
         onHoverPoint(null);
-      }else{
-        onHoverPoint(point)
-      }
+
 }
 
 
@@ -367,6 +361,7 @@ const InstancedPoints = ({
         setZoom,
         storeSelectedPoint,
         updatePosLoading,
+        setUpdatePosLoading,
         setIsVoteByUser,
         isVoteByUser,
         user,
@@ -394,13 +389,12 @@ const InstancedPoints = ({
   
     // update instance matrices only when needed
     useEffect(() => {
-      
-        if(!updatePosLoading){
 
                 if(storeSelectedPoint.current !== null && isVoteByUser){
 
                   const point = data[storeSelectedPoint.current];
                   if(point !== selectedPoint){
+                          setUpdatePosLoading(false)
                           onSelectPoint(point);
                           setZoom(true)
                           zoomToView(point)
@@ -446,13 +440,13 @@ const InstancedPoints = ({
                                     setShowAllMesh(true)
                                 }
                         }
-                }
+                
                  
                   UpdateInstancedMeshMatrices({ mesh: meshRef.current, data, selectedPoint, hoverPoint, userVotes, cubeOptionToShow, layout });
 
       }
 
-    }, [data, selectedPoint, hoverPoint, updatePosLoading, userVotes]);
+    }, [data, selectedPoint, hoverPoint, userVotes]);
 
     // Color settings
     const { colorAttrib, colorArray } = usePointColors({ data, selectedPoint, layout, hoverPoint, user, userVotes, optionToShow, hoverOnCentroid });
@@ -520,6 +514,7 @@ const Scene = ({ data,
                  zoomToView,
                  storeSelectedPoint,
                  updatePosLoading,
+                 setUpdatePosLoading,
                  setIsVoteByUser,
                  isVoteByUser,
 
@@ -568,6 +563,7 @@ const Scene = ({ data,
                     storeSelectedPoint = {storeSelectedPoint}
                     setLayout = {setLayout}
                     updatePosLoading = {updatePosLoading}
+                    setUpdatePosLoading = {setUpdatePosLoading}
                     setIsVoteByUser = {setIsVoteByUser}
                     isVoteByUser = {isVoteByUser} 
 

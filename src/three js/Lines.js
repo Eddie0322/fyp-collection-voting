@@ -26,7 +26,7 @@ const varShow = {
     opacity: 0.5, 
     transition: {
         delay: 0,
-        duration: 0.5
+        duration: 1
   } },
 }
 
@@ -36,7 +36,7 @@ const varHide = {
     opacity: 0, 
     transition: {
         delay: 0,
-        duration: 0.5
+        duration: 1
   } },
 }
 
@@ -160,7 +160,7 @@ const Lines = ({data, layout, optionToShow, showAllMesh}) => {
           setDreadLinePoints(resultDread)
     
 
-  },[data])
+  },[data, layout])
 
 
   if(layout !== 'spiral') return null

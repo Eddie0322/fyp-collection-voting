@@ -135,23 +135,26 @@ const EmotionSelection = ({
               setCubeOptionToShow(null)
             }
           
-            storeSelectedPoint.current = selected[0].collectionId
-            setUpdatePosLoading(true)
-            setIsVoteByUser(true)
-            setSelectUnvoted(false)
 
             if(layout !== 'grid' && layout !== 'spiral'){
               setTimeout(() => {
                 setOpenModal(false)
                 setZoom(false) 
                 setLayout('grid') 
-              }, 1500)
+                setUpdatePosLoading(true)
+              }, 1000)
              } else  {
               setTimeout(() => {
                         setOpenModal(false)
-                        setZoom(false)         
-                      }, 1500)
+                        setZoom(false)    
+                        setUpdatePosLoading(true)  
+                      }, 1000)
+
            }
+
+           storeSelectedPoint.current = selected[0].collectionId
+           setIsVoteByUser(true)
+           setSelectUnvoted(false)
 
         } else {
             console.log("Please Log In!")
@@ -177,25 +180,25 @@ const EmotionSelection = ({
           setCubeOptionToShow(null)
         }
 
-        storeSelectedPoint.current = selected[0].collectionId
-        setUpdatePosLoading(true)
-        setIsVoteByUser(true)
-        setSelectUnvoted(false)
-
         if(layout !== 'grid' && layout !== 'spiral'){
             setTimeout(() => {
               setOpenModal(false)
               setZoom(false) 
               setLayout('grid') 
-            }, 1500)
+              setUpdatePosLoading(true)
+            }, 1000)
         } else  {
             setTimeout(() => {
                       setOpenModal(false)
-                      setZoom(false)         
-                    }, 1500)
+                      setZoom(false)    
+                      setUpdatePosLoading(true)     
+                    }, 1000)
         }
 
-        
+        storeSelectedPoint.current = selected[0].collectionId
+        setIsVoteByUser(true)
+        setSelectUnvoted(false)
+
 
     } else {
         console.log("Please Log In!")

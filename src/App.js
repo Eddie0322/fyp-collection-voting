@@ -60,6 +60,7 @@ function App() {
   const [selectCubeUnvoted, setSelectCubeUnvoted] = React.useState(false)
 
   //const [userVoteCubePosCentroid, setUserVoteCubePosCentroid] = React.useState(null)
+  // console.log(updatePosLoading)
 
     React.useEffect(() => {
       function handleResize() {
@@ -191,7 +192,6 @@ function App() {
         collectionValue.current = collectionValueArray;
         var testArray = calculatePCA(collectionValue.current, collection_value_data.collection_value_accumulated_results, votedCollections);
           
-        setTimeout(() => {
             setData(data.map((object, index) => (
               {
                 ...object,
@@ -202,8 +202,8 @@ function App() {
                 totalVote: total_count_data.total_count[index].count
               }
             )))
-            setUpdatePosLoading(false)
-        },1000)
+            //setUpdatePosLoading(false)
+      
 
       }
     },[collection_value_data, total_count_data])
@@ -283,6 +283,13 @@ function App() {
 
               {(loading || ConvexHullLoading) && (
                   <div id="preloader"></div>
+              )}
+
+              { updatePosLoading && (
+                  <div className="position-loading">
+                       {/* <img src={logo} alt="Logo" className="logo" /> */}
+                       <p className="secondary-text">Loading...</p>
+                  </div>
               )}
 
               <LayoutButtons 
@@ -390,6 +397,7 @@ function App() {
                   setFocus = {setFocus}
                   zoomToView = {(focusRef) => (setFocus(focusRef))}
                   storeSelectedPoint = {storeSelectedPoint}
+                  setUpdatePosLoading = {setUpdatePosLoading}
                   updatePosLoading = {updatePosLoading}
                   setIsVoteByUser = {setIsVoteByUser}
                   isVoteByUser = {isVoteByUser}
