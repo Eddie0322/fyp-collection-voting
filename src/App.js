@@ -73,8 +73,8 @@ function App() {
     }, []);
 
     React.useEffect(() => {
-      document.body.style.cursor = hoverOnCentroid !== null  ? 'pointer' : 'auto'
-    }, [hoverOnCentroid])
+      document.body.style.cursor = hoverOnCentroid !== null || hoverPoint  ? 'pointer' : 'auto'
+    }, [hoverOnCentroid, hoverPoint])
 
     const {loading: collection_data_loading, data: collection_data} = useQuery(COLLECTION_DATA)
       React.useEffect(() => {
