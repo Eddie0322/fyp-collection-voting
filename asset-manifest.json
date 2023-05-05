@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/fyp-collection-voting/static/css/main.1b9553e0.css",
-    "main.js": "/fyp-collection-voting/static/js/main.6e43b383.js",
+    "main.css": "/fyp-collection-voting/static/css/main.8958b4aa.css",
+    "main.js": "/fyp-collection-voting/static/js/main.21281b5c.js",
     "static/js/787.6a8f83d5.chunk.js": "/fyp-collection-voting/static/js/787.6a8f83d5.chunk.js",
     "static/media/preloader.gif": "/fyp-collection-voting/static/media/preloader.931c895e826a91f8fe9b.gif",
     "static/media/cross.svg": "/fyp-collection-voting/static/media/cross.b9f9e5a5bd1478a7b737c88c69f0cd70.svg",
     "index.html": "/fyp-collection-voting/index.html",
-    "main.1b9553e0.css.map": "/fyp-collection-voting/static/css/main.1b9553e0.css.map",
-    "main.6e43b383.js.map": "/fyp-collection-voting/static/js/main.6e43b383.js.map",
+    "main.8958b4aa.css.map": "/fyp-collection-voting/static/css/main.8958b4aa.css.map",
+    "main.21281b5c.js.map": "/fyp-collection-voting/static/js/main.21281b5c.js.map",
     "787.6a8f83d5.chunk.js.map": "/fyp-collection-voting/static/js/787.6a8f83d5.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.1b9553e0.css",
-    "static/js/main.6e43b383.js"
+    "static/css/main.8958b4aa.css",
+    "static/js/main.21281b5c.js"
   ]
 }
