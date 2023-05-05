@@ -104,7 +104,7 @@ function spiralLayout(data){
     }
      
   }
-  console.log(PCAposDup)
+  //console.log(PCAposDup)
 
 }
 

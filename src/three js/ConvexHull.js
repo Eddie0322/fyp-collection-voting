@@ -347,9 +347,6 @@ const ConvexHull = ({
                 
                 }
 
-                console.log("update!")
-
-
     }, [data, layout])
 
 
