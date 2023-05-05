@@ -1,6 +1,6 @@
 import { ConvexGeometry } from 'three/addons/geometries/ConvexGeometry.js';
 import * as THREE from "three";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion-3d"
 import { useFrame } from '@react-three/fiber';
 import { Text } from '@react-three/drei';
@@ -21,6 +21,7 @@ const ConvexHull = ({
                       setConvexHullLoading
                     }) => {
 
+    const [textRefArr, setTextRefArr] = useState();
 
     const convexRefAmusement = useRef();
     const convexRefIntimate = useRef();
@@ -97,7 +98,7 @@ const ConvexHull = ({
     }
 
     //Text
-    let refArr = []
+    //let refArr = []
 
     const textRef0 = useRef();
     const textRef1 = useRef();
@@ -112,8 +113,6 @@ const ConvexHull = ({
     const textRef10 = useRef();
     const textRef11 = useRef();
 
-
-    refArr.push(textRef0, textRef1, textRef2, textRef3, textRef4, textRef5, textRef6, textRef7, textRef8, textRef9, textRef10, textRef11)
 
     const LIGHT_COLOR = ["#ffff99", "#ffc3c3", "#c3c3ff", "#f6bb90", "#7ce764", "#99ffff", "#c3c388", "#cccccc", "#e580ff", "#9b6eff", "#33ff33", "#ec8a9e"]
     const DARK_COLOR = ["#4c4c00", "#620000", "#000062", "#3f1d05", "#113709", "#004c4c", "#19190d", "#262626", "#330040", "#110037", "#001a00", "#330811"]
@@ -193,7 +192,6 @@ const ConvexHull = ({
           flag2.current = false;
         } else {
           setHoverOnCentroid(buttonIndex)
-          console.log("hover")
           flag2.current = true;
         }
       };
@@ -205,7 +203,6 @@ const ConvexHull = ({
           setHoverOnCentroid(null)
         } else {
           setHoverOnCentroid(null)
-          console.log("out")
           flag2.current = true;
         }
       };
@@ -214,12 +211,14 @@ const ConvexHull = ({
     // Update the text rotation on each frame to face the camera
     useFrame(({ camera }) => {
 
-
-      for(let i=0; i<12; i++){
-        if (refArr[i].current) {
-          refArr[i].current.lookAt(camera.position);
+      if(textRefArr){
+        for(let i=0; i<12; i++){
+        if (textRefArr[i].current) {
+          textRefArr[i].current.lookAt(camera.position);
         }
       }
+      }
+      
   
     });
 
@@ -242,6 +241,9 @@ const ConvexHull = ({
             let arrSadness = [];
             let arrDread = [];
             let arrCentroids = [];
+
+            let refArr = [];
+            refArr.push(textRef0, textRef1, textRef2, textRef3, textRef4, textRef5, textRef6, textRef7, textRef8, textRef9, textRef10, textRef11)
 
 
             if(layout === 'spiral') {
@@ -334,6 +336,8 @@ const ConvexHull = ({
                   flag2.current = false
                 }else{
                   setCentroidsArray(arrCentroids)
+
+                  setTextRefArr(refArr)
                   
                   setTimeout(() => {
                     setConvexHullLoading(false)
@@ -342,6 +346,8 @@ const ConvexHull = ({
                 }
                 
                 }
+
+                console.log("update!")
 
 
     }, [data, layout])
@@ -727,12 +733,12 @@ const ConvexHull = ({
 
 
               <>
-              { centroidsArray && !flag.current && count.current > 2 &&
+              { centroidsArray && !flag.current && count.current > 2 && textRefArr &&
               buttonConfigs.map((config, index) => (
 
-                      <AnimatedText
+                      <Text
                         key={index}
-                        ref={refArr[index]}
+                        ref={textRefArr[index]}
                         position={centroidsArray[index]}
                         onClick={() => handleClick(index)}
                         //font={"Georgia,'Times New Roman', Times, serif"}
@@ -748,16 +754,15 @@ const ConvexHull = ({
                         }}
                         onPointerLeave={() => {handleHoverOut(index)}}
                         onPointerOut={() => {handleHoverOut(index)}}
-                        onPointerMissed={() => setHoverOnCentroid(null)}     
-
+                        onPointerMissed={() => setHoverOnCentroid(null)}               
                           
-                        whileHover={{
-                            scale: 1.2,
-                            transition: { duration: 0.15 },
-                          }}
+                        // whileHover={{
+                        //     scale: 1.2,
+                        //     transition: { duration: 0.15 },
+                        //   }}
                       >
                         {config.text}
-                      </AnimatedText>
+                      </Text>
 
 
                       )

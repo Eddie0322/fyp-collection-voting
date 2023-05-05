@@ -542,6 +542,7 @@ const Scene = ({ data,
 
     const { user, userVotes } = UserAuth()
 
+
     return(
 
         <Canvas style={{ background: "#111" }} camera={{ position: [25, 25, 25] }}>
