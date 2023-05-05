@@ -285,7 +285,7 @@ function App() {
                   <div id="preloader"></div>
               )}
 
-              { updatePosLoading && (
+              { updatePosLoading && isVoteByUser && (
                   <div className="position-loading">
                        {/* <img src={logo} alt="Logo" className="logo" /> */}
                        <p className="secondary-text">Loading...</p>

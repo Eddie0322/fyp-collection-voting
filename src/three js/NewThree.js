@@ -391,10 +391,9 @@ const InstancedPoints = ({
     useEffect(() => {
 
                 if(storeSelectedPoint.current !== null && isVoteByUser){
-
+                  setUpdatePosLoading(false)
                   const point = data[storeSelectedPoint.current];
                   if(point !== selectedPoint){
-                          setUpdatePosLoading(false)
                           onSelectPoint(point);
                           setZoom(true)
                           zoomToView(point)

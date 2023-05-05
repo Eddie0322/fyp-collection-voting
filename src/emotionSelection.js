@@ -141,17 +141,16 @@ const EmotionSelection = ({
                 setOpenModal(false)
                 setZoom(false) 
                 setLayout('grid') 
-                setUpdatePosLoading(true)
               }, 1000)
              } else  {
               setTimeout(() => {
                         setOpenModal(false)
                         setZoom(false)    
-                        setUpdatePosLoading(true)  
                       }, 1000)
 
            }
 
+           setUpdatePosLoading(true) 
            storeSelectedPoint.current = selected[0].collectionId
            setIsVoteByUser(true)
            setSelectUnvoted(false)
@@ -185,16 +184,15 @@ const EmotionSelection = ({
               setOpenModal(false)
               setZoom(false) 
               setLayout('grid') 
-              setUpdatePosLoading(true)
             }, 1000)
         } else  {
             setTimeout(() => {
                       setOpenModal(false)
-                      setZoom(false)    
-                      setUpdatePosLoading(true)     
+                      setZoom(false)      
                     }, 1000)
         }
 
+        setUpdatePosLoading(true)   
         storeSelectedPoint.current = selected[0].collectionId
         setIsVoteByUser(true)
         setSelectUnvoted(false)
