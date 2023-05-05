@@ -54,7 +54,7 @@ function App() {
   const [hoverOnCentroid, setHoverOnCentroid] = React.useState(null)
 
   const [cubeOptionToShow, setCubeOptionToShow] = React.useState(null)
-
+  const [selectUnvoted, setSelectUnvoted] = React.useState(false)
   const [selectYourVotes, setSelectYourVotes] = React.useState(false)
   const [selectHasVotes, setSelectHasVotes] = React.useState(false)
   const [selectCubeUnvoted, setSelectCubeUnvoted] = React.useState(false)
@@ -341,6 +341,9 @@ function App() {
                     cubeOptionToShow = {cubeOptionToShow}
                     setCubeOptionToShow = {setCubeOptionToShow}
 
+                    selectUnvoted = {selectUnvoted}
+                    setSelectUnvoted = {setSelectUnvoted}
+
                     selectYourVotes = {selectYourVotes}
                     setSelectYourVotes = {setSelectYourVotes}
                     selectHasVotes = {selectHasVotes}
@@ -453,6 +456,8 @@ function App() {
                 zoomToView = {(focusRef) => (setFocus(focusRef))}
                 layout = {layout}
                 setLayout = {setLayout}
+
+                setSelectUnvoted = {setSelectUnvoted}
 
                 setCubeOptionToShow = {setCubeOptionToShow}
                 setSelectYourVotes = {setSelectYourVotes}

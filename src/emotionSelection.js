@@ -32,7 +32,7 @@ const EmotionSelection = ({
 
                             layout,
                             setLayout,
-
+                            setSelectUnvoted,
                             setCubeOptionToShow,
                             setSelectYourVotes,
                             setSelectHasVotes,
@@ -138,6 +138,7 @@ const EmotionSelection = ({
             storeSelectedPoint.current = selected[0].collectionId
             setUpdatePosLoading(true)
             setIsVoteByUser(true)
+            setSelectUnvoted(false)
 
             if(layout !== 'grid' && layout !== 'spiral'){
               setTimeout(() => {
@@ -179,6 +180,7 @@ const EmotionSelection = ({
         storeSelectedPoint.current = selected[0].collectionId
         setUpdatePosLoading(true)
         setIsVoteByUser(true)
+        setSelectUnvoted(false)
 
         if(layout !== 'grid' && layout !== 'spiral'){
             setTimeout(() => {

@@ -30,14 +30,16 @@ const SideBar = ({
                     selectHasVotes,
                     setSelectHasVotes,
                     selectCubeUnvoted,
-                    setSelectCubeUnvoted
+                    setSelectCubeUnvoted,
+
+                    selectUnvoted,
+                    setSelectUnvoted
 
                   }) => {
 
     const { user, userVotes } = UserAuth()
     
     const [hoverOnUnvoted, setHoverOnUnvoted] = useState(false)
-    const [selectUnvoted, setSelectUnvoted] = useState(false)
     const [hoverShowAll, setHoverShowAll] = useState(false)
 
     const [hoverOnYourVotes, setHoverOnYourVotes] = useState(false)

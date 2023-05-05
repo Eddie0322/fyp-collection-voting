@@ -37,7 +37,7 @@ const Modal = ({
                 zoomToView,
                 layout,
                 setLayout,
-            
+                setSelectUnvoted,
                 setCubeOptionToShow,
                 setSelectYourVotes,
                 setSelectHasVotes,
@@ -288,6 +288,7 @@ const Modal = ({
                                 setIsVoteByUser = {setIsVoteByUser}
                                 layout = {layout}
                                 setLayout = {setLayout}
+                                setSelectUnvoted = {setSelectUnvoted}
                                 setCubeOptionToShow = {setCubeOptionToShow}
                                 setSelectYourVotes = {setSelectYourVotes}
                                 setSelectHasVotes = {setSelectHasVotes}
