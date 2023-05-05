@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/fyp-collection-voting/static/css/main.a9e143c9.css",
+    "main.css": "/fyp-collection-voting/static/css/main.fcd6355b.css",
     "main.js": "/fyp-collection-voting/static/js/main.6866bfed.js",
     "static/js/787.6a8f83d5.chunk.js": "/fyp-collection-voting/static/js/787.6a8f83d5.chunk.js",
     "static/media/preloader.gif": "/fyp-collection-voting/static/media/preloader.931c895e826a91f8fe9b.gif",
     "static/media/cross.svg": "/fyp-collection-voting/static/media/cross.b9f9e5a5bd1478a7b737c88c69f0cd70.svg",
     "index.html": "/fyp-collection-voting/index.html",
-    "main.a9e143c9.css.map": "/fyp-collection-voting/static/css/main.a9e143c9.css.map",
+    "main.fcd6355b.css.map": "/fyp-collection-voting/static/css/main.fcd6355b.css.map",
     "main.6866bfed.js.map": "/fyp-collection-voting/static/js/main.6866bfed.js.map",
     "787.6a8f83d5.chunk.js.map": "/fyp-collection-voting/static/js/787.6a8f83d5.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.a9e143c9.css",
+    "static/css/main.fcd6355b.css",
     "static/js/main.6866bfed.js"
   ]
 }
