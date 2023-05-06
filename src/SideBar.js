@@ -179,17 +179,18 @@ const SideBar = ({
                       <span 
                         style={{
                           display: "flex",
-                          fontSize: "15px",
-                          padding: "12px",
-                          marginLeft: "12px",
-                          marginBottom: "8px",
+                          fontSize: "calc(0.6vw + 0.6vh)",
+                          padding: "calc(0.2vw + 0.2vh)",
+                          marginLeft: "1.4vw",
+                          marginBottom: "1.4vh",
                           fontFamily: "Arial, Helvetica, sans-serif",
                           fontWeight: "600",
-                          letterSpacing: "1.2px",
+                          letterSpacing: "0.2vw",
                           textTransform: "uppercase"
                         }}
                       
                       >Emotions</span>
+
 
                 {
                 PCAbuttonsConfig.map((config, index) => (
@@ -370,13 +371,13 @@ const SideBar = ({
                           <span 
                             style={{
                               display: "flex",
-                              fontSize: "15px",
-                              padding: "12px",
-                              marginLeft: "12px",
-                              marginBottom: "8px",
+                              fontSize: "calc(0.6vw + 0.6vh)",
+                              padding: "calc(0.2vw + 0.2vh)",
+                              marginLeft: "1.4vw",
+                              marginBottom: "1.4vh",
                               fontFamily: "Arial, Helvetica, sans-serif",
                               fontWeight: "600",
-                              letterSpacing: "1.2px",
+                              letterSpacing: "0.2vw",
                               textTransform: "uppercase"
                             }}
                           

@@ -394,6 +394,8 @@ hr {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  width: 100%;
+  margin-right: 1rem
 }
 
 
@@ -401,12 +403,11 @@ hr {
   position: absolute;
   z-index: 2;
   background: rgba(44, 43, 43, 0.2);
-  padding-top: 24px;
-  padding-bottom: 32px;
+  padding-top: 5vh;
+  padding-bottom: 3vh;
   color: #fff;
   border-radius: 16px;
   left: 5%;
-  height: 70%;
   top: 50%;
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
@@ -418,25 +419,22 @@ hr {
   position: absolute;
   z-index: 2;
   background: rgba(44, 43, 43, 0.3);
-  padding-top: 24px;
-  padding-bottom: 32px;
+  padding-top: 3vh;
+  padding-bottom: 2vh;
   color: #fff;
   border-radius: 16px;
   left: 5%;
-  top: 48px;
-  height: 26%;
   top: 50%;
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 
 }
 
 
 .sideBarTagDot{
-  margin-top: 2px;
-  height: 8px;
-  width: 8px;
+  margin-top: calc(0.2vw + 0.2vh);
+  height: calc(0.3vw + 0.3vh);
+  width: calc(0.3vw + 0.3vh);
   border-radius: 50%;
   display: inline-block;
   margin-right: 8px;
@@ -453,31 +451,34 @@ hr {
 
 .sideBarTagButtonContainer{
 
-  padding: 10px;
-  margin-left: 12px;
-  margin-right: 12px;
+  padding: 1.2vh;
+  margin-left: 1vw;
+  margin-right: 1vw;
   border-radius: 10px;
   background-color: #ffffff00;
   cursor: pointer;
 
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 12px;
+  font-size: calc(0.3vw + 0.3vh);
   color:#b7b7b7;
-  font-weight: 500;
+  font-weight: 600;
 
   text-transform: uppercase;
   letter-spacing: 1px;
 
+
   display: flex;
+  flex: 1
 
 }
 
 .sideBarTagButtonContainerShowAll{
 
-  padding: 12px;
-  margin-left: 12px;
-  margin-right: 12px;
-  margin-top: 24px;
+  padding: calc(0.5vw + 0.5vh);
+  margin-left: 1vw;
+  margin-right: 1vw;
+  margin-top: 3vh;
+  margin-bottom: 3vh;
   border-radius: 30px;
   background-color: #3a3a3a00;
   cursor: pointer;
@@ -486,12 +487,14 @@ hr {
   border-style: solid;
 
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 12px;
+  font-size: calc(0.3vw + 0.3vh);
   color:#b7b7b7;
   font-weight: 500;
 
   text-transform: uppercase;
   letter-spacing: 1px;
+
+
 }
 
 
