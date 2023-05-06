@@ -179,7 +179,7 @@ const SideBar = ({
                       <span 
                         style={{
                           display: "flex",
-                          fontSize: "1vw",
+                          fontSize: "calc(0.5vw + 0.5vh)",
                           padding: "calc(0.2vw + 0.2vh)",
                           marginLeft: "1.4vw",
                           marginRight: "1.4vw",
@@ -377,7 +377,7 @@ const SideBar = ({
                           <span 
                             style={{
                               display: "flex",
-                              fontSize: "1vw",
+                              fontSize: "calc(0.5vw + 0.5vh)",
                               padding: "calc(0.2vw + 0.2vh)",
                               marginLeft: "1.4vw",
                               marginRight: "1.4vw",
