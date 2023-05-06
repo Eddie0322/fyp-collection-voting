@@ -37,6 +37,7 @@ const EmotionSelection = ({
                             setSelectYourVotes,
                             setSelectHasVotes,
                             setSelectCubeUnvoted,
+                            closeVote
                           }) => {
   const [selected, setSelected] = useState([]);
   const [insert_vote_poll, { data: insert_vote_data, loading, error }] = useMutation(INSERT_VOTES);
@@ -204,8 +205,11 @@ const EmotionSelection = ({
 }
 
   return (
-    <div>
-      {/* <pre>{JSON.stringify(selected)}</pre> */}
+    <div className="multiselect">
+
+            <div className="multiselect-info">
+                Select Your Top Three Feelings On This Collection
+            </div>
             <MultiSelect
                 options={options}
                 value={selected}
@@ -243,22 +247,25 @@ const EmotionSelection = ({
               </>
             )}
 
-            <div className='button-row'>
+            <div className='button-row' style={{marginLeft: 0}}>
+
+              <button onClick={closeVote} className="btn"><p>Back</p></button>
 
               {user?(
                 <>
                 {userVotes.includes(id) ? (
                     <button 
                       className={buttonDisabled()[1]} 
-                      style={{marginLeft: "160px"}} 
+                      style={{marginLeft: "1vw"}} 
                       disabled={buttonDisabled()[0]}
                       onClick= {() => modifyVotes()}>
                       <p>Edit</p>
                     </button>
                 ):(
+                  
                     <button 
                       className={buttonDisabled()[1]} 
-                      style={{marginLeft: "160px"}} 
+                      style={{marginLeft: "1vw"}} 
                       disabled={buttonDisabled()[0]}
                       onClick= {() => insertVotes()}>
                       <p>{submitButtonText()}</p>
@@ -266,9 +273,10 @@ const EmotionSelection = ({
                 )} 
                 </>  
               ):(
+                
                 <button 
                   className={ "btn2"} 
-                  style={{marginLeft: "160px"}} 
+                  style={{marginLeft: "1vw"}} 
                   onClick={() => setOpenLoginModal(true)}
                   >
                   <p>Login and Vote</p>

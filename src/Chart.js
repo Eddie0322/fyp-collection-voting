@@ -27,8 +27,8 @@ const StackedBar = ({stackedBarLabel, stackedBarValue, stackedBarColors}) => {
         <Chart
         
           type = "bar"
-          width = {520}
-          height = {130}
+          width = {"108%"}
+          height = {"150%"}
           horizontalalign = "left"
           
           series = {seriesData}
@@ -97,8 +97,8 @@ const StackedBar = ({stackedBarLabel, stackedBarValue, stackedBarColors}) => {
                     {
                         showForZeroSeries: false,
                         position: "bottom",
-                        horizontalAlign: "right",
-                        offsetY: -44,
+                        horizontalAlign: "middle",
+                        offsetY: -50,
                         height: 28,
                         markers: {
                             

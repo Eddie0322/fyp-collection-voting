@@ -16,7 +16,6 @@ const Modal = ({
                 image, 
                 info, 
                 infoTitle, 
-                infoDate, 
                 voteCount, 
                 openVote, 
                 closeVote, 
@@ -109,21 +108,6 @@ const Modal = ({
                         onClick={e => { e.stopPropagation(); }}
                     >   
 
-                            <motion.div 
-                                initial={{
-                                    scale: 0
-                                }}
-                                animate={{
-                                    scale: 1,
-                                    transition: {
-                                        delay: 0.2,
-                                        duration: 0.2
-                                    }
-                                }}                                           
-                                className='HeaderRow'
-                            >
-                                <img style={{ width: "24px", cursor: "pointer" }} src={crossSVG} alt="" onClick={closeModal}></img>    
-                            </motion.div> 
 
                             <motion.div             
                                  className="content-left"
@@ -146,9 +130,25 @@ const Modal = ({
                                 }}                 
                                 className="content-right"
                             >
+                                <motion.div 
+                                    initial={{
+                                        scale: 0
+                                    }}
+                                    animate={{
+                                        scale: 1,
+                                        transition: {
+                                            delay: 0.2,
+                                            duration: 0.2
+                                        }
+                                    }}                                           
+                                    className='HeaderRow'
+                                >
+                                    <img style={{ width: "5%", cursor: "pointer" }} src={crossSVG} alt="" onClick={closeModal}></img>    
+                                </motion.div> 
 
                                 {info}
                                 {voteCount}
+
                                 <div className='stackedBar'>
                                     <StackedBar
                                         stackedBarLabel = {stackedBarLabel}
@@ -241,39 +241,40 @@ const Modal = ({
                         onClick={e => { e.stopPropagation(); }}
                     >
 
-                        <div 
-                            className='HeaderRow'
-                        >
 
-                            <img style={{ width: "24px", cursor: "pointer" }} src={crossSVG} alt="" onClick={closeModal}></img>    
+                            <motion.div             
+                                 className="content-left"
+                            >
+                                  {image}
+                            </motion.div>
 
-                        </div> 
-
-                        <div 
-                            className="content-left"
-                        > 
-                            {image}
-                        </div>
-
-                        <div 
-                            className="content-right"
-                        >
+                        <motion.div 
+                                initial={{
+                                    opacity: 0,
+                                }}
+                                animate={{
+                                    opacity: 1,
+                                    transition: {
+                                        delay: 0.2,
+                                        duration: 0.4
+                                    }
+                                }}                 
+                                className="content-right">
+                                <div className='HeaderRow'>
+                                     <img style={{ width: "5%", cursor: "pointer" }} src={crossSVG} alt="" onClick={closeModal}></img>     
+                                </div> 
 
                             {infoTitle}
-                            {infoDate}
-                            <hr></hr>
 
                         <motion.div
                                 initial={{
                                     opacity: 0,
-                                    x: 50
                                 }}
                                 animate={{
                                     opacity: 1,
-                                    x: 0,
                                     transition: {
                                         delay: 0,
-                                        duration: 0.2
+                                        duration: 0.5
                                     }
                                 }}                                            
                             >
@@ -293,17 +294,11 @@ const Modal = ({
                                 setSelectYourVotes = {setSelectYourVotes}
                                 setSelectHasVotes = {setSelectHasVotes}
                                 setSelectCubeUnvoted = {setSelectCubeUnvoted}
+                                closeVote = {closeVote}
 
                             />
-                       
-
-                        <div className='button-row'>
-                             <button onClick={closeVote} className="btn"><p>Back</p></button>
-                        </div>
-                            
                         </motion.div>
-
-                        </div>
+                        </motion.div>
                         
                     </div>
                 </motion.div>

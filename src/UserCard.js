@@ -42,12 +42,22 @@ const UserCard = ({ user, database_loading, handleSignOut, setOpenLoginModal}) =
                                             >
                                                 
                                                 {database_loading?(
-                                                    
-                                                        <div> Loading... </div>
 
+                                                    <div className="user-info">
+                                                                <h2 className="user-name">Loading...</h2>
+                                                    </div>
+                                                    
                                                 ):(
                                                     
-                                                        <button onClick={() => {handleSignOut(); setShowDropdown(false)}} className={ "btn4"} ><p>LOGOUT</p></button>
+                                                        <motion.button 
+                                                                onClick={() => {handleSignOut(); setShowDropdown(false)}} 
+                                                                className={"log-out-button"}
+                                                                whileHover={{
+                                                                    scale: 1.1
+                                                                }}
+                                                                 >
+                                                            <p>LOGOUT</p>
+                                                        </motion.button>
                                                     
                                                 )}
                                         
@@ -61,25 +71,46 @@ const UserCard = ({ user, database_loading, handleSignOut, setOpenLoginModal}) =
                               <>
                               {database_loading?(
                                 <>
-                                    <div className="user-card" style={{padding: "24px"}}>
-                                        <div className="user-dot"></div>
-                                        <div className="user-info">
-                                                <h2 className="user-name" style={{width: "60%"}}>Loading...</h2>
-                                        </div>
-                                    </div>
-                                
-                                </>
-                              ):(
-                                <>
-                                
-                                    <div className="user-card" style={{padding: "24px"}}>
+                                    <div className="user-card" style={{padding: "calc(1vw + 1vh)"}}>
                                             <div className="user-dot"></div>
                                             <div className="user-info" >
                                                 
                                                     <motion.h2 
                                                         className="user-name" 
                                                         style={{
-                                                                fontSize: "1rem",
+                                                                fontSize: "1.8vh",
+                                                                width: "80%", 
+                                                                cursor: "pointer", 
+                                                                // textDecoration: "underline",
+                                                                fontWeight: "300",
+                                                                textTransform: "uppercase",
+                                                                letterSpacing: "0.8px",
+                                                                color: "#eeeeee"
+                                                            }}
+                                                        onClick={() => {setOpenLoginModal(true)}}
+                                                        whileHover={{
+                                                            scale: 1.1,
+                                                            transition: { duration: 0.3 }
+                                                        }}
+                                                    >
+                                                        Loading...
+                                                    </motion.h2>
+                                            </div>
+            
+                                    </div>
+                                
+                                </>
+                              ):(
+                                <>
+                                
+                                    <div className="user-card" style={{padding: "calc(1vw + 1vh)"}}>
+                                            <div className="user-dot"></div>
+                                            <div className="user-info" >
+                                                
+                                                    <motion.h2 
+                                                        className="user-name" 
+                                                        style={{
+                                                                fontSize: "1.8vh",
                                                                 width: "80%", 
                                                                 cursor: "pointer", 
                                                                 // textDecoration: "underline",

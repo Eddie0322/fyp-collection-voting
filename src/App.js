@@ -100,30 +100,68 @@ function App() {
 
           if(object.artist_title){
           return(
-            <div key={index}>
-              <h3 className='portal-header'>{object.title}</h3>
-              <p className='portal-date'>{object.date_display}</p>
-              <hr></hr>
-              <p className='portal-content-title'>Place Of Origin<i className='portal-content-box'><i className='portal-content'>{object.place_of_origin}</i></i></p>
-              <p className='portal-content-title'>Collection ID<i className='portal-content-box'><i className='portal-content'>{object.id}</i></i></p>
-              <p className='portal-content-title'>Artist<i className='portal-content-box'><i className='portal-content'>{object.artist_title}</i></i></p>
-              <p className='portal-content-title'>Category<i className='portal-content-box'><i className='portal-content'>{object.artwork_type_title}</i></i></p> 
-              
-                    
-          </div>)
+
+            <div key={index} className='collection-info-container'>
+              <div className='portal-header-container' >
+                 {object.title}
+              </div>
+              <div className='portal-date-container'>
+                 {object.date_display} 
+                 <hr></hr>
+              </div>
+              <div className='portal-content-container'>
+                 <div className='portal-content-container-small'>
+                     <p className='portal-content-title'>Place Of Origin</p>
+                     <p className='portal-content'>{object.place_of_origin}</p>
+                 </div>
+                 <div className='portal-content-container-small'>
+                     <p className='portal-content-title'>Collection ID</p>
+                     <p className='portal-content'>{object.id}</p>
+                 </div>
+                 <div className='portal-content-container-small'>
+                     <p className='portal-content-title'>Artist</p>
+                     <p className='portal-content'>{object.artist_title}</p>
+                 </div>
+                 <div className='portal-content-container-small'>
+                     <p className='portal-content-title'>Category</p>
+                     <p className='portal-content'>{object.artwork_type_title}</p>
+                 </div>
+              </div>
+                  
+          </div>
+          )
 
           }else{
             return(
-              <div key={index}>
-                <h3 className='portal-header'>{object.title}</h3>
-                <p className='portal-date'>{object.date_display}</p>
-                <hr></hr>
-                <p className='portal-content-title'>Place Of Origin<i className='portal-content-box'><i className='portal-content'>{object.place_of_origin}</i></i></p>
-              <p className='portal-content-title'>Collection ID<i className='portal-content-box'><i className='portal-content'>{object.id}</i></i></p>
-              <p className='portal-content-title'>Artist<i className='portal-content-box'><i className='portal-content'>Artist Unknown</i></i></p>
-              <p className='portal-content-title'>Category<i className='portal-content-box'><i className='portal-content'>{object.artwork_type_title}</i></i></p> 
-                      
-            </div>)
+              <div key={index} className='collection-info-container'>
+                <div className='portal-header-container' >
+                  {object.title}
+                </div>
+                <div className='portal-date-container'>
+                  {object.date_display} 
+                  <hr></hr>
+                </div>
+                <div className='portal-content-container'>
+                  <div className='portal-content-container-small'>
+                      <p className='portal-content-title'>Place Of Origin</p>
+                      <p className='portal-content'>{object.place_of_origin}</p>
+                  </div>
+                  <div className='portal-content-container-small'>
+                      <p className='portal-content-title'>Collection ID</p>
+                      <p className='portal-content'>{object.id}</p>
+                  </div>
+                  <div className='portal-content-container-small'>
+                      <p className='portal-content-title'>Artist</p>
+                      <p className='portal-content'>Unknown</p>
+                  </div>
+                  <div className='portal-content-container-small'>
+                      <p className='portal-content-title'>Category</p>
+                      <p className='portal-content'>{object.artwork_type_title}</p>
+                  </div>
+                </div>
+                  
+          </div>
+            )
           }
 
 
@@ -432,14 +470,21 @@ function App() {
                   alt = ""
                 />}
                 info={
-                  <h3>{listObjects[selectedPoint.id]}</h3>
+                  <>{listObjects[selectedPoint.id]}</>
                 }
+              
                 infoTitle={
-                  <h3 className='portal-header'>{collections[selectedPoint.id].title}</h3>
+                  <div className='collection-info-container'>
+                          <div className='portal-header-container' >
+                               {collections[selectedPoint.id].title}
+                          </div>
+                          <div className='portal-date-container'>
+                               {collections[selectedPoint.id].date_display}
+                               <hr></hr>
+                          </div>
+                  </div>
                 }
-                infoDate={
-                  <p className='portal-date'>{collections[selectedPoint.id].date_display}</p>
-                }
+
                 voteCount={
 
                   <p className='portal-content-vote'>Total votes: {total_count_data.total_count[selectedPoint.id].count}</p>
