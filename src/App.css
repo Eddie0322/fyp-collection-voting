@@ -432,7 +432,7 @@ hr {
 
 
 .sideBarTagDot{
-  margin-top: calc(0.2vw + 0.2vh);
+  margin-top: 0.3vh;
   height: calc(0.3vw + 0.3vh);
   width: calc(0.3vw + 0.3vh);
   border-radius: 50%;
