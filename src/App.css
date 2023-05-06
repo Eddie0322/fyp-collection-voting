@@ -413,8 +413,15 @@ hr {
   transform: translateY(-50%);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
   height: 70vh;
-  overflow-y: scroll
+  overflow-y: scroll;
 
+}
+
+.sideBarPCA::-webkit-scrollbar {
+  display: none;
+}
+.sideBarPCA::-moz-scrollbar{
+  display: none;
 }
 
 .sideBarCube{
