@@ -239,13 +239,15 @@ const SideBar = ({
                                 transition: { duration: 0.1 },
                               }}
                       >
+                        <div className='sideBarTagDotContainer'>
                           <motion.span 
                                   className="sideBarTagDot" 
                                   style={{backgroundColor: config.hoverDotColor}}
                           ></motion.span>
-
-                        {config.text}
-                          
+                        </div>
+                        <div className='sideBarTextContainer'>
+                                  {config.text}
+                        </div>
                     </motion.div>
 
                 ))}
@@ -299,12 +301,15 @@ const SideBar = ({
                             transition: { duration: 0.1 },
                           }}
                         >
-                        <motion.span 
-                              className="sideBarTagDot" 
-                              style={{backgroundColor: hoverOnUnvoted ? "#eeeeee" : "#b7b7b7"}}
-                        ></motion.span>
-
-                         Unvoted
+                        <div className='sideBarTagDotContainer'>
+                            <motion.span 
+                                  className="sideBarTagDot" 
+                                  style={{backgroundColor: hoverOnUnvoted ? "#eeeeee" : "#b7b7b7"}}
+                            ></motion.span>
+                        </div>
+                        <div className='sideBarTextContainer'>
+                                   Unvoted
+                        </div>
 
                     </motion.div>
 
@@ -430,14 +435,16 @@ const SideBar = ({
                                   transition: { duration: 0.1 },
                                 }}
                               >
+                              <div className='sideBarTagDotContainer'>
+                                      <motion.span 
+                                              className="sideBarTagDot" 
+                                              style={{backgroundColor: CubeButtonsConfig[0].hoverDotColor}}
+                                      ></motion.span>
+                              </div>
 
-                              <motion.span 
-                                      className="sideBarTagDot" 
-                                      style={{backgroundColor: CubeButtonsConfig[0].hoverDotColor}}
-                              ></motion.span>
-
+                              <div className='sideBarTextContainer'>
                                   {CubeButtonsConfig[0].text}
-
+                              </div>
                            </motion.div>
                           
                         </>):(
@@ -497,14 +504,16 @@ const SideBar = ({
                                   transition: { duration: 0.1 },
                                 }}
                               >
+                              <div className='sideBarTagDotContainer'>
+                                      <motion.span 
+                                              className="sideBarTagDotLarge" 
+                                              style={{backgroundColor: CubeButtonsConfig[1].hoverDotColor}}
+                                      ></motion.span>                         
+                              </div>
 
-                              <motion.span 
-                                      className="sideBarTagDotLarge" 
-                                      style={{backgroundColor: CubeButtonsConfig[1].hoverDotColor}}
-                              ></motion.span>                         
-
-                                  {CubeButtonsConfig[1].text}
-
+                              <div className='sideBarTextContainer'>
+                                             {CubeButtonsConfig[1].text}
+                              </div>
                         </motion.div>
 
                         <motion.div 
@@ -552,14 +561,15 @@ const SideBar = ({
                                   transition: { duration: 0.1 },
                                 }}
                               >
-
-                              <motion.span 
-                                      className="sideBarTagDot" 
-                                      style={{backgroundColor: CubeButtonsConfig[2].hoverDotColor}}
-                              ></motion.span>     
-
+                              <div className='sideBarTagDotContainer'>
+                                    <motion.span 
+                                            className="sideBarTagDot" 
+                                            style={{backgroundColor: CubeButtonsConfig[2].hoverDotColor}}
+                                    ></motion.span>     
+                              </div>
+                              <div className='sideBarTextContainer'>
                                   {CubeButtonsConfig[2].text}
-
+                              </div>
                         </motion.div>
 
                         <motion.div 

@@ -430,9 +430,19 @@ hr {
 
 }
 
+.sideBarTagDotContainer{
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.sideBarTextContainer{
+  justify-content: center;
+  align-items: center;
+}
+
 
 .sideBarTagDot{
-  margin-top: 0.3vh;
   height: calc(0.3vw + 0.3vh);
   width: calc(0.3vw + 0.3vh);
   border-radius: 50%;
@@ -451,7 +461,7 @@ hr {
 
 .sideBarTagButtonContainer{
 
-  padding: 1.2vh;
+  padding: calc(0.6vw + 0.6vh);
   margin-left: 1vw;
   margin-right: 1vw;
   border-radius: 10px;
@@ -468,7 +478,6 @@ hr {
 
 
   display: flex;
-  flex: 1
 
 }
 
