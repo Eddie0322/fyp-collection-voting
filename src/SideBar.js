@@ -179,13 +179,14 @@ const SideBar = ({
                       <span 
                         style={{
                           display: "flex",
-                          fontSize: "calc(0.6vw + 0.6vh)",
+                          fontSize: "1vw",
                           padding: "calc(0.2vw + 0.2vh)",
                           marginLeft: "1.4vw",
+                          marginRight: "1.4vw",
                           marginBottom: "1.4vh",
                           fontFamily: "Arial, Helvetica, sans-serif",
                           fontWeight: "600",
-                          letterSpacing: "0.2vw",
+                          letterSpacing: "1.2px",
                           textTransform: "uppercase"
                         }}
                       
@@ -371,13 +372,14 @@ const SideBar = ({
                           <span 
                             style={{
                               display: "flex",
-                              fontSize: "calc(0.6vw + 0.6vh)",
+                              fontSize: "1vw",
                               padding: "calc(0.2vw + 0.2vh)",
                               marginLeft: "1.4vw",
+                              marginRight: "1.4vw",
                               marginBottom: "1.4vh",
                               fontFamily: "Arial, Helvetica, sans-serif",
                               fontWeight: "600",
-                              letterSpacing: "0.2vw",
+                              letterSpacing: "1.2px",
                               textTransform: "uppercase"
                             }}
                           
