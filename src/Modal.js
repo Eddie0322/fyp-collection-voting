@@ -118,11 +118,9 @@ const Modal = ({
                             <motion.div 
                                 initial={{
                                     opacity: 0,
-                                    y: 50
                                 }}
                                 animate={{
                                     opacity: 1,
-                                    y: 0,
                                     transition: {
                                         delay: 0.2,
                                         duration: 0.4
@@ -130,21 +128,12 @@ const Modal = ({
                                 }}                 
                                 className="content-right"
                             >
-                                <motion.div 
-                                    initial={{
-                                        scale: 0
-                                    }}
-                                    animate={{
-                                        scale: 1,
-                                        transition: {
-                                            delay: 0.2,
-                                            duration: 0.2
-                                        }
-                                    }}                                           
+                                <div 
+                                                                  
                                     className='HeaderRow'
                                 >
                                     <img style={{ width: "5%", cursor: "pointer" }} src={crossSVG} alt="" onClick={closeModal}></img>    
-                                </motion.div> 
+                                </div> 
 
                                 {info}
                                 {voteCount}
@@ -250,7 +239,7 @@ const Modal = ({
 
                         <motion.div 
                                 initial={{
-                                    opacity: 0,
+                                    opacity: 1,
                                 }}
                                 animate={{
                                     opacity: 1,

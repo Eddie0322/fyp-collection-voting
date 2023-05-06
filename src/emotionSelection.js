@@ -5,19 +5,21 @@ import { useMutation } from "@apollo/client";
 import { UserAuth } from './AuthContext';
 import './App.css';
 
+const DEFAULT_COLOR = ["#ff3", "#f88", "#88f", "#e72", "#4d2", "#3ff", "#663", "#999", "#c0f", "#40d", "#060", "#c24"]
+
 const options = [
-  { label: "Amusement", value: "amusement", disabled: false, id: 1 },
-  { label: "Intimate", value: "intimate", disabled: false, id: 2 },
-  { label: "Elegant", value: "elegant", disabled: false, id: 3 },
-  { label: "Lively", value: "lively", disabled: false, id: 4  },
-  { label: "Spiritual", value: "spiritual", disabled: false, id: 5  },
-  { label: "Calmness", value: "calmness", disabled: false, id: 6  },
-  { label: "Boredom", value: "boredom", disabled: false, id: 7  },
-  { label: "Strange", value: "strange", disabled: false, id: 8  },
-  { label: "Mysterious", value: "mysterious", disabled: false, id: 9  },
-  { label: "Anxiety", value: "anxiety", disabled: false, id: 10  },
-  { label: "Sadness", value: "sadness", disabled: false, id: 11  },
-  { label: "Dread", value: "dread", disabled: false, id: 12  },
+  { label: "Amusement", value: "amusement", disabled: false, id: 1, color: "#ff3" },
+  { label: "Intimate", value: "intimate", disabled: false, id: 2, color: "##f88" },
+  { label: "Elegant", value: "elegant", disabled: false, id: 3, color: "#88f" },
+  { label: "Lively", value: "lively", disabled: false, id: 4, color: "#e72" },
+  { label: "Spiritual", value: "spiritual", disabled: false, id: 5, color: "#4d2" },
+  { label: "Calmness", value: "calmness", disabled: false, id: 6, color: "#3ff"  },
+  { label: "Boredom", value: "boredom", disabled: false, id: 7, color: "#663"  },
+  { label: "Strange", value: "strange", disabled: false, id: 8, color: "#999"  },
+  { label: "Mysterious", value: "mysterious", disabled: false, id: 9, color: "#c0f"  },
+  { label: "Anxiety", value: "anxiety", disabled: false, id: 10, color: "#40d"  },
+  { label: "Sadness", value: "sadness", disabled: false, id: 11, color: "#060"  },
+  { label: "Dread", value: "dread", disabled: false, id: 12, color: "#c24"  },
 ];
 
 
@@ -233,9 +235,9 @@ const EmotionSelection = ({
                 </>
               ):(
                 <>
-                  <p className='vote-result'>Previous Strongest Emotion Vote: <em>{options[voteSelection[0]-1].label}</em></p>
-                  <p className='vote-result'>Previous 2nd Strongest Emotion Vote: <em>{options[voteSelection[1]-1].label}</em></p>
-                  <p className='vote-result'>Previous 3rd Strongest Emotion Vote: <em>{options[voteSelection[2]-1].label}</em></p>
+                  <p className='vote-result'>Previous Strongest Emotion Vote: <em style={{color: options[voteSelection[0]-1].color }}>{options[voteSelection[0]-1].label}</em></p>
+                  <p className='vote-result'>Previous 2nd Strongest Emotion Vote: <em style={{color: options[voteSelection[1]-1].color }}>{options[voteSelection[1]-1].label}</em></p>
+                  <p className='vote-result'>Previous 3rd Strongest Emotion Vote: <em style={{color: options[voteSelection[2]-1].color }}>{options[voteSelection[2]-1].label}</em></p>
                 </>
               )}
               </>

@@ -51,21 +51,11 @@ const LoginModal = ({openLoginModal, closeLoginModal}) => {
                     onClick={e => { e.stopPropagation(); }}
                 >
 
-                    <motion.div 
-                        initial={{
-                            scale: 0
-                        }}
-                        animate={{
-                            scale: 1,
-                            transition: {
-                                delay: 0.2,
-                                duration: 0.2
-                            }
-                        }}         
-                        className='HeaderRow'
+                    <div         
+                        className='LoginHeaderRow'
                     >
                     <img style={{ width: "24px", cursor: "pointer" }} src={crossSVG} alt="" onClick={closeLoginModal}></img> 
-                    </motion.div>
+                    </div>
 
                     <motion.div
                         initial={{
@@ -128,7 +118,8 @@ const LoginModal = ({openLoginModal, closeLoginModal}) => {
                                 <GoogleButton 
                                     type="light"
                                     onClick={handleGoogleSignIn}
-                                    className='googleButton'/>
+                                    className='googleButton'
+                                    />
                             </motion.div>
                         )}
                         

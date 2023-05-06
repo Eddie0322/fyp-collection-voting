@@ -487,7 +487,7 @@ function App() {
 
                 voteCount={
 
-                  <p className='portal-content-vote'>Total votes: {total_count_data.total_count[selectedPoint.id].count}</p>
+                  <p className='portal-content-vote'>Total Emotions votes: {total_count_data.total_count[selectedPoint.id].count}</p>
                 }
                 checkVoteOpen = {openVote}
                 openVote = {() => setOpenVote(true)}
