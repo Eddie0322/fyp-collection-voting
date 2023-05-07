@@ -47,10 +47,6 @@ const EmotionSelection = ({
   const { user, userVotes, user_votes_data } = UserAuth()
   const [ voteSelection, setVoteSelection ] = useState([])
   
-  //console.log({ data, loading, error })
-  //console.log(selected);
-  //console.log(options);
-  //console.log(voteSelection)
 
   useEffect(() => {
       if(user && userVotes.includes(id)){
@@ -93,6 +89,26 @@ const EmotionSelection = ({
     } else if(selected.length === 3){
       return (
         [selected[0].label, selected[1].label, selected[2].label]
+      )
+    }
+  }
+
+  function showSelectedColor(){
+    if (selected.length === 0){
+      return (
+        ["", "", ""]
+      )
+    } else if(selected.length === 1){
+      return (
+        [selected[0].color, "", ""]
+      )
+    } else if(selected.length === 2){
+      return (
+        [selected[0].color, selected[1].color, ""]
+      )
+    } else if(selected.length === 3){
+      return (
+        [selected[0].color, selected[1].color, selected[2].color]
       )
     }
   }
@@ -220,7 +236,7 @@ const EmotionSelection = ({
                 labelledBy="Select"
                 disableSearch = {true}
                 //disabled={isOptionDisabled()}
-                shouldToggleOnHover={true}
+                shouldToggleOnHover={false}
                 closeOnChangedValue={true}
                 className="select-emotions"
             />
@@ -229,9 +245,9 @@ const EmotionSelection = ({
               <>
               {(selected.length !== 0) ? (
                 <>
-                  <p className='vote-result'>Strongest Emotion: <em>{showSelected()[0]}</em></p>
-                  <p className='vote-result'>2nd Strongest Emotion: <em>{showSelected()[1]}</em></p>
-                  <p className='vote-result'>3rd Strongest Emotion: <em>{showSelected()[2]}</em></p>
+                  <p className='vote-result'>Strongest Emotion: <em style={{color: showSelectedColor()[0]}}>{showSelected()[0]}</em></p>
+                  <p className='vote-result'>2nd Strongest Emotion: <em style={{color: showSelectedColor()[1]}}>{showSelected()[1]}</em></p>
+                  <p className='vote-result'>3rd Strongest Emotion: <em style={{color: showSelectedColor()[2]}}>{showSelected()[2]}</em></p>
                 </>
               ):(
                 <>
@@ -243,9 +259,9 @@ const EmotionSelection = ({
               </>
             ):(
               <>
-                <p className='vote-result'>Strongest Emotion: <em>{showSelected()[0]}</em></p>
-                <p className='vote-result'>2nd Strongest Emotion: <em>{showSelected()[1]}</em></p>
-                <p className='vote-result'>3rd Strongest Emotion: <em>{showSelected()[2]}</em></p>
+                <p className='vote-result'>Strongest Emotion: <em style={{color: showSelectedColor()[0]}}>{showSelected()[0]}</em></p>
+                <p className='vote-result'>2nd Strongest Emotion: <em style={{color: showSelectedColor()[1]}}>{showSelected()[1]}</em></p>
+                <p className='vote-result'>3rd Strongest Emotion: <em style={{color: showSelectedColor()[2]}}>{showSelected()[2]}</em></p>
               </>
             )}
 

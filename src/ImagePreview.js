@@ -91,7 +91,7 @@ return(
   
                                 <div className="hover-info">  
                                         Explore 1,000 Painting Collections of <br></br>
-                                        Art Institute Of Chicago                  
+                                        The Art Institute Of Chicago                  
                                 </div>
 
                                 <motion.div     

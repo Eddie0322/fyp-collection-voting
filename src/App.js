@@ -406,7 +406,7 @@ function App() {
              
 
               <div className='threeBtnGroup'>
-                <button onClick={() => {setZoom(false); setHoverOnCentroid(null)}}>Zoom Out</button>
+                <button onClick={() => {setZoom(false); setHoverOnCentroid(null); setSelectUnvoted(false)}}>Zoom Out</button>
               </div>
              
               
