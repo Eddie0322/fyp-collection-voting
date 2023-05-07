@@ -374,7 +374,7 @@ hr {
   width: 10vw;
   border-radius: 16px;
   left: 50%;
-  bottom: 0%;
+  bottom: 2%;
   transform: translate(-50%, -50%);
 }
 
