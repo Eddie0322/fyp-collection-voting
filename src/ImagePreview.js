@@ -94,7 +94,16 @@ return(
                                         Art Institute Of Chicago                  
                                 </div>
 
-                                <div                
+                                <motion.div     
+                                    initial={{
+                                            opacity: 0
+                                        }}
+                                        animate={{
+                                            opacity: 1,
+                                            transition: {
+                                                duration: 0.8
+                                            }
+                                        }}    
                                     className="hover-image-info">
                                         <div class="left">
                                                 <img class="logo" src={pointer} alt="Logo" />
@@ -104,7 +113,7 @@ return(
                                                 <img class="logo" src={drag} alt="Logo" />
                                                 <p class="description">Scroll / Drag On Screen</p>
                                         </div>
-                                </div>
+                                </motion.div>
 
                         </motion.div>
                             
