@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/fyp-collection-voting/static/css/main.b809ec05.css",
+    "main.css": "/fyp-collection-voting/static/css/main.63f012bd.css",
     "main.js": "/fyp-collection-voting/static/js/main.c59a4e21.js",
     "static/js/787.6a8f83d5.chunk.js": "/fyp-collection-voting/static/js/787.6a8f83d5.chunk.js",
     "static/media/Pointer.png": "/fyp-collection-voting/static/media/Pointer.6277a04fe3ea5930d1fc.png",
@@ -9,12 +9,12 @@
     "static/media/Logo.png": "/fyp-collection-voting/static/media/Logo.a225c02a1f19b4c761a7.png",
     "static/media/cross.svg": "/fyp-collection-voting/static/media/cross.b9f9e5a5bd1478a7b737c88c69f0cd70.svg",
     "index.html": "/fyp-collection-voting/index.html",
-    "main.b809ec05.css.map": "/fyp-collection-voting/static/css/main.b809ec05.css.map",
+    "main.63f012bd.css.map": "/fyp-collection-voting/static/css/main.63f012bd.css.map",
     "main.c59a4e21.js.map": "/fyp-collection-voting/static/js/main.c59a4e21.js.map",
     "787.6a8f83d5.chunk.js.map": "/fyp-collection-voting/static/js/787.6a8f83d5.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.b809ec05.css",
+    "static/css/main.63f012bd.css",
     "static/js/main.c59a4e21.js"
   ]
 }
