@@ -52,6 +52,7 @@
 .message-container p {
   color: white;
   text-align: center;
+  font-size: calc(1vw + 1vh);
 }
 
 .message-container img {
@@ -62,13 +63,15 @@
 
 .message-container .secondary-text {
   color: #c4d4a0;
-  font-size: 1.5vw;
-  font-weight: 600;
+  font-size: 1vw;
+  font-weight: 500;
   margin-bottom: 0.5rem;
   border: 0.08em solid red;
   padding: 2em;
   border-radius:  15px;
   border-color: white;
+  font-family: Georgia,'Times New Roman', Times, serif;
+  text-transform: uppercase;
 }
 
 .controls {
@@ -239,7 +242,7 @@ hr {
 }
 
 .stackedBar{
-  height: 10vh;
+  height: calc(4vh + 4vw);
   padding: calc(0.5vw + 0.5vh);
   padding-top: 0%;
 }
@@ -282,7 +285,7 @@ hr {
 
 .button-row{
   position: absolute;
-  bottom: 8%;
+  bottom: 10%;
   margin-left: calc(0.5vw + 0.5vh);
 }
 
