@@ -387,15 +387,15 @@ hr {
   position: absolute;
   z-index: 2;
   background: rgba(44, 43, 43, 0.2);
-  padding: 16px;
+  padding: calc(1vw + 1vh);
   color: #fff;
-  width: 25%;
-  height: 40%;
+  width: 20%;
+  height: 32%;
   border-radius: 16px;
   bottom: 5%;
   right: 30px;
   overflow: hidden;
-  z-index: 998;
+  z-index: 2;
   
 }
 
@@ -417,6 +417,23 @@ hr {
   height: 100%;
 }
 
+.hoverBoxSmall{
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  z-index: 2;
+  background: rgba(44, 43, 43, 0.2);
+  padding: calc(1vw + 1vh);
+  color: #fff;
+  width: 20%;
+  height: 32%;
+  border-radius: 16px;
+  bottom: 5%;
+  right: 30px;
+  overflow: hidden;
+  z-index: 2;
+  
+}
 
 .selected-point {
   flex: 0.5;
