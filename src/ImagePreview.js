@@ -101,7 +101,7 @@ return(
                                         animate={{
                                             opacity: 1,
                                             transition: {
-                                                duration: 0.8
+                                                duration: 1
                                             }
                                         }}    
                                     className="hover-image-info">
