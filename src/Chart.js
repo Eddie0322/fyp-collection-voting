@@ -27,7 +27,7 @@ const StackedBar = ({stackedBarLabel, stackedBarValue, stackedBarColors}) => {
         <Chart
         
           type = "bar"
-          width = {"108%"}
+          width = {"105%"}
           height = {"150%"}
           horizontalalign = "left"
           
