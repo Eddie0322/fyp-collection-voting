@@ -19,7 +19,7 @@
 .logo-container{
   position: fixed;
   margin-top: 6vh;
-  left: 4%;
+  left: 3%;
   width: 12vw;
   height: auto;
   text-align: center;
@@ -29,10 +29,10 @@
   align-items: center;
 }
 
-.logo {
+.webLogo {
   display: inline-block;
-  max-width: 100%;
-  max-height: 100%;
+  max-width: 50%;
+  max-height: 50%;
   vertical-align: middle;
 }
 

@@ -4,7 +4,7 @@ import logo from "./assets/Logo.png"
 const Logo = ({}) => {
     return(
         <motion.div className="logo-container">
-                 <img class="logo" src={logo} alt="Logo"></img>
+                 <img class="webLogo" src={logo} alt="Logo"></img>
         </motion.div>
     )
 }
