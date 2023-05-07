@@ -442,7 +442,7 @@ hr {
   text-align: left;
   height:1rem;
   color: #D1FF71;
-  font-weight: 600;
+  font-weight: 400;
   font-family: Arial, Helvetica, sans-serif;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -464,6 +464,64 @@ hr {
   margin-right: 1rem
 }
 
+.hover-info {
+  flex: 2;
+  display: flex;
+  font-size: 0.85em;
+  margin-bottom: 0.5rem;
+  text-align: left;
+  color: #b9b9b9;
+  height: 1.5rem;
+  font-family: Georgia,'Times New Roman', Times, serif;
+  width: 100%;
+  margin-right: 1rem;
+  line-height: 150%;
+}
+
+.hover-image-info{
+  flex: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  overflow: hidden;
+  background-color: #00000000;
+  margin-top: calc(1vh + 1vw);
+  border-radius: 8px;
+  border: 1px solid #b9b9b987;
+  border-style: dashed;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: calc(1vw + 1vh);
+}
+
+.left, .right {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 2%;
+}
+
+.logo {
+  max-width: 60%;
+  max-height: 60%;
+  display: block;
+}
+
+/* Set the description text */
+.description {
+  width: 75%;
+  text-align: center;
+  font-size: calc(0.4vh + 0.4vw);
+  font-family: Georgia,'Times New Roman', Times, serif;
+  color: #eeeeee;
+  font-weight: 400;
+}
+
+
 
 .sideBarPCA{
   position: absolute;
@@ -480,7 +538,6 @@ hr {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
   height: 70vh;
   overflow-y: scroll;
-
 }
 
 .sideBarPCA::-webkit-scrollbar {
