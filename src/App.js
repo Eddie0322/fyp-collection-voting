@@ -12,7 +12,7 @@ import SideBar from './SideBar';
 import LayoutButtons from './LayoutButtons';
 import UserCard from './UserCard';
 import NotificationComponent from './NotificationContainer';
-//import CollectionsMutation from './collection_mutation';
+import Logo from './Logo';
 
 let initialTextPos = new Array(12).fill(0).map(() => ({x: 100, y:100, z: 100}))
 let initialData = new Array(1000).fill(0).map((d, id) => ({ id, PCAx: 100, PCAy: 100, PCAz: 100, Label: -1, totalVote: 0 }));
@@ -329,6 +329,12 @@ function App() {
                        <p className="secondary-text">Loading...</p>
                   </div>
               )}
+
+
+              <Logo 
+              
+              />
+
 
               <LayoutButtons 
                 layout = {layout}

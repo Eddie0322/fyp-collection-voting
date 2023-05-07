@@ -9,7 +9,7 @@ const DEFAULT_COLOR = ["#ff3", "#f88", "#88f", "#e72", "#4d2", "#3ff", "#663", "
 
 const options = [
   { label: "Amusement", value: "amusement", disabled: false, id: 1, color: "#ff3" },
-  { label: "Intimate", value: "intimate", disabled: false, id: 2, color: "##f88" },
+  { label: "Intimate", value: "intimate", disabled: false, id: 2, color: "#f88" },
   { label: "Elegant", value: "elegant", disabled: false, id: 3, color: "#88f" },
   { label: "Lively", value: "lively", disabled: false, id: 4, color: "#e72" },
   { label: "Spiritual", value: "spiritual", disabled: false, id: 5, color: "#4d2" },

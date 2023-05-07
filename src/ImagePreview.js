@@ -107,7 +107,7 @@ return(
                                     className="hover-image-info">
                                         <div class="left">
                                                 <img class="logo" src={pointer} alt="Logo" />
-                                                 <p class="description">Hover / Click On Points</p>
+                                                 <p class="description">Hover / Click On Points or Emotions</p>
                                         </div>
                                         <div class="right">
                                                 <img class="logo" src={drag} alt="Logo" />
