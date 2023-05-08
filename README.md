@@ -1,2 +1,2 @@
-# Final Year Project designed by Eddie #
+Final Year Project designed by Eddie Huang
 
