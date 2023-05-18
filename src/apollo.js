@@ -16,7 +16,7 @@ const splitter = ({ query }) => {
 const GRAPHQL_ENDPOINT = "collection-voting-1.hasura.app";
 const cache = new InMemoryCache();
 const options = { reconnect: true };
-const HASURA_SECRET = process.env.REACT_APP_HASURA_SECRET || '<default_value>';;
+const HASURA_SECRET = "eKUUl0j58WBR1753anBeFEUL53fiteGS1GLH1DwP5pboiNNCVilrIAW7Tqnni14x";
 
 const wsURI = `${scheme("wss")}://${GRAPHQL_ENDPOINT}/v1/graphql`;
 const httpurl = `${scheme("https")}://${GRAPHQL_ENDPOINT}/v1/graphql`;
